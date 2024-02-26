@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
+import { Provider } from "@/utils/lib/provider/provider";
+import { Header } from "./layout/header/header.layout";
+import { EnumHeader } from "./layout/header/header.interface";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({ weight: "500", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +19,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+      <body className={`${roboto.className} bg-background`}>
+        <Provider>
+          <Header type={EnumHeader.DEFAULT} />
+          <main className={`flex-1 flex items-center justify-center py-20 duration-300`}>
+            {children}
+          </main>
+        </Provider>
+      </body>
+    </html >
   );
-}
+};
