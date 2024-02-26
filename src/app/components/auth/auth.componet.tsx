@@ -5,9 +5,9 @@ import { CheckBox } from "../checkbox/checkbox.component";
 import { PrimaryButton } from "../primary-button/primary-button.component";
 import { EnumPrimaryButton } from "../primary-button/primary-button.interface";
 import { EnumAuth, IAuth } from "./auth.interface";
-import { AuthGoogle } from "./components/auth-google.component";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
+import { signIn } from "next-auth/react";
 
 export const Auth = ({ type }: IAuth) => {
     const [pageSwitcher, setPageSwitcher] = React.useState<string>("");
@@ -27,12 +27,8 @@ export const Auth = ({ type }: IAuth) => {
 
                 <div className={`w-full max-[425px]:py-0py-4`}>
                     {
-                        // (type === EnumAuth.LOGIN || type === EnumAuth.REGISTER)
-                        // &&
                         <>
-                        {/* JOGAR ESSE BOTÃO PARA O PRIMARY BUTTON */}
-                            <AuthGoogle text="Entrar com Google" route={pageSwitcher} />
-                        {/* JOGAR ESSE BOTÃO PARA O PRIMARY BUTTON */}
+                            <PrimaryButton text="Entrar com Google" type={EnumPrimaryButton.GOOGLE} handleClick={() => signIn("google", { callbackUrl: "/" })} />
 
                             <div className="flex items-center flex-row gap-3 h-20 w-full">
                                 <div className="opacity-100 bg-gray-200 w-full h-[0.125rem]"></div>

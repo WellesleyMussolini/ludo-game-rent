@@ -4,7 +4,8 @@ export enum EnumPrimaryButton {
     PRIMARY="primary",
     SECONDARY="secondary",
     OUTLINED="outlined",
-    DISABLED="disabled"
+    DISABLED="disabled",
+    GOOGLE="google",
 };
 
 export interface IPrimaryButton {

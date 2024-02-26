@@ -7,7 +7,7 @@ import { PrimaryButton } from "@/app/components/primary-button/primary-button.co
 import { EnumPrimaryButton } from "@/app/components/primary-button/primary-button.interface";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Dropdown } from "@/app/components/dropdown/dropdown.component";
 import { UserProfile } from "./component/loading/user-profile.component";
 import { EnumHeader, IHeader } from "./header.interface";
