@@ -1,24 +1,17 @@
 "use client"
 
-import Image from "next/image";
 import { CheckBox } from "../checkbox/checkbox.component";
 import { PrimaryButton } from "../primary-button/primary-button.component";
 import { EnumPrimaryButton } from "../primary-button/primary-button.interface";
 import { EnumAuth, IAuth } from "./auth.interface";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { signIn } from "next-auth/react";
+import { PrimaryInput } from "../primary-input/primary-input.component";
+import { EnumPrimaryInput } from "../primary-input/primary-input.interface";
 
 export const Auth = ({ type }: IAuth) => {
-    const [pageSwitcher, setPageSwitcher] = React.useState<string>("");
-    const currentPage = usePathname()
     const router = useRouter();
-
-    React.useEffect(() => {
-        if (currentPage === "admin/login") return setPageSwitcher("/admin");
-        else return setPageSwitcher("/")
-    }, [setPageSwitcher]);
-
     return (
         <>
             <div className={`flex items-center flex-col bg-[#FFFFFF] shadow-lg rounded p-10 text-gray-500 text-[.875rem] font-medium duration-300
@@ -39,53 +32,23 @@ export const Auth = ({ type }: IAuth) => {
                     }
 
                     <div className="flex flex-col gap-5">
-                        {
-                            type === EnumAuth.REGISTER &&
-                            <div className="flex justify-between max-[545px]:flex-col flex-row max-[640px]:gap-5 max-[545px]:gap-5">
-                                <div className="flex flex-col gap-2">
-                                    <p>Nome</p>
-                                    <input type="text" placeholder="Digite seu nome" className="border-2 outline-none rounded-[0.5rem] w-full inline-flex items-center justify-center gap-3 py-2 px-3 bg-[#F9FAFB] focus:border-primary" />
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <p>Sobrenome</p>
-                                    <input type="text" placeholder="Digite seu sobrenome" className="border-2 outline-none rounded-[0.5rem] w-full inline-flex items-center justify-center gap-3 py-2 px-3 bg-[#F9FAFB] focus:border-primary" />
-                                </div>
-                            </div>
-                        }
-{/* COMPONENTIZAR OS INPUTS */}
-                        <div className="flex flex-col gap-2">
-                            <p>Email</p>
-                            <input type="email" placeholder="Digite seu email" className="text-base border-2 outline-none rounded-[0.5rem] w-full inline-flex items-center justify-center gap-3 py-2 px-3 bg-[#F9FAFB] focus:border-primary" />
-                        </div>
+                        <PrimaryInput type={EnumPrimaryInput.EMAIL} text="Email" placeholder="Digite seu email" />
+                        <PrimaryInput type={EnumPrimaryInput.PASSWORD} text="Senha" placeholder="••••••••" />
 
-                        <div className="flex flex-col gap-2">
-                            <p>Senha</p>
-                            <input type="password" placeholder="••••••••" className="tracking-[.2em] border-2 rounded-[0.5rem] w-full inline-flex items-center justify-center gap-3 py-2 px-3 bg-[#F9FAFB] outline-none focus:border-primary" />
-                        </div>
-
-                        {
-                            (type === EnumAuth.LOGIN || type === EnumAuth.ADMIN) &&
-                            <div className="w-full"><CheckBox text="Continuar conectado" /></div>
-                        }
+                        {(type === EnumAuth.LOGIN || type === EnumAuth.ADMIN) && <div className="w-full"><CheckBox text="Continuar conectado" /></div>}
 
                         <div className={type === EnumAuth.REGISTER ? "mt-4" : ""}>
                             <PrimaryButton handleClick={() => { }} text={(type === EnumAuth.LOGIN || type === EnumAuth.ADMIN) && "entrar" || (type === EnumAuth.REGISTER && "registrar")} disabled={false} type={EnumPrimaryButton.OUTLINED} />
                         </div>
 
-                        {
-                            type === EnumAuth.LOGIN &&
-                            <div className="flex gap-1 mt-2 max-[440px]:flex-col">
-                                <p>Não tem uma conta ainda ?</p>
-                                <p onClick={() => router.push("/register")} className="text-blue-500 cursor-pointer hover:underline hover:text-blue-700">Crie uma aqui</p>
-                            </div>
-                        }
-                        {
-                            type === EnumAuth.REGISTER &&
-                            <div className="flex gap-1 mt-2">
-                                <p>Já possui uma conta ?</p>
-                                <p onClick={() => router.push("/login")} className="text-blue-500 cursor-pointer hover:underline hover:text-blue-700">Entrar</p>
-                            </div>
-                        }
+                        <div className="flex gap-1 mt-2 max-[440px]:flex-col">
+                            <p>
+                                {type === EnumAuth.LOGIN && "Não tem uma conta ainda ?"}
+                                {type === EnumAuth.REGISTER && "Já possui uma conta ?"}
+                            </p>
+                            {type === EnumAuth.LOGIN && <p onClick={() => router.push("/register")} className="text-blue-500 cursor-pointer hover:underline hover:text-blue-700">Crie uma aqui</p>}
+                            {type === EnumAuth.REGISTER && <p onClick={() => router.push("/login")} className="text-blue-500 cursor-pointer hover:underline hover:text-blue-700">Entrar</p>}
+                        </div>
                     </div>
                 </div>
             </div>
