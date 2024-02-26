@@ -6,8 +6,6 @@ import xmlJs from 'xml-js';
 import { Card } from "@/app/components/card/card.component";
 import { PrimaryButton } from "../primary-button/primary-button.component";
 import { EnumPrimaryButton } from "../primary-button/primary-button.interface";
-import { Alert } from "../alert/alert.component";
-import { EnumAlert } from "../alert/alert.interface";
 import { LoadingSpinner } from "../loading-spinner/loading-spinner.component";
 import { Dropdown } from "../dropdown/dropdown.component";
 import { SituationDropDown } from "./situation-dropdown/situation-dropdown.component";
@@ -88,9 +86,7 @@ export const BoardGameForm = ({ visibility, handleVisibility }: IBoardGameForm) 
     };
     return (
         <>
-        {/* remover o alert */}
-            <Alert visibility={successfulAlert} text="ENVIADO COM SUCESSO" type={EnumAlert.SUCCESSFUL} handleAlertVisibility={setSuccessfulAlert} />
-            <Alert visibility={errorAlert} text="JOGO NÃO ENCONTRADO" type={EnumAlert.ERROR} handleAlertVisibility={setErrorAlert} />
+
 
             {
                 visibility &&
