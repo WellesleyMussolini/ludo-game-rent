@@ -8,5 +8,5 @@ export const storeBoardGame = async (image: string, name: string, situation: str
   catch (error) {
     console.error('Error storing board game:', error);
     throw error;
-  }
+  };
 };
