@@ -1,0 +1,1 @@
+export const boardGameOptions = ["Cópia Fixa", "Reservado", "Quarentena", "Indisponível", "Manutenção", "Alugado", "Disponível"];

@@ -6,12 +6,14 @@ export enum EnumPrimaryButton {
     OUTLINED="outlined",
     DISABLED="disabled",
     GOOGLE="google",
+    DELETE="delete",
 };
 
 export interface IPrimaryButton {
     text: string | ReactNode,
     type: EnumPrimaryButton,
     disabled?: boolean | undefined,
+    loadingSize?: number,
     isLoading?: boolean,
-    handleClick: () => void,
+    handleClick: (() => void) | undefined,
 };

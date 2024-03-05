@@ -10,6 +10,6 @@ export default function Login() {
     const { status } = useSession();
     if (status === "authenticated") return redirect("/");
     return <>
-        <div className="max-[425px]:relative max-[425px]:bottom-[4.8em] flex items-center justify-center w-full"><Auth type={EnumAuth.LOGIN} /></div>
+        <div className="flex items-center justify-center w-full" style={{minHeight: "calc(100vh - 80px)"}}><Auth type={EnumAuth.LOGIN} /></div>
     </>
 };

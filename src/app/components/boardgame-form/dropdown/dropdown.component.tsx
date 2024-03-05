@@ -2,15 +2,26 @@ import React from "react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { Dropdown } from "../../dropdown/dropdown.component";
 
-export const SituationDropDown = ({
-    situations, boardGameSituation, handleBoardGameSituation
-}: { situations: string[], boardGameSituation: string, handleBoardGameSituation: (boardGameSituation: string) => void }) => {
+export const BoardGameDropdown = ({
+    options, boardGameSituation, handleBoardGameSituation
+}: { options: string[], boardGameSituation: string, handleBoardGameSituation: (boardGameSituation: string) => void }) => {
     const [isOpen, setIsOpen] = React.useState<boolean>(false);
 
-    const handleSituationChange = (state: string) => {
-        handleBoardGameSituation(state);
-        setIsOpen(false);
-    };
+    const dropdownContent = React.useMemo(() => {
+        return options.map((situation, index) => (
+            <li
+                key={index}
+                className="select-none w-full flex items-center gap-2 px-4 cursor-pointer duration-200 hover:bg-primary hover:rounded hover:text-white py-2"
+                onDragStart={(event) => event.preventDefault()}
+                onClick={() => {
+                    handleBoardGameSituation(situation);
+                    setIsOpen(false);
+                }}>
+                <p className="text-base font-medium">{situation}</p>
+            </li>
+        ));
+    }, [options, handleBoardGameSituation]);
+
     return (
         <div className="relative flex items-center flex-col gap-2 z-50 text-gray-500">
             <div
@@ -26,15 +37,7 @@ export const SituationDropDown = ({
 
             {/* DROPDOWN */}
             <div className="absolute top-[70px] w-48">
-                <Dropdown isOpen={isOpen} content={situations.map((situation, index) => (
-                    <li
-                        key={index}
-                        className="select-none w-full flex items-center gap-2 px-4 cursor-pointer duration-200 hover:bg-primary hover:rounded hover:text-white py-2"
-                        onDragStart={(event) => event.preventDefault()}
-                        onClick={() => handleSituationChange(situation)}>
-                        <p className="text-base font-medium">{situation}</p>
-                    </li>
-                ))} />
+                <Dropdown isOpen={isOpen} content={dropdownContent} />
             </div>
         </div>
     );

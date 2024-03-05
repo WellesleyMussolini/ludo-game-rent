@@ -8,12 +8,20 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { signIn } from "next-auth/react";
 import { PrimaryInput } from "../primary-input/primary-input.component";
-import { EnumPrimaryInput } from "../primary-input/primary-input.interface";
+import { EnumPrimaryInputStyle, EnumPrimaryInputType } from "../primary-input/primary-input.interface";
 
-export const Auth = ({ type }: IAuth) => {
+export const Auth = ({ type, email, password, handleEmail, handlePassword }: IAuth) => {
     const router = useRouter();
-    return (
-        <>
+    return <>
+        {
+            type === EnumAuth.LOGIN &&
+            <div className={`flex items-center flex-col bg-[#FFFFFF] shadow-lg rounded p-10 text-gray-500 text-[.875rem] font-medium duration-300 h-auto             
+        max-[425px]:w-full max-[425px]:h-[100vh_-_80px] max-[640px]:w-[80%] min-[640px]:w-[32rem] max-[425px]:shadow-none`}>
+                <PrimaryButton text="Entrar com Google" type={EnumPrimaryButton.GOOGLE} handleClick={() => signIn("google", { callbackUrl: "/" })} />
+            </div>
+        }
+        {
+            type === EnumAuth.ADMIN &&
             <div className={`flex items-center flex-col bg-[#FFFFFF] shadow-lg rounded p-10 text-gray-500 text-[.875rem] font-medium duration-300
             max-[425px]:w-full max-[425px]:h-[100vh_-_80px] max-[640px]:w-[80%] min-[640px]:w-[32rem] h-auto
             max-[425px]:shadow-none`}>
@@ -32,8 +40,42 @@ export const Auth = ({ type }: IAuth) => {
                     }
 
                     <div className="flex flex-col gap-5">
-                        <PrimaryInput type={EnumPrimaryInput.EMAIL} text="Email" placeholder="Digite seu email" />
-                        <PrimaryInput type={EnumPrimaryInput.PASSWORD} text="Senha" placeholder="••••••••" />
+                        <PrimaryInput handleOnChange={handleEmail} style={EnumPrimaryInputStyle.PRIMARY} type={EnumPrimaryInputType.EMAIL} text="Email" placeholder="Digite seu email" />
+                        <PrimaryInput handleOnChange={handlePassword} style={EnumPrimaryInputStyle.PRIMARY} type={EnumPrimaryInputType.PASSWORD} text="Senha" placeholder="••••••••" />
+
+                        <div className="w-full"><CheckBox text="Continuar conectado" /></div>
+
+                        <PrimaryButton handleClick={() => router.push("/admin")} text={"entrar"} disabled={!email || !password} type={!email || !password ? EnumPrimaryButton.DISABLED : EnumPrimaryButton.OUTLINED} />
+                    </div>
+                </div>
+            </div>
+        }
+    </>
+};
+
+
+
+/*
+            <div className={`flex items-center flex-col bg-[#FFFFFF] shadow-lg rounded p-10 text-gray-500 text-[.875rem] font-medium duration-300
+            max-[425px]:w-full max-[425px]:h-[100vh_-_80px] max-[640px]:w-[80%] min-[640px]:w-[32rem] h-auto
+            max-[425px]:shadow-none`}>
+
+                <div className={`w-full max-[425px]:py-0py-4`}>
+                    {
+                        <>
+                            <PrimaryButton text="Entrar com Google" type={EnumPrimaryButton.GOOGLE} handleClick={() => signIn("google", { callbackUrl: "/" })} />
+
+                            <div className="flex items-center flex-row gap-3 h-20 w-full">
+                                <div className="opacity-100 bg-gray-200 w-full h-[0.125rem]"></div>
+                                <p>ou</p>
+                                <div className="opacity-100 bg-gray-200 w-full h-[0.125rem]"></div>
+                            </div>
+                        </>
+                    }
+
+                    <div className="flex flex-col gap-5">
+                        <PrimaryInput style={EnumPrimaryInputStyle.PRIMARY} type={EnumPrimaryInputType.EMAIL} text="Email" placeholder="Digite seu email" />
+                        <PrimaryInput style={EnumPrimaryInputStyle.PRIMARY} type={EnumPrimaryInputType.PASSWORD} text="Senha" placeholder="••••••••" />
 
                         {(type === EnumAuth.LOGIN || type === EnumAuth.ADMIN) && <div className="w-full"><CheckBox text="Continuar conectado" /></div>}
 
@@ -52,6 +94,4 @@ export const Auth = ({ type }: IAuth) => {
                     </div>
                 </div>
             </div>
-        </>
-    );
-};
+*/
