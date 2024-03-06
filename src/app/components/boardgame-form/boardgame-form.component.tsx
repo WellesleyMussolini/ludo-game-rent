@@ -1,6 +1,5 @@
 "use client"
 
-import { storeBoardGame } from "@/app/services/store-boardgame";
 import React, { useEffect, useState } from "react";
 import { Card } from "@/app/components/card/card.component";
 import { PrimaryButton } from "../primary-button/primary-button.component";
@@ -71,20 +70,3 @@ export const BoardGameForm = ({
             }
         </>
     );
-
-
-// SEARCH
-// const fetchData = async () => {
-//     try {
-//         const response = await fetch(`https://thingproxy.freeboard.io/fetch/https://boardgamegeek.com/xmlapi/boardgame/${id}`);
-//         if (!response.ok) throw new Error('Network response was not ok');
-//         const xmlText = await response.text();
-//         const jsonData = xmlJs.xml2json(xmlText, { compact: true, spaces: 2 });
-//         const parsedData = JSON.parse(jsonData);
-//         setBoardGameData(parsedData);
-//     } catch (error) {
-//         console.error('Error fetching data:', error);
-//     }
-// };
-
-// <button className=" bg-primary w-full text-white font-black h-10" onClick={fetchData}>SEARCH</button>
