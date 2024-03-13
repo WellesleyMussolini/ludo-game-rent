@@ -2,6 +2,13 @@ export interface IBoardGameForm {
     id: string,
     option: string,
 
+    image: string,
+    imageName: string,
+
+
+
+    gameName: string,
+    gamePrice: string,
     isLoading: boolean,
 
     handleId: (id: string) => void, 
@@ -17,3 +24,13 @@ export interface IBoardGameForm {
 
     handleGenerateCard: () => void,
 };
+
+export enum EnumBoardGameFormSteps {
+    SEARCH_ID_STEP="searchId",
+    SAVE_GAME_FORM_STEP="saveGameForm",
+};  
+
+export enum EnumBoardGameFormAnimation {
+    ANIMATION_JUMP_IN="animate-jump-in",
+    ANIMATION_JUMP_OUT="animate-jump-out",
+}
