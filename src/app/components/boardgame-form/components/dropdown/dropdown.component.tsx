@@ -1,6 +1,6 @@
 import React from "react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import { Dropdown } from "../../dropdown/dropdown.component";
+import { Dropdown } from "../../../dropdown/dropdown.component";
 
 export const BoardGameDropdown = ({
     options, boardGameSituation, handleBoardGameSituation
