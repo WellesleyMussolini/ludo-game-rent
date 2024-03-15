@@ -13,9 +13,10 @@ export enum EnumPrimaryInputStyle {
 export interface IPrimaryInput {
     type: EnumPrimaryInputType,
     style: EnumPrimaryInputStyle,
-    text: string,
+    text?: string,
     placeholder?: string,
     id?: string,
     htmlFor?: string,
+    value?: string,
     handleOnChange: (value: string) => void,
 };

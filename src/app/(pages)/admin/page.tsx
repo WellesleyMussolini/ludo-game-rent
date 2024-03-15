@@ -22,6 +22,7 @@ export default function Admin() {
     const [successfulAlert, setSuccessfulAlert] = React.useState<boolean>(false);
     const [errorAlert, setErrorAlert] = React.useState<boolean>(false);
     const [formVisibility, setFormVisibility] = React.useState<boolean>(false);
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
     // vai para o banco
     const [boardgame, setBoardgame] = React.useState<IBoardGame>({
@@ -39,31 +40,36 @@ export default function Admin() {
         price: "",
     });
 
-    const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
     const isInputFieldEmpty = (event: keyof iGameApiData, defaultValue: string) => gameApiData[event].trim() !== "" ? gameApiData[event] : defaultValue;
 
     const generatePreviewBoardgame = async (id: string) => {
-        const response = await fetch(`https://thingproxy.freeboard.io/fetch/https://boardgamegeek.com/xmlapi/boardgame/${id}`);
-        if (!response.ok) throw new Error('Network response was not ok');
-        const xmlText = await response.text();
-        const jsonData = JSON.parse(xmlJs.xml2json(xmlText, { compact: true, spaces: 2 }));
+        setIsLoading(true);
+        try {
+            const response = await fetch(`https://thingproxy.freeboard.io/fetch/https://boardgamegeek.com/xmlapi/boardgame/${id}`);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const xmlText = await response.text();
+            const jsonData = JSON.parse(xmlJs.xml2json(xmlText, { compact: true, spaces: 2 }));
 
-        // checks if the game data is from an array or an object
-        const defaultName = Array.isArray(jsonData.boardgames.boardgame.name)
-            ? jsonData.boardgames.boardgame.name[0]._text
-            : jsonData.boardgames.boardgame.name._text;
+            // checks if the game data is from an array or an object
+            const defaultName = Array.isArray(jsonData.boardgames.boardgame.name) ? jsonData.boardgames.boardgame.name[0]._text : jsonData.boardgames.boardgame.name._text;
 
-        // acess the image inside of the API
-        const { _text } = jsonData.boardgames.boardgame.image;
-        setGameApiData({
-            id,
-            image: _text,
-            name: isInputFieldEmpty("name", defaultName),
-            price: isInputFieldEmpty("price", "30"),
-            situation: isInputFieldEmpty("situation", "Disponível"),
-        });
+            // access the image inside of the API
+            const { _text } = jsonData.boardgames.boardgame.image;
+
+            setGameApiData({
+                id,
+                image: _text,
+                name: isInputFieldEmpty("name", defaultName),
+                price: isInputFieldEmpty("price", "30"),
+                situation: isInputFieldEmpty("situation", "Disponível"),
+            });
+        } catch (error) {
+            console.error(error);
+        }
+        setIsLoading(false);
     };
+
 
     // saves the boardgame in the database
     const handleSaveBoardGameOnDB = async () => {
@@ -139,9 +145,9 @@ export default function Admin() {
 
 
 
-    // if (status !== "authenticated") return redirect("/admin/login"); SWITCH PAGE INSTANTLY BUT NEVER ACESS THE "/ADMIN" ROUTE
-    // if (status === "unauthenticated") return redirect("/admin/login");
-    // adicionar um token de logado para verificar no navegador do usuario se ele está conectado.
+// if (status !== "authenticated") return redirect("/admin/login"); SWITCH PAGE INSTANTLY BUT NEVER ACESS THE "/ADMIN" ROUTE
+// if (status === "unauthenticated") return redirect("/admin/login");
+// adicionar um token de logado para verificar no navegador do usuario se ele está conectado.
 
 // const generatePreviewBoardgame = async () => {
 //     setIsLoading(true);
@@ -179,20 +185,20 @@ export default function Admin() {
 //         setErrorAlert(false);
 //     }
 // };
-    // const clearInputFields = () => {
-    //     setBoardgame({
-    //         image: "",
-    //         name: "",
-    //         price: "",
-    //         situation: "Disponível",
-    //     });
-    // };
+// const clearInputFields = () => {
+//     setBoardgame({
+//         image: "",
+//         name: "",
+//         price: "",
+//         situation: "Disponível",
+//     });
+// };
 
 
 
-         // gameApiData.image && gameApiData.name && gameApiData.price &&
-            //     <Card
-            //         image={gameApiData.image}
-            //         name={gameApiData.name}
-            //         price={gameApiData.price}
-            //     />
+// gameApiData.image && gameApiData.name && gameApiData.price &&
+//     <Card
+//         image={gameApiData.image}
+//         name={gameApiData.name}
+//         price={gameApiData.price}
+//     />
