@@ -1,6 +1,6 @@
 import {ICard} from "../../../../../../interfaces/card.interface";
 
-export interface IBoardGameFormStepTwo extends ICard {
+export interface IBoardGameFormStepSaveGame extends ICard {
     isLoading: boolean,
     writeGameName: string,
     handleWriteGameName: (writeGameName: string) => void,

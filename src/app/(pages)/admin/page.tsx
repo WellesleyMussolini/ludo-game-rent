@@ -16,7 +16,11 @@ import BoardGameCatalogue from "@/app/components/boardgame-catalogue/boardgame-c
 import { handleInputChange } from "./utils/handle-input-change";
 
 export default function Admin() {
+    // if (status !== "authenticated") return redirect("/admin/login"); SWITCH PAGE INSTANTLY BUT NEVER ACESS THE "/ADMIN" ROUTE
+    // if (status === "unauthenticated") return redirect("/admin/login");
+    // adicionar um token de logado para verificar no navegador do usuario se ele está conectado.
     const { status } = useSession();
+
     const [openSidebar, setOpenSidebar] = React.useState<boolean>(false);
     const [successfulAlert, setSuccessfulAlert] = React.useState({
         message: "",
@@ -127,23 +131,3 @@ export default function Admin() {
         </div>
     </div>
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// if (status !== "authenticated") return redirect("/admin/login"); SWITCH PAGE INSTANTLY BUT NEVER ACESS THE "/ADMIN" ROUTE
-// if (status === "unauthenticated") return redirect("/admin/login");
-// adicionar um token de logado para verificar no navegador do usuario se ele está conectado.

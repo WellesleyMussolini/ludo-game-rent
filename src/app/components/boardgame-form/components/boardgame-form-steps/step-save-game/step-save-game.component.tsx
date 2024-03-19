@@ -1,7 +1,7 @@
 import { IoMdClose } from "react-icons/io";
 import { ActionButtonForm } from "../../action-button-form/action-button-form.component";
 
-import { IBoardGameFormStepTwo } from "./step.two.interface";
+import { IBoardGameFormStepSaveGame } from "./step-save-game.interface";
 import Image from "next/image";
 import { PrimaryInput } from "@/app/components/primary-input/primary-input.component";
 import { EnumPrimaryInputStyle, EnumPrimaryInputType } from "@/app/components/primary-input/primary-input.interface";
@@ -11,7 +11,7 @@ import { boardGameOptions } from "../../../data/options.data";
 import { PrimaryButton } from "@/app/components/primary-button/primary-button.component";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 
-export const BoardGameFormStepTwo = ({
+export const BoardGameFormStepSaveGame = ({
     isLoading,
     boardgameImage,
     boardgameName,
@@ -24,10 +24,10 @@ export const BoardGameFormStepTwo = ({
     handleCloseForm,
     handleSaveGameInDB,
     handleReturnPreviousStep
-}: IBoardGameFormStepTwo) => (
+}: IBoardGameFormStepSaveGame) => (
     <>
-        <ActionButtonForm positionX="left-2" children={<MdKeyboardDoubleArrowLeft size={25} />} onClickIcon={handleReturnPreviousStep} />
-        <ActionButtonForm positionX="right-2" children={<IoMdClose size={25} />} onClickIcon={handleCloseForm} />
+        <ActionButtonForm positionX="left-2" onClickIcon={handleReturnPreviousStep}>{<MdKeyboardDoubleArrowLeft size={25} />}</ActionButtonForm>
+        <ActionButtonForm positionX="right-2" onClickIcon={handleCloseForm}>{<IoMdClose size={25} />}</ActionButtonForm>
         <div className="relative z-10 h-56 w-56">
             <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 z-10"></div>
             <Image

@@ -1,4 +1,4 @@
-"use client"
+"use server"
 
 import { prisma } from "@/utils/lib/database/prisma";
 import { Card } from "../card/card.component";

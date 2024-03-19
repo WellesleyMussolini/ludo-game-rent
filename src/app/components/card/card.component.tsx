@@ -8,13 +8,14 @@ export const Card = ({ image, name, price, isEditing, isLoading, handleSave, han
     const currency = formatCurrency(price);
     return <div className="bg-white max-[350px]:w-[77.14%] w-[270px] h-[316px] rounded-md shadow-md">
         <div className="relative w-full bg-secondary h-[64%] z-10 leading-5 rounded-t-md">
-            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 z-10 rounded-t-md"></div>
+        <div className="absolute z-30 top-3 left-4 bg-primary"><p className="text-white text-base">Reservado</p></div>
+            <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 z-20 rounded-t-md"></div>
             <Image
                 src={image}
                 alt={name} width={0} height={0}
                 layout='fill'
                 objectFit='cover'
-                className="w-full h-full bg-center object-cover overflow-hidden select-none touch-none" />
+                className="w-full h-full bg-center object-cover overflow-hidden select-none touch-none z-10" />
             <p className="absolute bottom-4 left-4 font-black text-xl z-20 text-white shadow-cardName drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">{name}</p>
         </div>
 

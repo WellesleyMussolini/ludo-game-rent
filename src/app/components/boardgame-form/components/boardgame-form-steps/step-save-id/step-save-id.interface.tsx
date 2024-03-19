@@ -1,4 +1,4 @@
-export interface IBoardGameFormStepOne {
+export interface IBoardGameFormStepSaveId {
     isLoading: boolean,
     writeGameId: string,
     handleCloseForm: () => void,
