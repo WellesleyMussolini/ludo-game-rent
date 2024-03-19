@@ -1,7 +1,3 @@
-export interface iGameApiData {
-    id: string,
-    name: string,
-    image: string,
-    situation: string,
-    price: string,
-};
+import { IBoardGame } from "@/interfaces/boardgame.interface";
+
+export interface iGameApiData extends IBoardGame { id: string };

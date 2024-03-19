@@ -7,20 +7,21 @@ import { BoardGameFormStepTwo } from "./components/boardgame-form-steps/step-two
 
 export const BoardGameForm = ({
     visibility,
-    id,
+    boardgameId,
     image,
     imageName,
     gameName,
     option,
     gamePrice,
     isLoading,
-    handleId,
-    handleName,
-    handleOption,
-    handlePrice,
+    handleBoardgameId,
+    handleBoardgameName,
+    handleBoardgameOption,
+    handleBoardgamePrice,
     handleVisibility,
     handleGenerateCard,
-}: IBoardGameForm) => { // UTILIZAR O INTERFACE NA PASTA INTERFACES AQUI
+    handleSaveGameInDB,
+    }: IBoardGameForm) => { // UTILIZAR O INTERFACE NA PASTA INTERFACES AQUI
     const [animation, setAnimation] = React.useState<string>(EnumBoardGameFormAnimation.ANIMATION_JUMP_IN);
     const [step, setStep] = React.useState<EnumBoardGameFormSteps>(EnumBoardGameFormSteps.SEARCH_ID_STEP);
 
@@ -30,6 +31,7 @@ export const BoardGameForm = ({
             setStep(EnumBoardGameFormSteps.SEARCH_ID_STEP);
             setAnimation(EnumBoardGameFormAnimation.ANIMATION_JUMP_IN);
             handleVisibility(false);
+            handleBoardgameId("");
         }, 600);
     };
 
@@ -40,29 +42,36 @@ export const BoardGameForm = ({
                 await handleGenerateCard();
                 setStep(EnumBoardGameFormSteps.SAVE_GAME_FORM_STEP);
             }}
-            writeGameId={id}
-            handleOnChangeId={handleId}
+            writeGameId={boardgameId}
+            handleOnChangeId={handleBoardgameId}
             isLoading={isLoading}
         />,
         [EnumBoardGameFormSteps.SAVE_GAME_FORM_STEP]: <BoardGameFormStepTwo
+        isLoading={isLoading}
             boardgameImage={image}
             boardgameName={imageName}
             chooseGameOptions={option}
-            handleChooseGameOptions={handleOption}
+            handleChooseGameOptions={handleBoardgameOption}
             handleCloseForm={handleCloseForm}
-            handleReturnPreviousStep={() => setStep(EnumBoardGameFormSteps.SEARCH_ID_STEP)}
-            handleNextStep={handleCloseForm}
+            handleReturnPreviousStep={() => {
+                setStep(EnumBoardGameFormSteps.SEARCH_ID_STEP);
+                handleBoardgameId("");
+            }}
+            handleSaveGameInDB={async () => {
+                await handleSaveGameInDB();
+                handleCloseForm();
+            }}
             writeGameName={gameName}
-            handleWriteGameName={handleName}
+            handleWriteGameName={handleBoardgameName}
             writeGamePrice={gamePrice}
-            handleWriteGamePrice={handlePrice}
+            handleWriteGamePrice={handleBoardgamePrice}
         />
     };
     return <>
         {
             visibility &&
             <>
-                <div className="fixed top-0 opacity-30 h-screen w-screen bg-black z-40"></div>
+                <div className="fixed top-0 opacity-30 h-screen w-screen bg-black z-40" onClick={handleCloseForm}></div>
                 <div className={`z-50 relative rounded flex flex-col items-center justify-center gap-6 bg-white py-10 h-auto w-96 duration-300 ${animation} text-gray-500`}>{stepsObjectBoardGameForm[step]}</div>
             </>
         }

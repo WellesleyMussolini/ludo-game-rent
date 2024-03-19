@@ -1,5 +1,5 @@
 export interface IBoardGameForm {
-    id: string,
+    boardgameId: string,
     option: string,
     image: string,
     imageName: string,
@@ -8,16 +8,15 @@ export interface IBoardGameForm {
     isLoading: boolean,
     visibility: boolean,
 
-    handleId: (id: string) => void,
-    handleName: (name: string) => void,
-    handleOption: (option: string) => void,
-    handlePrice: (price: string) => void,
+    handleBoardgameId: (id: string) => void,
+    handleBoardgameName: (name: string) => void,
+    handleBoardgameOption: (option: string) => void,
+    handleBoardgamePrice: (price: string) => void,
 
     handleVisibility: (visibility: boolean) => void,
-    handleSuccessfulAlert: (successfulAlert: boolean) => void,
-    handleErrorAlert: (errorAlert: boolean) => void,
 
     handleGenerateCard: () => void,
+    handleSaveGameInDB: () => void,
 };
 
 export enum EnumBoardGameFormSteps {
@@ -28,4 +27,4 @@ export enum EnumBoardGameFormSteps {
 export enum EnumBoardGameFormAnimation {
     ANIMATION_JUMP_IN = "animate-jump-in",
     ANIMATION_JUMP_OUT = "animate-jump-out",
-}
+};

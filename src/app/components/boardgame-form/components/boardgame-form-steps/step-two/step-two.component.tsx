@@ -12,6 +12,7 @@ import { PrimaryButton } from "@/app/components/primary-button/primary-button.co
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 
 export const BoardGameFormStepTwo = ({
+    isLoading,
     boardgameImage,
     boardgameName,
     writeGameName,
@@ -21,7 +22,7 @@ export const BoardGameFormStepTwo = ({
     writeGamePrice,
     handleWriteGamePrice,
     handleCloseForm,
-    handleNextStep,
+    handleSaveGameInDB,
     handleReturnPreviousStep
 }: IBoardGameFormStepTwo) => (
     <>
@@ -48,7 +49,7 @@ export const BoardGameFormStepTwo = ({
             <BoardGameDropdown options={boardGameOptions} boardGameSituation={chooseGameOptions} handleBoardGameSituation={handleChooseGameOptions} />
         </div>
         <div className="w-full px-10">
-            <PrimaryButton handleClick={handleNextStep} text="SALVAR" type={EnumPrimaryButton.OUTLINED} />
+            <PrimaryButton isLoading={isLoading} handleClick={handleSaveGameInDB} text="SALVAR" type={EnumPrimaryButton.OUTLINED} />
         </div>
     </>
 );

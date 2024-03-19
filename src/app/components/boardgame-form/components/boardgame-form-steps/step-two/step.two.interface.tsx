@@ -1,7 +1,7 @@
 import {ICard} from "../../../../../../interfaces/card.interface";
 
-
 export interface IBoardGameFormStepTwo extends ICard {
+    isLoading: boolean,
     writeGameName: string,
     handleWriteGameName: (writeGameName: string) => void,
     chooseGameOptions: string,
@@ -9,6 +9,6 @@ export interface IBoardGameFormStepTwo extends ICard {
     writeGamePrice: string,
     handleWriteGamePrice: (writeGamePrice: string) => void,
     handleCloseForm: () => void,
-    handleNextStep: () => void,
+    handleSaveGameInDB: () => void,
     handleReturnPreviousStep: () => void,
 };

@@ -18,7 +18,8 @@ export const Alert = ({ message, type, visibility }: IAlert) => {
                 pauseOnHover={false}
                 theme="colored"
                 transition={Bounce}
+                className="z-50"
             />
-            }
+        }
     </>
 };
