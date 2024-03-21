@@ -1,22 +1,10 @@
 export interface IBoardGameForm {
-    boardgameId: string,
     option: string,
-    image: string,
-    imageName: string,
-    gameName: string,
-    gamePrice: string,
-    isLoading: boolean,
     visibility: boolean,
 
-    handleBoardgameId: (id: string) => void,
-    handleBoardgameName: (name: string) => void,
     handleBoardgameOption: (option: string) => void,
-    handleBoardgamePrice: (price: string) => void,
-
     handleVisibility: (visibility: boolean) => void,
-
-    handleGenerateCard: () => void,
-    handleSaveGameInDB: () => void,
+    handleSaveGame: () => void,
 };
 
 export enum EnumBoardGameFormSteps {

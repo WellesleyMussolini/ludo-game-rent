@@ -2,6 +2,6 @@ export interface IBoardGameFormStepSaveId {
     isLoading: boolean,
     writeGameId: string,
     handleCloseForm: () => void,
-    handleOnChangeId: (writeGameId: string) => void,
+    handleOnChangeFields: (field: string, event: React.ChangeEvent<HTMLInputElement>) => void,
     handleNextStep: () => void,
 };

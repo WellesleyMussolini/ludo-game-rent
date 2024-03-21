@@ -1,14 +1,14 @@
-import {ICard} from "../../../../../../interfaces/card.interface";
+import { ICard } from "@/interfaces/card.interface";
 
 export interface IBoardGameFormStepSaveGame extends ICard {
     isLoading: boolean,
     writeGameName: string,
-    handleWriteGameName: (writeGameName: string) => void,
+    boardgameImage: string,
     chooseGameOptions: string,
     handleChooseGameOptions: (chooseGameOptions: string) => void,
     writeGamePrice: string,
-    handleWriteGamePrice: (writeGamePrice: string) => void,
     handleCloseForm: () => void,
-    handleSaveGameInDB: () => void,
+    handleSaveGame: () => void,
     handleReturnPreviousStep: () => void,
+    handleOnChangeFields: (field: string, event: React.ChangeEvent<HTMLInputElement>) => void,
 };
