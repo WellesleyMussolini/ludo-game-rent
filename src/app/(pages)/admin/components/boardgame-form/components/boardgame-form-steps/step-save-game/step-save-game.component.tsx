@@ -7,7 +7,7 @@ import { PrimaryInput } from "@/app/components/primary-input/primary-input.compo
 import { EnumPrimaryInputStyle, EnumPrimaryInputType } from "@/app/components/primary-input/primary-input.interface";
 import { BoardGameDropdown } from "../../dropdown/dropdown.component";
 import { EnumPrimaryButton } from "@/app/components/primary-button/primary-button.interface";
-import { boardGameOptions } from "../../../data/options.data";
+import { boardgameStatus } from "../../../data/boardgame-status.data";
 import { PrimaryButton } from "@/app/components/primary-button/primary-button.component";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 
@@ -15,8 +15,7 @@ export const BoardGameFormStepSaveGame = ({
     isLoading,
     boardgameImage,
     writeGameName,
-    chooseGameOptions,
-    handleChooseGameOptions,
+    chooseGameStatus,
     writeGamePrice,
     handleCloseForm,
     handleSaveGame,
@@ -51,9 +50,9 @@ export const BoardGameFormStepSaveGame = ({
             </div>
             <div className={`flex justify-start items-start gap-3 flex-col w-full px-11 `}>
                 <p className="text-gray-400">SITUAÇÃO</p>
-                <BoardGameDropdown options={boardGameOptions} boardGameSituation={chooseGameOptions} 
-                handleBoardGameSituation={handleChooseGameOptions} 
-                />
+                <BoardGameDropdown status={boardgameStatus} boardgameStatus={chooseGameStatus} 
+    handleOnChangeFields={(field, value) => handleOnChangeFields(field, value)}
+    />
             </div>
             <div className="w-full px-10">
                 <PrimaryButton isLoading={isLoading} handleClick={handleSaveGame} text="SALVAR" type={EnumPrimaryButton.OUTLINED} />

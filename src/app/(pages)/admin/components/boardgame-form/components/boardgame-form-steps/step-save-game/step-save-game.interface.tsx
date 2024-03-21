@@ -4,11 +4,10 @@ export interface IBoardGameFormStepSaveGame extends ICard {
     isLoading: boolean,
     writeGameName: string,
     boardgameImage: string,
-    chooseGameOptions: string,
-    handleChooseGameOptions: (chooseGameOptions: string) => void,
+    chooseGameStatus: string,
     writeGamePrice: string,
     handleCloseForm: () => void,
     handleSaveGame: () => void,
     handleReturnPreviousStep: () => void,
-    handleOnChangeFields: (field: string, event: React.ChangeEvent<HTMLInputElement>) => void,
+    handleOnChangeFields: (field: string, event: React.ChangeEvent<HTMLInputElement> | string) => void,
 };

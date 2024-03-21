@@ -1,10 +1,6 @@
 export interface IBoardGameForm {
-    option: string,
     visibility: boolean,
-
-    handleBoardgameOption: (option: string) => void,
-    handleVisibility: (visibility: boolean) => void,
-    handleSaveGame: () => void,
+    handleVisibility: (visibility: boolean) => void
 };
 
 export enum EnumBoardGameFormSteps {
