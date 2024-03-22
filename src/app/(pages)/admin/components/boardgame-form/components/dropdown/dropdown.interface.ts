@@ -1,5 +1,5 @@
 export interface IBoardGameDropdown { 
-    status: Array<string>, 
+    statusList: Array<string>, 
     boardgameStatus: string, 
     handleOnChangeFields: (field: string, value: string) => void,
 };

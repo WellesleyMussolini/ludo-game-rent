@@ -8,11 +8,11 @@ datasource db {
 }
 
 model boardgame {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  image     String
-  situation String
-  price     String
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  image  String
+  status String
+  price  String
 }
 
 // user & account  

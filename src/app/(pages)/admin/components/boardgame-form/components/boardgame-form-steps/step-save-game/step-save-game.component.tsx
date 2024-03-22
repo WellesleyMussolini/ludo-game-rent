@@ -13,10 +13,7 @@ import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 
 export const BoardGameFormStepSaveGame = ({
     isLoading,
-    boardgameImage,
-    writeGameName,
-    chooseGameStatus,
-    writeGamePrice,
+    boardgameData,
     handleCloseForm,
     handleSaveGame,
     handleReturnPreviousStep,
@@ -29,30 +26,31 @@ export const BoardGameFormStepSaveGame = ({
             <div className="relative z-10 h-56 w-56">
                 <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 z-10"></div>
                 <Image
-                    src={boardgameImage}
-                    alt={writeGameName}
+                    src={boardgameData["image"]}
+                    alt={boardgameData["name"]}
                     layout='fill'
                     objectFit='cover'
                     className="w-full h-full bg-center object-cover overflow-hidden select-none touch-none"
                 />
             </div>
             <div className="w-full px-10">
-                <PrimaryInput  text="Nome" placeholder={"Digite o nome do jogo"} 
+                <PrimaryInput text="Nome" placeholder={"Digite o nome do jogo"}
                     handleOnChange={(event) => handleOnChangeFields("name", event)}
                     style={EnumPrimaryInputStyle.PRIMARY}
-                    value={writeGameName}
+                    value={boardgameData["name"]}
                     type={EnumPrimaryInputType.TEXT} />
             </div>
             <div className="w-full px-10">
-                <PrimaryInput handleOnChange={(event) => handleOnChangeFields("price", event)} text="Preço" placeholder={"Digite o preço do jogo"} value={writeGamePrice} 
-                style={EnumPrimaryInputStyle.PRIMARY}
-                type={EnumPrimaryInputType.NUMBER} />
+                <PrimaryInput handleOnChange={(event) => handleOnChangeFields("price", event)} text="Preço" placeholder={"Digite o preço do jogo"}
+                    value={boardgameData["price"]}
+                    style={EnumPrimaryInputStyle.PRIMARY}
+                    type={EnumPrimaryInputType.NUMBER} />
             </div>
             <div className={`flex justify-start items-start gap-3 flex-col w-full px-11 `}>
                 <p className="text-gray-400">SITUAÇÃO</p>
-                <BoardGameDropdown status={boardgameStatus} boardgameStatus={chooseGameStatus} 
-    handleOnChangeFields={(field, value) => handleOnChangeFields(field, value)}
-    />
+                <BoardGameDropdown statusList={boardgameStatus} boardgameStatus={boardgameData["status"]}
+                    handleOnChangeFields={(field, value) => handleOnChangeFields(field, value)}
+                />
             </div>
             <div className="w-full px-10">
                 <PrimaryButton isLoading={isLoading} handleClick={handleSaveGame} text="SALVAR" type={EnumPrimaryButton.OUTLINED} />

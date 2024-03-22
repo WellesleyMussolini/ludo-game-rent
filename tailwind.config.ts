@@ -34,6 +34,10 @@ const config: Config = {
         cardName: "2px 2px 2px rgba(0,0,0,.1)",
         cardShadow: "0 0 1rem rgba(0,0,0,.15)!important"
       },
+      dropShadow: {
+        '3xl': '0 35px 35px rgba(0, 0, 0, 0.25)',
+        '4xl': '0 45px 65px rgba(0, 0, 0, 0.15)',
+      },
     },
     colors: {
       primary: "#1cb36e",

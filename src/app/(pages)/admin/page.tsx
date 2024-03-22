@@ -4,8 +4,6 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { PrimaryButton } from "@/app/components/primary-button/primary-button.component";
 import { EnumPrimaryButton } from "@/app/components/primary-button/primary-button.interface";
-import { iGameApiData } from "./interfaces/game-api-data.interface";
-import { handleInputChange } from "./utils/handle-input-change";
 import { BoardGameForm } from "./components/boardgame-form/boardgame-form.component";
 
 

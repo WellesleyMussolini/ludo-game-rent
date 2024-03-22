@@ -6,6 +6,6 @@ export const handleSaveBoardGame = async (boardgame: IBoardGame, gameApiData: iG
     ...boardgame,
     name: gameApiData.name,
     image: gameApiData.image,
-    situation: gameApiData.situation,
+    status: gameApiData.status,
     price: gameApiData.price
 });

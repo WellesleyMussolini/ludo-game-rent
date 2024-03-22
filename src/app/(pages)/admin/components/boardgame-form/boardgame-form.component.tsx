@@ -6,12 +6,11 @@ import { BoardGameFormStepSaveId } from "./components/boardgame-form-steps/step-
 import { BoardGameFormStepSaveGame } from "./components/boardgame-form-steps/step-save-game/step-save-game.component";
 import { toast } from "react-toastify";
 import { iGameApiData } from "../../interfaces/game-api-data.interface";
-import { isInputFieldEmpty } from "../../utils/is-input-field-empty";
-import xmlJs from 'xml-js';
 import { IBoardGame } from "@/interfaces/boardgame.interface";
 import { handleSaveBoardGame } from "../../utils/handle-save-game";
+import { generatePreviewBoardgame } from "../../services/generate-preview-boardgame";
 
-export const BoardGameForm = ({ visibility, handleVisibility }: IBoardGameForm) => { // UTILIZAR O INTERFACE NA PASTA INTERFACES AQUI
+export const BoardGameForm = ({ visibility, handleVisibility }: IBoardGameForm) => { 
     const [gameApiData, setGameApiData] = React.useState<iGameApiData>({
         id: "",
         image: "",
@@ -28,31 +27,10 @@ export const BoardGameForm = ({ visibility, handleVisibility }: IBoardGameForm) 
         status: "Disponível",
     });
 
-    React.useEffect(() => { console.log(gameApiData) }, [gameApiData])
+    React.useEffect(() => { console.log(gameApiData) }, [gameApiData]);
     const [animation, setAnimation] = React.useState<EnumBoardGameFormAnimation>(EnumBoardGameFormAnimation.ANIMATION_JUMP_IN);
     const [step, setStep] = React.useState<EnumBoardGameFormSteps>(EnumBoardGameFormSteps.SEARCH_ID_STEP);
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-    const generatePreviewBoardgame = async (id: string) => {
-        const response = await fetch(`https://thingproxy.freeboard.io/fetch/https://boardgamegeek.com/xmlapi/boardgame/${id}`);
-        if (!response.ok) throw new Error('Network response was not ok');
-        const xmlText = await response.text();
-        const jsonData = JSON.parse(xmlJs.xml2json(xmlText, { compact: true, spaces: 2 }));
-
-        // checks if the game data is from an array or an object
-        const defaultName = Array.isArray(jsonData.boardgames.boardgame.name) ? jsonData.boardgames.boardgame.name[0]._text : jsonData.boardgames.boardgame.name._text;
-
-        // access the image inside of the API
-        const { _text } = jsonData.boardgames.boardgame.image;
-
-        setGameApiData({
-            id,
-            image: _text,
-            name: defaultName,
-            price: isInputFieldEmpty("price", "30", gameApiData),
-            status: isInputFieldEmpty("status", "Disponível", gameApiData),
-        });
-    };
 
     const handleCloseForm = () => {
         setAnimation(EnumBoardGameFormAnimation.ANIMATION_JUMP_OUT);
@@ -72,15 +50,13 @@ export const BoardGameForm = ({ visibility, handleVisibility }: IBoardGameForm) 
             setGameApiData((prevState) => ({ ...prevState, [field]: event.target.value }));
     };
 
-
-
     const stepsObjectBoardGameForm: { [key: string]: React.ReactNode } = {
         [EnumBoardGameFormSteps.SEARCH_ID_STEP]: <BoardGameFormStepSaveId
             handleCloseForm={handleCloseForm}
             handleNextStep={async () => {
                 setIsLoading(true);
                 try {
-                    await generatePreviewBoardgame(gameApiData.id)
+                    await generatePreviewBoardgame(gameApiData.id, setGameApiData)
                     setStep(EnumBoardGameFormSteps.SAVE_GAME_FORM_STEP);
                 } catch (error) {
                     toast.error("JOGO NÃO ENCONTRADO");
@@ -97,7 +73,6 @@ export const BoardGameForm = ({ visibility, handleVisibility }: IBoardGameForm) 
             isLoading={isLoading}
             boardgameImage={gameApiData.image}
             boardgameName={gameApiData.name}
-            chooseGameStatus={gameApiData.status}
             handleCloseForm={handleCloseForm}
             handleReturnPreviousStep={() => {
                 setStep(EnumBoardGameFormSteps.SEARCH_ID_STEP);
@@ -114,9 +89,8 @@ export const BoardGameForm = ({ visibility, handleVisibility }: IBoardGameForm) 
                 };
                 setIsLoading(false);
             }}
-            writeGameName={gameApiData.name}
             handleOnChangeFields={handleOnChangeFields}
-            writeGamePrice={gameApiData.price}
+            boardgameData={gameApiData}
         />
     };
     return <>

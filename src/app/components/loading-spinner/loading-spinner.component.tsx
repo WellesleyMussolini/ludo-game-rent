@@ -7,5 +7,3 @@ export const LoadingSpinner = ({ size }: { size: number | string }) => (
         <span className="sr-only">Loading...</span>
     </div>
 );
-
-// ENUM DE SMALL MEDIUM AND LARGE

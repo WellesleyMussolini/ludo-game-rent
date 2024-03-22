@@ -3,11 +3,11 @@ import React from "react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { IBoardGameDropdown } from "./dropdown.interface";
 
-export const BoardGameDropdown = ({ status, boardgameStatus, handleOnChangeFields }: IBoardGameDropdown) => {
+export const BoardGameDropdown = ({ statusList, boardgameStatus, handleOnChangeFields }: IBoardGameDropdown) => {
     const [isDropdownOpen, setIsDropdownOpen] = React.useState<boolean>(false);
 
     const dropdownContent = React.useMemo(() => {
-        return status.map((chosenStatus, index) => (
+        return statusList.map((chosenStatus, index) => (
             <li key={index}
                 className="select-none w-full flex items-center gap-2 px-4 cursor-pointer duration-200 hover:bg-primary hover:rounded hover:text-white py-2"
                 onDragStart={(event) => event.preventDefault()}
@@ -18,7 +18,7 @@ export const BoardGameDropdown = ({ status, boardgameStatus, handleOnChangeField
                 <p className="text-base font-medium">{chosenStatus}</p>
             </li>
         ));
-    }, [status, handleOnChangeFields]);
+    }, [statusList, handleOnChangeFields]);
 
     return (
         <div className="relative flex items-center flex-col gap-2 z-50 text-gray-500">
