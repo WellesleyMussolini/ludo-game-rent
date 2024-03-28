@@ -11,17 +11,23 @@ export const generatePreviewBoardgame = async (
     const xmlText = await response.text();
     const jsonData = JSON.parse(xmlJs.xml2json(xmlText, { compact: true, spaces: 2 }));
 
-    // checks if the game data is from an array or an object
-    const defaultName = Array.isArray(jsonData.boardgames.boardgame.name) ? jsonData.boardgames.boardgame.name[0]._text : jsonData.boardgames.boardgame.name._text;
-
-    // access the image inside of the API
-    const { _text } = jsonData.boardgames.boardgame.image;
-
+    const apiObjectAccess = (key: string) => {
+        const data = jsonData.boardgames.boardgame[key];
+        return Array.isArray(data) ? data[0]._text : data._text;
+    };
+    
     handleGameApiData({
         id,
-        image: _text,
-        name: defaultName,
+        image: apiObjectAccess("image"),
+        name: apiObjectAccess("name"),
         price: "40",
         status: "Disponível",
+        ageToPlay: apiObjectAccess("age"),
+        playTime: apiObjectAccess("playingtime"),
+        playersToPlay: {
+            minimum: apiObjectAccess("minplayers"),
+            maximum: apiObjectAccess("maxplayers"),
+        },
+        description: apiObjectAccess("description"),
     });
 };

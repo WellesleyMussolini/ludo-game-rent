@@ -8,11 +8,23 @@ datasource db {
 }
 
 model boardgame {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  name   String
-  image  String
-  status String
-  price  String
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  image           String
+  status          String
+  price           String
+  ageToPlay       String
+  description     String
+  playTime        String
+  playersToPlayId String        @db.ObjectId
+  playersToPlay   playersToPlay @relation(fields: [playersToPlayId], references: [id])
+}
+
+model playersToPlay {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  minimum   String
+  maximum   String
+  boardgame boardgame[]
 }
 
 // user & account  

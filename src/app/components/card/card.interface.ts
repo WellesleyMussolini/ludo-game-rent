@@ -1,3 +1,5 @@
+import { IBoardGame } from "@/interfaces/boardgame.interface";
+
 export enum EnumCardStatus {
     AVAILABLE = "Disponível",
     RESERVED = "Reservado",
@@ -8,16 +10,8 @@ export enum EnumCardStatus {
     RENT="Alugado",
 };
 
-export interface ICard {
-    name: string,
-    image: string,
-    price: string,
-    status: string,
-
+export interface ICard extends IBoardGame {
     isEditing?: boolean,
-    isLoading?: boolean,
-    
-    handleEditGame?: () => void,
-    handleDeleteGame?: () => void,
+    isLoading?: boolean,    
     handleRentGame?: () => void,
 };

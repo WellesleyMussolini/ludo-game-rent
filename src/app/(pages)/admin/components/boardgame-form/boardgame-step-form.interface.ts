@@ -1,4 +1,4 @@
-export interface IBoardGameForm {
+export interface IBoardGameStepForm {
     visibility: boolean,
     handleVisibility: (visibility: boolean) => void
 };

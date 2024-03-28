@@ -10,6 +10,7 @@ import { EnumPrimaryButton } from "@/app/components/primary-button/primary-butto
 import { boardgameStatus } from "../../../data/boardgame-status.data";
 import { PrimaryButton } from "@/app/components/primary-button/primary-button.component";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
+import { ImageComponent } from "@/app/components/image/image.component";
 
 export const BoardGameFormStepSaveGame = ({
     isLoading,
@@ -25,13 +26,7 @@ export const BoardGameFormStepSaveGame = ({
             <ActionButtonForm positionX="right-2" onClickIcon={handleCloseForm}>{<IoMdClose size={25} />}</ActionButtonForm>
             <div className="relative z-10 h-56 w-56">
                 <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 z-10"></div>
-                <Image
-                    src={boardgameData["image"]}
-                    alt={boardgameData["name"]}
-                    layout='fill'
-                    objectFit='cover'
-                    className="w-full h-full bg-center object-cover overflow-hidden select-none touch-none"
-                />
+                <ImageComponent image={boardgameData["image"]} alt={boardgameData["name"]} />
             </div>
             <div className="w-full px-10">
                 <PrimaryInput text="Nome" placeholder={"Digite o nome do jogo"}

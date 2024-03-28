@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react";
-import { EnumBoardGameFormAnimation, EnumBoardGameFormSteps, IBoardGameForm } from "./boardgame-form.interface";
+import { EnumBoardGameFormAnimation, EnumBoardGameFormSteps, IBoardGameStepForm } from "./boardgame-step-form.interface";
 import { BoardGameFormStepSaveId } from "./components/boardgame-form-steps/step-save-id/step-save-id.component";
 import { BoardGameFormStepSaveGame } from "./components/boardgame-form-steps/step-save-game/step-save-game.component";
 import { toast } from "react-toastify";
@@ -10,24 +10,39 @@ import { IBoardGame } from "@/interfaces/boardgame.interface";
 import { handleSaveBoardGame } from "../../utils/handle-save-game";
 import { generatePreviewBoardgame } from "../../services/generate-preview-boardgame";
 
-export const BoardGameForm = ({ visibility, handleVisibility }: IBoardGameForm) => { 
+export const BoardGameStepForm = ({ visibility, handleVisibility }: IBoardGameStepForm) => {
     const [gameApiData, setGameApiData] = React.useState<iGameApiData>({
         id: "",
         image: "",
         name: "",
         price: "",
+        ageToPlay: "",
+        description: "",
+        playTime: "",
+        playersToPlay: {
+            minimum: "",
+            maximum: "",
+        },
         status: "Disponível",
     });
 
-    // vai para o banco
+    // save to the database
     const [boardgame] = React.useState<IBoardGame>({
         image: "",
         name: "",
         price: "",
+        ageToPlay: "",
+        description: "",
+        playTime: "",
+        playersToPlay: {
+            minimum: "",
+            maximum: "",
+        },
         status: "Disponível",
     });
 
-    React.useEffect(() => { console.log(gameApiData) }, [gameApiData]);
+    React.useEffect(() => { console.log(gameApiData) }, [gameApiData])
+
     const [animation, setAnimation] = React.useState<EnumBoardGameFormAnimation>(EnumBoardGameFormAnimation.ANIMATION_JUMP_IN);
     const [step, setStep] = React.useState<EnumBoardGameFormSteps>(EnumBoardGameFormSteps.SEARCH_ID_STEP);
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -42,6 +57,46 @@ export const BoardGameForm = ({ visibility, handleVisibility }: IBoardGameForm) 
         }, 600);
     };
 
+    const handleNextStep = async () => {
+        setIsLoading(true);
+        try {
+            await generatePreviewBoardgame(gameApiData.id, setGameApiData);
+            setStep(EnumBoardGameFormSteps.SAVE_GAME_FORM_STEP);
+        } catch {
+            toast.error("JOGO NÃO ENCONTRADO");
+            setIsLoading(false);
+            return;
+        };
+        setIsLoading(false);
+        return;
+    };
+
+    const handleReturnPreviousStep = () => {
+        setStep(EnumBoardGameFormSteps.SEARCH_ID_STEP);
+        setGameApiData({ ...gameApiData, id: "" });
+        return;
+    };
+
+    const handleSaveGame = async () => {
+        setIsLoading(true);
+        try {
+            if (!gameApiData.name || !gameApiData.price) {
+                toast.warn("Não é possível salvar as informações com campos vazios!");
+                setIsLoading(false);
+                return;
+            } else {
+                await handleSaveBoardGame(boardgame, gameApiData);
+                handleCloseForm();
+                toast.success("O JOGO FOI SALVO COM SUCESSO!");
+                return;
+            }
+        } catch {
+            toast.error("NÃO FOI POSSÍVEL SALVAR O JOGO");
+        }
+        setIsLoading(false);
+        return;
+    };
+
     const handleOnChangeFields = (field: string, event: React.ChangeEvent<HTMLInputElement> | string) => {
         typeof event === "string"
             ?
@@ -53,17 +108,7 @@ export const BoardGameForm = ({ visibility, handleVisibility }: IBoardGameForm) 
     const stepsObjectBoardGameForm: { [key: string]: React.ReactNode } = {
         [EnumBoardGameFormSteps.SEARCH_ID_STEP]: <BoardGameFormStepSaveId
             handleCloseForm={handleCloseForm}
-            handleNextStep={async () => {
-                setIsLoading(true);
-                try {
-                    await generatePreviewBoardgame(gameApiData.id, setGameApiData)
-                    setStep(EnumBoardGameFormSteps.SAVE_GAME_FORM_STEP);
-                } catch (error) {
-                    toast.error("JOGO NÃO ENCONTRADO");
-                    console.log(error)
-                };
-                setIsLoading(false);
-            }}
+            handleNextStep={handleNextStep}
             writeGameId={gameApiData.id}
             handleOnChangeFields={handleOnChangeFields}
             isLoading={isLoading}
@@ -71,24 +116,9 @@ export const BoardGameForm = ({ visibility, handleVisibility }: IBoardGameForm) 
 
         [EnumBoardGameFormSteps.SAVE_GAME_FORM_STEP]: <BoardGameFormStepSaveGame
             isLoading={isLoading}
-            boardgameImage={gameApiData.image}
-            boardgameName={gameApiData.name}
             handleCloseForm={handleCloseForm}
-            handleReturnPreviousStep={() => {
-                setStep(EnumBoardGameFormSteps.SEARCH_ID_STEP);
-                setGameApiData({ ...gameApiData, id: "" });
-            }}
-            handleSaveGame={async () => {
-                setIsLoading(true);
-                try {
-                    await handleSaveBoardGame(boardgame, gameApiData);
-                    handleCloseForm();
-                    toast.success("O JOGO FOI SALVO COM SUCESSO!");
-                } catch {
-                    toast.error("NÃO FOI POSSÍVEL SALVAR O JOGO");
-                };
-                setIsLoading(false);
-            }}
+            handleReturnPreviousStep={handleReturnPreviousStep}
+            handleSaveGame={handleSaveGame}
             handleOnChangeFields={handleOnChangeFields}
             boardgameData={gameApiData}
         />
@@ -97,9 +127,13 @@ export const BoardGameForm = ({ visibility, handleVisibility }: IBoardGameForm) 
         {
             visibility &&
             <>
-                <div className="fixed top-0 opacity-30 h-screen w-screen bg-black z-40" onClick={handleCloseForm}></div>
-                <div className={`z-50 relative rounded flex flex-col items-center justify-center gap-6 bg-white py-10 h-auto w-96 duration-300 ${animation} text-gray-500`}>
-                    {stepsObjectBoardGameForm[step]}
+                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
+                    <div className="fixed top-0 opacity-30 h-screen w-screen bg-black z-40" onClick={handleCloseForm}></div>
+                    <div className={`z-50 rounded flex flex-col items-center justify-center gap-6 bg-white py-10 h-auto w-96 duration-300 ${animation} text-gray-500
+                    max-[450px]:w-[85.33%]
+                    `}>
+                        {stepsObjectBoardGameForm[step]}
+                    </div>
                 </div>
             </>
         }

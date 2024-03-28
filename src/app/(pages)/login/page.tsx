@@ -9,7 +9,5 @@ import { redirect } from "next/navigation";
 export default function Login() {
     const { status } = useSession();
     if (status === "authenticated") return redirect("/");
-    return <>
-        <div className="flex items-center justify-center w-full" style={{minHeight: "calc(100vh - 80px)"}}><Auth type={EnumAuth.LOGIN} /></div>
-    </>
+    return <div className="flex items-center justify-center w-full h-[calc(100vh-80px)]"><Auth type={EnumAuth.LOGIN} /></div>
 };
