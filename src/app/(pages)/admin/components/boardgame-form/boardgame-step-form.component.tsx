@@ -7,8 +7,8 @@ import { BoardGameFormStepSaveGame } from "./components/boardgame-form-steps/ste
 import { toast } from "react-toastify";
 import { iGameApiData } from "../../interfaces/game-api-data.interface";
 import { IBoardGame } from "@/interfaces/boardgame.interface";
-import { handleSaveBoardGame } from "../../utils/handle-save-game";
 import { generatePreviewBoardgame } from "../../services/generate-preview-boardgame";
+import { createBoardGame } from "@/app/services/create-boardgame";
 
 export const BoardGameStepForm = ({ visibility, handleVisibility }: IBoardGameStepForm) => {
     const [gameApiData, setGameApiData] = React.useState<iGameApiData>({
@@ -19,10 +19,8 @@ export const BoardGameStepForm = ({ visibility, handleVisibility }: IBoardGameSt
         ageToPlay: "",
         description: "",
         playTime: "",
-        playersToPlay: {
-            minimum: "",
-            maximum: "",
-        },
+        maximumPlayersToPlay: "",
+        minimumPlayersToPlay: "",
         status: "Disponível",
     });
 
@@ -34,14 +32,10 @@ export const BoardGameStepForm = ({ visibility, handleVisibility }: IBoardGameSt
         ageToPlay: "",
         description: "",
         playTime: "",
-        playersToPlay: {
-            minimum: "",
-            maximum: "",
-        },
+        maximumPlayersToPlay: "",
+        minimumPlayersToPlay: "",
         status: "Disponível",
     });
-
-    React.useEffect(() => { console.log(gameApiData) }, [gameApiData])
 
     const [animation, setAnimation] = React.useState<EnumBoardGameFormAnimation>(EnumBoardGameFormAnimation.ANIMATION_JUMP_IN);
     const [step, setStep] = React.useState<EnumBoardGameFormSteps>(EnumBoardGameFormSteps.SEARCH_ID_STEP);
@@ -85,7 +79,10 @@ export const BoardGameStepForm = ({ visibility, handleVisibility }: IBoardGameSt
                 setIsLoading(false);
                 return;
             } else {
-                await handleSaveBoardGame(boardgame, gameApiData);
+                await createBoardGame({
+                    ...boardgame,
+                    ...gameApiData,
+                })
                 handleCloseForm();
                 toast.success("O JOGO FOI SALVO COM SUCESSO!");
                 return;

@@ -1,5 +1,3 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import BoardGameCatalogue from "./components/boardgame-catalogue/boardgame-catalogue.component";
 
 export default async function Home() {

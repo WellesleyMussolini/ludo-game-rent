@@ -7,24 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model boardgame {
-  id              String        @id @default(auto()) @map("_id") @db.ObjectId
-  name            String
-  image           String
-  status          String
-  price           String
-  ageToPlay       String
-  description     String
-  playTime        String
-  playersToPlayId String        @db.ObjectId
-  playersToPlay   playersToPlay @relation(fields: [playersToPlayId], references: [id])
-}
-
-model playersToPlay {
-  id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  minimum   String
-  maximum   String
-  boardgame boardgame[]
+model boardgames {
+  id                   String @id @default(auto()) @map("_id") @db.ObjectId
+  name                 String
+  image                String
+  status               String
+  price                String
+  ageToPlay            String
+  description          String
+  playTime             String
+  minimumPlayersToPlay String
+  maximumPlayersToPlay String
 }
 
 // user & account  
@@ -90,12 +83,3 @@ enum Role {
   USER
   ADMIN
 }
-
-// age         Int
-// description String
-// playingtime Int
-// minplaytime Int
-// maxplaytime Int
-// minplayers  Int
-// maxplayers  Int
-// rental      Int

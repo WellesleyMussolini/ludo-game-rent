@@ -44,7 +44,7 @@ export const Header = ({ openSidebar, type, handleOpenSidebar }: IHeader) => {
             }
             {<UserProfile isOpen={isOpen} handleIsOpen={setIsOpen} />}
         </div>
-        <ul className={`${status === "authenticated" && "hidden"} sm:hidden flex gap-4 flex-col items-start overflow-hidden duration-500 ease-in-out ${isOpen ? "h-44" : "h-0"} w-full`}>
+        <ul className={`${status === "authenticated" && "hidden"} sm:hidden flex gap-4 flex-col items-start overflow-hidden duration-500 ease-in-out ${isOpen ? "h-28" : "h-0"} w-full`}>
             <li><p className="text-gray-500 hover:text-gray-600 text-base font-bold cursor-pointer">Como funciona</p></li>
             <li><PrimaryButton type={EnumPrimaryButton.SECONDARY} text="entrar" handleClick={() => router.push("/login")} /></li>
         </ul>

@@ -4,7 +4,7 @@ import Image from "next/image";
 import React from "react";
 
 export default async function BoardGame({ params: { id } }: { params: { id: string } }) {
-    const boardgameData = await prisma.boardgame.findUnique({ where: { id } });
+    const boardgameData = await prisma.boardgames.findUnique({ where: { id } });
     return (
         <div className="flex items-center justify-center h-[calc(100vh-80px)]">
             <div className="relative h-[32em] w-[32em]"><ImageComponent image={boardgameData?.image} alt={boardgameData?.name} /></div>
@@ -15,6 +15,3 @@ export default async function BoardGame({ params: { id } }: { params: { id: stri
         </div>
     );
 };
-
-// export default async function BoardGame({ params: { name } }: BoardgamePageProps) {
-// const boardgameData = await prisma.boardgame.findFirst({ where: { name: name } });
