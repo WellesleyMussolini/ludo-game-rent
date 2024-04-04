@@ -8,45 +8,39 @@ import { EnumPrimaryButton } from "@/app/components/primary-button/primary-butto
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Dropdown } from "@/app/components/dropdown/dropdown.component";
-import { UserProfile } from "./component/loading/user-profile.component";
-import { EnumHeader, IHeader } from "./header.interface";
+import { UserProfilePicture } from "./component/user-profile-picture/user-profile-picture.component";
+import { HeaderMenu } from "./component/header-menu/header-menu.component";
+import { useHeader } from "./hooks/use-header.hook";
 
-export const Header = ({ openSidebar, type, handleOpenSidebar }: IHeader) => {
-    const { status } = useSession();
-    const [isOpen, setIsOpen] = React.useState<boolean>(false);
-    const router = useRouter();
+export const Header = () => {
+    const { authenticated, isMenuOpen, setIsMenuOpen, isLoading } = useHeader();
     return <div className={`flex flex-col items-center justify-center px-6 bg-white w-full shadow-lg`}>
         <div className="flex items-center justify-between w-full h-20">
-            {
-                type === EnumHeader.DEFAULT ?
-                    <Link className="flex items-center h-full" href={"/"}>
-                        <Image src={Logo} alt="logo"
-                            className="w-32 cursor-pointer object-cover select-none"
-                            onDragStart={(event) => event.preventDefault()}
-                            priority={true}
-                            objectFit="cover"
-                        />
-                    </Link>
-                    :
-                    <div onClick={() => handleOpenSidebar && handleOpenSidebar(!openSidebar)} className={`flex text-gray-500`}><Hamburger size={26} toggled={openSidebar} /></div>
-            }
+            {/* LOGO */}
+            <Link className="flex items-center h-full" href={"/"}>
+                <Image src={Logo} alt="logo"
+                    className="w-32 cursor-pointer object-cover select-none"
+                    onDragStart={(event) => event.preventDefault()}
+                    priority={true}
+                    objectFit="cover"
+                />
+            </Link>
 
-            <div className={`${status === "authenticated" && "hidden"} sm:hidden flex text-gray-500`} onClick={() => setIsOpen(!isOpen)}><Hamburger size={26} /></div>
+            {/* MENU HAMBURGER FOR MOBILE VERSION */}
+            {!authenticated && <div className={`${isLoading && "hidden"} sm:hidden flex text-gray-500`} onClick={() => setIsMenuOpen(!isMenuOpen)}><Hamburger size={26} /></div>}
 
-            {
-                status === "unauthenticated" && (
-                    <ul className="hidden sm:flex sm:items-center sm:justify-center sm:gap-3">
-                        <li><p className="text-gray-500 duration-300 hover:text-gray-600 text-base font-bold cursor-pointer">Como funciona</p></li>
-                        <li><PrimaryButton type={EnumPrimaryButton.SECONDARY} text="entrar" handleClick={() => router.push("/login")} /></li>
-                    </ul>
-                )
-            }
-            {<UserProfile isOpen={isOpen} handleIsOpen={setIsOpen} />}
+            {/* LOGIN && ADDITIONAL INFORMATIONS FOR DESKTOP */}
+            <div className={`${isLoading && "hidden"} ${!authenticated && !isLoading && "sm:flex"} hidden`}>
+                <HeaderMenu authentication={authenticated} isMenuHamburgerOpen={isMenuOpen} />
+            </div>
+
+            {/* USER PROFILE PICTURE */}
+            <div className={`${!authenticated && !isLoading && "hidden"}`}>
+                <UserProfilePicture isOpen={isMenuOpen} handleIsOpen={setIsMenuOpen} />
+            </div>
         </div>
-        <ul className={`${status === "authenticated" && "hidden"} sm:hidden flex gap-4 flex-col items-start overflow-hidden duration-500 ease-in-out ${isOpen ? "h-28" : "h-0"} w-full`}>
-            <li><p className="text-gray-500 hover:text-gray-600 text-base font-bold cursor-pointer">Como funciona</p></li>
-            <li><PrimaryButton type={EnumPrimaryButton.SECONDARY} text="entrar" handleClick={() => router.push("/login")} /></li>
-        </ul>
-    </div>;
+        
+        {/* LOGIN && ADDITIONAL INFORMATIONS FOR MOBILE */}
+        <div className={`${authenticated && "hidden"} inline sm:hidden w-full overflow-hidden`}><HeaderMenu authentication={authenticated} isMenuHamburgerOpen={isMenuOpen} /></div>
+    </div >;
 };

@@ -4,7 +4,7 @@ import { PrimaryButton } from "../primary-button/primary-button.component";
 import { EnumPrimaryButton } from "../primary-button/primary-button.interface";
 import { ImageComponent } from "../image/image.component";
 import { CardStatus } from "./component/status/card-status.component";
-import { CardInfo } from "./component/info/card-info.component";
+import { CardInfo } from "./component/card-info/card-info.component";
 
 export const Card = ({ boardgame, handleRentGame }: ICard) => (
     <div className="bg-white max-[350px]:w-[77.14%] w-[270px] h-[316px] max-[340px]:h-[366px] rounded-md shadow-cardShadow">
