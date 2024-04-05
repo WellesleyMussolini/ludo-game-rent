@@ -2,15 +2,12 @@
 
 import { prisma } from "@/utils/lib/database/prisma";
 import { Card } from "../card/card.component";
-import Link from "next/link";
-import { formatString } from "./utils/format-string";
 import { IBoardGame } from "@/interfaces/boardgame.interface";
 
 interface IBoardGameData extends IBoardGame { id: string };
 
 export default async function BoardGameCatalogue() {
     const findAllBoardGames = await prisma.boardgames.findMany({ orderBy: { id: "desc" } });
-
     return (
         <ul className="grid justify-items-center gap-10
         grid-cols-4 
@@ -21,12 +18,10 @@ export default async function BoardGameCatalogue() {
         "
         >
             {findAllBoardGames.map((boardgame: IBoardGameData, index: number) => (
-                <Link
-                    href={`/boardgame/${formatString(boardgame.id)}`}
+                <Card
                     key={index}
-                    className="w-full flex justify-center">
-                    <Card boardgame={boardgame} />
-                </Link>
+                    boardgame={boardgame}
+                />
             ))}
         </ul>
     );

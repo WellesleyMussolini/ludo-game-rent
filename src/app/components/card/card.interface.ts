@@ -10,7 +10,6 @@ export enum EnumCardStatus {
     RENT="Alugado",
 };
 
-export interface ICard {
-    boardgame: IBoardGame,
-    handleRentGame?: () => void
-};
+interface IBoardGameData extends IBoardGame { id: string };
+
+export interface ICard { boardgame: IBoardGameData };
