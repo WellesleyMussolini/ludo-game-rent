@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Provider } from "@/utils/lib/provider/provider";
-import { Header } from "./layout/header/header.layout";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import React from "react";
 import { Loading } from "./components/loading/loading.component";
+import { ThemeProvider } from "@/context/context";
+import React from "react";
+import { HeaderWithShoppingCart } from "./layout/header-with-shopping-cart/header-with-shopping-cart.layout";
 
 const poppins = Poppins({ weight: "500", subsets: ["latin"] });
 
@@ -20,30 +21,33 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cartVisibility = false;
   return (
-      <html lang="en">
-        <body className={`${poppins.className} bg-background`}>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover={false}
-            theme="colored"
-            transition={Bounce}
-            className="z-50"
-          />
-          <Provider>
+    <html lang="en">
+      <body className={`${poppins.className} bg-background`}>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+          theme="colored"
+          transition={Bounce}
+          className="z-50"
+        />
+        <Provider>
+          <ThemeProvider>
             <React.Suspense fallback={<Loading />}>
-              <Header />
+              <HeaderWithShoppingCart />
               {children}
             </React.Suspense>
-          </Provider>
-        </body>
-      </html>
+          </ThemeProvider>
+        </Provider>
+      </body>
+    </html>
   );
 };

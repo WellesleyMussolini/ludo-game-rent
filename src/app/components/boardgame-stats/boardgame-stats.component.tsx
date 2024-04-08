@@ -16,10 +16,10 @@ export const BoardgameStats = ({ minimumPlayersToPlay, maximumPlayersToPlay, pla
         <ul className={styles}>
             {
                 boardgameMock.map((information, index) => (
-                    <div className="flex items-center gap-2" key={index}>
+                    <li className="flex items-center justify-center gap-2" key={index}>
                         <information.icon className="text-[#48a3e0]" style={{ fontSize: iconSize }} />
                         <p className="0.8em">{information.value} {information.text}</p>
-                    </div>
+                    </li>
                 ))
             }
         </ul>

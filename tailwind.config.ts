@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-const colors = require('tailwindcss/colors')
+const colors = require("tailwindcss/colors");
 
 const config: Config = {
   content: [
@@ -15,28 +15,26 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       keyframes: {
-        showAlert: {
-          "0%": { transform: "translateX(-100%)", opacity: "0" },
-          "40%": { transform: "translateX(10%)", opacity: "0.5" },
-          "80%, 100%": { transform: "translateX(20px)", opacity: "1" },
+        slideInFromRight: {
+          "0%": { transform: "translateX(100%)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
         },
-        hideAlert: {
-          "0%": { transform: "translateX(20px)" },
-          "40%": { transform: "translateX(10%)" },
-          "80%, 100%": { opacity: "0", PointerEvent: "none", transform: "translateX(-100%)" },
+        slideOutToRight: {
+          "0%": { transform: "translateX(0)", opacity: "1" },
+          "100%": { transform: "translateX(100%)", opacity: "0" },
         },
       },
       animation: {
-        showAlert: "showAlert 1s ease forwards",
-        hideAlert: "hideAlert 1s ease forwards",
+        slideInFromRight: 'slideInFromRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        slideOutToRight: 'slideOutToRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
       },
       boxShadow: {
         cardName: "2px 2px 2px rgba(0,0,0,.1)",
-        cardShadow: "0 0 1rem rgba(0,0,0,.15)!important"
+        cardShadow: "0 0 1rem rgba(0,0,0,.15)!important",
       },
       dropShadow: {
-        '3xl': '0 35px 35px rgba(0, 0, 0, 0.25)',
-        '4xl': '0 45px 65px rgba(0, 0, 0, 0.15)',
+        "3xl": "0 35px 35px rgba(0, 0, 0, 0.25)",
+        "4xl": "0 45px 65px rgba(0, 0, 0, 0.15)",
       },
     },
     colors: {
@@ -47,12 +45,11 @@ const config: Config = {
       black: "#000",
       background: "#EDF0F2",
       ...colors,
-    }
+    },
   },
-  plugins: [require('tailwindcss-animated')],
+  plugins: [require("tailwindcss-animated")],
 };
 
 export default config;
-
 
 // gray: "#00000080",

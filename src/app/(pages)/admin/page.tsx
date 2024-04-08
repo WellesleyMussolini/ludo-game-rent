@@ -9,9 +9,9 @@ import { redirect } from "next/navigation";
 
 
 export default async function Admin() {
-    const session = await getServerSession(authOptions);
-    console.log(session)
-    if(!session || !session.user) return redirect("/");
+    // const session = await getServerSession(authOptions);
+    // console.log(session)
+    // if(!session || !session.user) return redirect("/");
     return (
         <div className="flex flex-col items-center justify-center gap-10 h-calc(100vh-80px)">
             <CreateBoardgameStepsForm />

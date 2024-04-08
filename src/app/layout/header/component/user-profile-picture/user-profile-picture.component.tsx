@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { useUserProfilePicture } from "./hooks/use-user-profile-picture.hooks";
 import { Logout } from "./components/logout/logout.component";
 import { useSession } from "next-auth/react";
 import { FaCircleUser } from "react-icons/fa6";

@@ -24,10 +24,8 @@ export const BoardGameFormStepSaveGame = ({
         <>
             <ActionButtonForm positionX="left-2" onClickIcon={handleReturnPreviousStep}>{<MdKeyboardDoubleArrowLeft size={25} />}</ActionButtonForm>
             <ActionButtonForm positionX="right-2" onClickIcon={handleCloseForm}>{<IoMdClose size={25} />}</ActionButtonForm>
-            <div className="relative z-10 h-56 w-56">
-                <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 z-10"></div>
-                <ImageComponent image={boardgameData["image"]} alt={boardgameData["name"]} />
-            </div>
+            <ImageComponent enableOpacity height="224px" width="224px" image={boardgameData["image"]} alt={boardgameData["name"]} />
+
             <div className="w-full px-10">
                 <PrimaryInput text="Nome" placeholder={"Digite o nome do jogo"}
                     handleOnChange={(event) => handleOnChangeFields("name", event)}

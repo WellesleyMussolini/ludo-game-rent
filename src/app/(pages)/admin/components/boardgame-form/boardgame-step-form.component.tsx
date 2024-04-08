@@ -9,6 +9,7 @@ import { iGameApiData } from "../../interfaces/game-api-data.interface";
 import { IBoardGame } from "@/interfaces/boardgame.interface";
 import { generatePreviewBoardgame } from "../../services/generate-preview-boardgame";
 import { createBoardGame } from "@/app/services/create-boardgame";
+import { OverlayBackground } from "@/app/components/overlay-background/overlay-background.component";
 
 export const BoardGameStepForm = ({ visibility, handleVisibility }: IBoardGameStepForm) => {
     const [gameApiData, setGameApiData] = React.useState<iGameApiData>({
@@ -125,7 +126,7 @@ export const BoardGameStepForm = ({ visibility, handleVisibility }: IBoardGameSt
             visibility &&
             <>
                 <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
-                    <div className="fixed top-0 opacity-30 h-screen w-screen bg-black z-40" onClick={handleCloseForm}></div>
+                    <OverlayBackground onClick={handleCloseForm} />
                     <div className={`z-50 rounded flex flex-col items-center justify-center gap-6 bg-white py-10 h-auto w-96 duration-300 ${animation} text-gray-500
                     max-[450px]:w-[85.33%]
                     `}>

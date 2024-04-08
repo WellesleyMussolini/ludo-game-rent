@@ -11,8 +11,9 @@ import { useSession } from "next-auth/react";
 import { UserProfilePicture } from "./component/user-profile-picture/user-profile-picture.component";
 import { HeaderMenu } from "./component/header-menu/header-menu.component";
 import { useHeader } from "./hooks/use-header.hook";
+import { CartIcon } from "./component/cart-icon/cart-icon.component";
 
-export const Header = () => {
+export const Header = ({handleCartVisibility}: {handleCartVisibility: (cartVisibility: boolean) => void}) => {
     const { authenticated, isMenuOpen, setIsMenuOpen, isLoading } = useHeader();
     return <div className={`flex flex-col items-center justify-center px-6 bg-white w-full shadow-lg`}>
         <div className="flex items-center justify-between w-full h-20">
@@ -29,17 +30,22 @@ export const Header = () => {
             {/* MENU HAMBURGER FOR MOBILE VERSION */}
             {!authenticated && <div className={`${isLoading && "hidden"} sm:hidden flex text-gray-500`} onClick={() => setIsMenuOpen(!isMenuOpen)}><Hamburger size={26} /></div>}
 
-            {/* LOGIN && ADDITIONAL INFORMATIONS FOR DESKTOP */}
-            <div className={`${isLoading && "hidden"} ${!authenticated && !isLoading && "sm:flex"} hidden`}>
-                <HeaderMenu authentication={authenticated} isMenuHamburgerOpen={isMenuOpen} />
-            </div>
+            <div className="flex justify-center items-center flex-row gap-5">
+                {/* LOGIN && ADDITIONAL INFORMATIONS FOR DESKTOP */}
+                <div className={`${isLoading && "hidden"} ${!authenticated && !isLoading && "sm:flex"} hidden`}>
+                    <HeaderMenu authentication={authenticated} isMenuHamburgerOpen={isMenuOpen} />
+                </div>
 
-            {/* USER PROFILE PICTURE */}
-            <div className={`${!authenticated && !isLoading && "hidden"}`}>
-                <UserProfilePicture isOpen={isMenuOpen} handleIsOpen={setIsMenuOpen} />
+                {/* cart icon */}
+                {authenticated && !isLoading && <CartIcon onClick={() => handleCartVisibility(true)} />}
+
+                {/* USER PROFILE PICTURE */}
+                <div className={`${!authenticated && !isLoading && "hidden"}`}>
+                    <UserProfilePicture isOpen={isMenuOpen} handleIsOpen={setIsMenuOpen} />
+                </div>
             </div>
         </div>
-        
+
         {/* LOGIN && ADDITIONAL INFORMATIONS FOR MOBILE */}
         <div className={`${authenticated && "hidden"} inline sm:hidden w-full overflow-hidden`}><HeaderMenu authentication={authenticated} isMenuHamburgerOpen={isMenuOpen} /></div>
     </div >;
