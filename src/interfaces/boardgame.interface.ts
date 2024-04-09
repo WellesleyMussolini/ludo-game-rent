@@ -1,6 +1,7 @@
 // database interface
 
 export interface IBoardGame {
+  id?: string,
   name?: string,
   image?: string,
   price?: string,

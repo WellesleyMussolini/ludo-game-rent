@@ -14,6 +14,6 @@ export const HeaderMenu = ({ authentication, isMenuHamburgerOpen }: IHeaderMenu)
     ${isMenuHamburgerOpen ? "h-28" : "h-0"} 
     `}>
         <li><p className="text-gray-500 duration-300 hover:text-gray-600 text-base font-bold cursor-pointer">Como funciona</p></li>
-        <li><PrimaryButton type={EnumPrimaryButton.SECONDARY} text="entrar" handleClick={() => router.push("/login")} /></li>
+        <li><PrimaryButton type={EnumPrimaryButton.SECONDARY} text="entrar" onClick={() => router.push("/login")} /></li>
     </ul>
 };

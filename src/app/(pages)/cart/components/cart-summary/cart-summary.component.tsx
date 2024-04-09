@@ -11,21 +11,30 @@ export const CartSummary = ({ visibility, handleVisibility }: ICartSummary) => {
     const { cart } = useContext();
     const [animation, setAnimation] = React.useState<string>(EnumCartSummaryAnimation.ANIMATION_SLIDE_IN)
 
-    const handleCloseCart = () => {
+    const handleCloseCart = React.useCallback(() => {
         setAnimation(EnumCartSummaryAnimation.ANIMATION_SLIDE_OUT);
         setTimeout(() => {
             handleVisibility(false);
             setAnimation(EnumCartSummaryAnimation.ANIMATION_SLIDE_IN);
         }, 250);
-    };
+    }, [handleVisibility, setAnimation]);
+    
+
+    React.useEffect(() => {
+        if (!cart.length) {
+            setTimeout(() => {
+                handleCloseCart();
+            }, 500);
+        }
+    }, [cart, handleCloseCart]);
     return <>
         {
             visibility &&
-            <div className={`${!cart.length && "hidden"}`}>
+            <div>
                 <OverlayBackground onClick={handleCloseCart} />
                 <div className={`${animation} flex flex-col fixed top-0 right-0 bg-white h-screen w-72 z-50`}>
                     <div className="flex justify-center items-center flex-col relative h-1/2 max-h-4/5">
-                        <ul className="w-full max-w-md px-4 overflow-y-auto"><CartItem /></ul>
+                        <CartItem />
                     </div>
 
                     <div className="flex justify-center items-center flex-col gap-5">

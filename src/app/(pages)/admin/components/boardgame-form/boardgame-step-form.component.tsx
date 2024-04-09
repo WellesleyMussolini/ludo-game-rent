@@ -127,7 +127,7 @@ export const BoardGameStepForm = ({ visibility, handleVisibility }: IBoardGameSt
             <>
                 <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
                     <OverlayBackground onClick={handleCloseForm} />
-                    <div className={`z-50 rounded flex flex-col items-center justify-center gap-6 bg-white py-10 h-auto w-96 duration-300 ${animation} text-gray-500
+                    <div className={`text-base max-[400px]:text-sm px-10 z-50 rounded flex flex-col items-center justify-center gap-3 bg-white py-10 h-auto w-96 duration-300 ${animation} text-gray-500
                     max-[450px]:w-[85.33%]
                     `}>
                         {stepsObjectBoardGameForm[step]}

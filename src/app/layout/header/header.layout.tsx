@@ -13,7 +13,7 @@ import { HeaderMenu } from "./component/header-menu/header-menu.component";
 import { useHeader } from "./hooks/use-header.hook";
 import { CartIcon } from "./component/cart-icon/cart-icon.component";
 
-export const Header = ({handleCartVisibility}: {handleCartVisibility: (cartVisibility: boolean) => void}) => {
+export const Header = ({ handleCartVisibility }: { handleCartVisibility: (cartVisibility: boolean) => void }) => {
     const { authenticated, isMenuOpen, setIsMenuOpen, isLoading } = useHeader();
     return <div className={`flex flex-col items-center justify-center px-6 bg-white w-full shadow-lg`}>
         <div className="flex items-center justify-between w-full h-20">
@@ -27,10 +27,11 @@ export const Header = ({handleCartVisibility}: {handleCartVisibility: (cartVisib
                 />
             </Link>
 
-            {/* MENU HAMBURGER FOR MOBILE VERSION */}
-            {!authenticated && <div className={`${isLoading && "hidden"} sm:hidden flex text-gray-500`} onClick={() => setIsMenuOpen(!isMenuOpen)}><Hamburger size={26} /></div>}
 
             <div className="flex justify-center items-center flex-row gap-5">
+                {/* MENU HAMBURGER FOR MOBILE VERSION */}
+                {!authenticated && <div className={`${isLoading && "hidden"} sm:hidden flex text-gray-500`} onClick={() => setIsMenuOpen(!isMenuOpen)}><Hamburger size={26} /></div>}
+
                 {/* LOGIN && ADDITIONAL INFORMATIONS FOR DESKTOP */}
                 <div className={`${isLoading && "hidden"} ${!authenticated && !isLoading && "sm:flex"} hidden`}>
                     <HeaderMenu authentication={authenticated} isMenuHamburgerOpen={isMenuOpen} />

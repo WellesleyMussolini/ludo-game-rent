@@ -1,7 +1,7 @@
-import { CartSummary } from "./components/cart-summary/cart-summary.component"
+import { ErrorMessage } from "@/app/components/error-message/error-message.component";
 
 export default function Cart(){
     return <div className="flex justify-center items-center h-[calc(100vh-80px)]">
-        <CartSummary />
+        <ErrorMessage title="IN DEVELOPMENT" message="WE'RE STILL WORKING ON IT YET" />
     </div>
 };

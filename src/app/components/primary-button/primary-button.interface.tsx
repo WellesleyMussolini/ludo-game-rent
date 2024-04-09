@@ -15,5 +15,5 @@ export interface IPrimaryButton {
     disabled?: boolean | undefined,
     loadingSize?: number,
     isLoading?: boolean,
-    handleClick: (() => void) | undefined,
+    onClick: (() => void) | undefined,
 };

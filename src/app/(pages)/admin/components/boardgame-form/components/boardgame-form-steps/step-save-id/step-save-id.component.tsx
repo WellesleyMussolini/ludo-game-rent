@@ -20,7 +20,7 @@ export const BoardGameFormStepSaveId = ({
     <ActionButtonForm positionX="right-2" onClickIcon={handleCloseForm}>
       {<IoMdClose size={25} />}
     </ActionButtonForm>
-    <div className="w-full px-10">
+    <div className="w-full">
       <PrimaryInput
         style={EnumPrimaryInputStyle.SECONDARY}
         text="Insira o ID"
@@ -30,10 +30,10 @@ export const BoardGameFormStepSaveId = ({
         type={EnumPrimaryInputType.NUMBER}
       />
     </div>
-    <div className="w-full px-10">
+    <div className="w-full">
       <PrimaryButton
         isLoading={isLoading}
-        handleClick={handleNextStep}
+        onClick={handleNextStep}
         text="avançar"
         disabled={!writeGameId}
         type={

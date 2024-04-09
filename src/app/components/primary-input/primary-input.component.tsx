@@ -23,7 +23,8 @@ export const PrimaryInput = ({
                     onChange={handleOnChange}
                     type={type}
                     placeholder={placeholder}
-                    className={`${type === EnumPrimaryInputType.PASSWORD && "tracking-[.2em]"} text-base border-2 outline-none rounded-[0.5rem] w-full inline-flex items-center justify-center gap-3 py-2 px-3 bg-[#F9FAFB] focus:border-primary`}
+                    className={`${type === EnumPrimaryInputType.PASSWORD && "tracking-[.2em]"} 
+                    border-2 outline-none rounded-[0.5rem] w-full inline-flex items-center justify-center gap-3 py-2 px-3 bg-[#F9FAFB] focus:border-primary`}
                     value={value}
                 />
             </div>

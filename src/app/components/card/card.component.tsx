@@ -7,15 +7,13 @@ import { EnumPrimaryButton } from "../primary-button/primary-button.interface";
 import { ImageComponent } from "../image/image.component";
 import { CardStatus } from "./component/status/card-status.component";
 import { BoardgameStats } from "../boardgame-stats/boardgame-stats.component";
-import { useRouter } from "next/navigation";
-import { useContext } from "@/context/context";
+import { useCard } from "./hooks/use-card.hook";
 
 export const Card = ({ boardgame }: ICard) => {
-    const router = useRouter();
-    const { cart, setCart } = useContext();
+    const { redirectToBoardgameAbout, handleRentGame } = useCard(boardgame);
     return (
         <div
-            //onClick={() => router.push(`/boardgame/${boardgame.id}`)}
+            onClick={redirectToBoardgameAbout}
             className="bg-white 
             max-[350px]:w-[77.14%] w-[270px] h-[316px] max-[340px]:h-[366px] 
             rounded-md shadow-cardShadow z-10 cursor-pointer">
@@ -33,8 +31,7 @@ export const Card = ({ boardgame }: ICard) => {
                 <p className="absolute bottom-4 left-4 font-black text-xl z-20 text-white shadow-cardName drop-shadow-4xl break-words">
                     {boardgame.name}
                 </p>
-            </div>
-
+            </div> 
 
             {/* number of players to play & average time to beat the game */}
             <BoardgameStats
@@ -46,8 +43,11 @@ export const Card = ({ boardgame }: ICard) => {
                 flex 
                 flex-row 
                 max-[340px]:flex-col 
-                max-[340px]:gap-2 
-                px-4 mt-3 
+                max-[340px]:gap-2
+                max-[340px]:w-full
+                max-[340px]:items-start 
+                px-4 
+                mt-3 
                 justify-between 
                 text-[13px]"
             />
@@ -61,15 +61,7 @@ export const Card = ({ boardgame }: ICard) => {
                     <div className="w-full">
                         <PrimaryButton
                             loadingSize={20}
-                            handleClick={async (event: React.MouseEvent<HTMLElement>) => {
-                                // Check if the boardgame is already in the cart
-                                const isDuplicated = cart.some((item) => item.id === boardgame.id);
-
-                                // If it's not a duplicate, add it to the cart
-                                if (!isDuplicated) return await setCart([...cart, boardgame]);
-
-                                return event.stopPropagation();
-                            }}
+                            onClick={handleRentGame}
                             text="alugar"
                             type={EnumPrimaryButton.OUTLINED}
                         />

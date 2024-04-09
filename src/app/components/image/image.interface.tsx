@@ -5,4 +5,5 @@ export interface IImage {
     width?: string,
     height?: string,
     enableOpacity?: boolean,
+    layoutType?: string | "fill" 
 };

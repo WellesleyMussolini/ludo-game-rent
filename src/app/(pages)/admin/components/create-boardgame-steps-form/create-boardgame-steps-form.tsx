@@ -13,7 +13,7 @@ export const CreateBoardgameStepsForm = () => {
                 handleVisibility={setIsOpenBoardgameStepForms}
             />
         <div className="flex mt-10 items-start max-[350px]:w-[77.14%] w-[270px]">
-            <PrimaryButton text="abrir formulário" handleClick={() => setIsOpenBoardgameStepForms(true)} type={EnumPrimaryButton.PRIMARY} />
+            <PrimaryButton text="abrir formulário" onClick={() => setIsOpenBoardgameStepForms(true)} type={EnumPrimaryButton.PRIMARY} />
         </div>
     </div>
 };
