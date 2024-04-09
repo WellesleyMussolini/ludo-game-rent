@@ -4,8 +4,9 @@ import { Logout } from "./components/logout/logout.component";
 import { useSession } from "next-auth/react";
 import { FaCircleUser } from "react-icons/fa6";
 import { ImageComponent } from "@/app/components/image/image.component";
+import { IUserProfilePicture } from "./user-profile-picture.interface";
 
-export const UserProfilePicture = ({ isOpen, handleIsOpen }: { isOpen: boolean, handleIsOpen: (isOpen: boolean) => void }) => {
+export const UserProfilePicture = ({ isOpen, handleIsOpen }: IUserProfilePicture) => {
     const { data: session, status } = useSession();
     const isLoading = status === "loading";
     const authenticated = status === "authenticated";
