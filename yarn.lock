@@ -237,10 +237,24 @@
   resolved "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
 
-"@types/node@*", "@types/node@^20":
-  version "20.11.16"
-  resolved "https://registry.npmjs.org/@types/node/-/node-20.11.16.tgz"
-  integrity sha512-gKb0enTmRCzXSSUJDq6/sPcqrfCv2mkkG6Jt/clpn5eiCbKTY+SgZUxo+p8ZKMof5dCp9vHQUAB7wOUTod22wQ==
+"@types/next-auth@^3.15.0":
+  version "3.15.0"
+  resolved "https://registry.npmjs.org/@types/next-auth/-/next-auth-3.15.0.tgz"
+  integrity sha512-ZVfejlu81YiIRX1m0iKAfvZ3nK7K9EyZWhNARNKsFop8kNAgEvMnlKpTpwN59xkK2OhyWLagPuiDAVBYSO9jSA==
+  dependencies:
+    next-auth "*"
+
+"@types/next@^9.0.0":
+  version "9.0.0"
+  resolved "https://registry.npmjs.org/@types/next/-/next-9.0.0.tgz"
+  integrity sha512-gnBXM8rP1mnCgT1uE2z8SnpFTKRWReJlhbZLZkOLq/CH1ifvTNwjIVtXvsywTy1dwVklf+y/MB0Eh6FOa94yrg==
+  dependencies:
+    next "*"
+
+"@types/node@*", "@types/node@^20.12.5":
+  version "20.12.5"
+  resolved "https://registry.npmjs.org/@types/node/-/node-20.12.5.tgz"
+  integrity sha512-BD+BjQ9LS/D8ST9p5uqBxghlN+S42iuNxjsUGjeZobe/ciXzk2qb1B6IXc6AnRLS+yFJRpN2IPEHMzwspfDJNw==
   dependencies:
     undici-types "~5.26.4"
 
@@ -1925,7 +1939,7 @@ natural-compare@^1.4.0:
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-next-auth@^4, next-auth@^4.24.6:
+next-auth@*, next-auth@^4, next-auth@^4.24.6:
   version "4.24.6"
   resolved "https://registry.npmjs.org/next-auth/-/next-auth-4.24.6.tgz"
   integrity sha512-djQt3ZEaWEIxcsuh3HTW2uuzLfXMRjHH+ugAsichlQSbH4iA5MRcgMA2HvTNvsDTDLh44tyU72+/gWsxgTbAKg==
@@ -1940,7 +1954,7 @@ next-auth@^4, next-auth@^4.24.6:
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
 
-"next@^12.2.5 || ^13 || ^14", next@14.1.0:
+next@*, "next@^12.2.5 || ^13 || ^14", next@14.1.0:
   version "14.1.0"
   resolved "https://registry.npmjs.org/next/-/next-14.1.0.tgz"
   integrity sha512-wlzrsbfeSU48YQBjZhDzOwhWhGsy+uQycR8bHAOt1LY1bn3zZEcDyHQOEoN3aWzQ8LHCAJ1nqrWCc9XF2+O45Q==

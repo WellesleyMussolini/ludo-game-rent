@@ -3,24 +3,20 @@ import Image from "next/image";
 import Logo from "./assets/logo/logo.png";
 import { Twirl as Hamburger } from 'hamburger-react'
 import React from "react";
-import { PrimaryButton } from "@/app/components/primary-button/primary-button.component";
-import { EnumPrimaryButton } from "@/app/components/primary-button/primary-button.interface";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { UserProfilePicture } from "./component/user-profile-picture/user-profile-picture.component";
 import { HeaderMenu } from "./component/header-menu/header-menu.component";
-import { useHeader } from "./hooks/use-header.hook";
 import { CartIcon } from "./component/cart-icon/cart-icon.component";
+import { UserProfilePicture } from "./component/user-profile-picture/user-profile-picture.component";
+import { useHeader } from "./hooks/use-header.hook";
 
 export const Header = ({ handleCartVisibility }: { handleCartVisibility: (cartVisibility: boolean) => void }) => {
     const { authenticated, isMenuOpen, setIsMenuOpen, isLoading } = useHeader();
     return <div className={`flex flex-col items-center justify-center px-6 bg-white w-full shadow-lg`}>
         <div className="flex items-center justify-between w-full h-20">
             {/* LOGO */}
-            <Link className="flex items-center h-full" href={"/"}>
+            <Link className="flex items-center h-full w-32 max-[320px]:w-28" href={"/"}>
                 <Image src={Logo} alt="logo"
-                    className="w-32 cursor-pointer object-cover select-none"
+                    className="cursor-pointer object-cover select-none"
                     onDragStart={(event) => event.preventDefault()}
                     priority={true}
                     objectFit="cover"
@@ -41,7 +37,7 @@ export const Header = ({ handleCartVisibility }: { handleCartVisibility: (cartVi
                 {authenticated && !isLoading && <CartIcon onClick={() => handleCartVisibility(true)} />}
 
                 {/* USER PROFILE PICTURE */}
-                <div className={`${!authenticated && !isLoading && "hidden"}`}>
+                <div className={`${!authenticated && !isLoading && "hidden"} flex items-center justify-center`}>
                     <UserProfilePicture isOpen={isMenuOpen} handleIsOpen={setIsMenuOpen} />
                 </div>
             </div>
