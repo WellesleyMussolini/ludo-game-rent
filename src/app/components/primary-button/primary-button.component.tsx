@@ -5,7 +5,7 @@ import { LoadingSpinner } from "../loading-spinner/loading-spinner.component";
 import { EnumPrimaryButton, IPrimaryButton } from "./primary-button.interface";
 import { GoogleIcon } from "./google-icon.component";
 
-export const PrimaryButton = ({ isLoading, text, type, disabled, loadingSize, onClick }: IPrimaryButton) => <button
+export const PrimaryButton = ({ styles, isLoading, text, type, disabled, loadingSize, onClick }: IPrimaryButton) => <button
     type="button"
     className={`
     ${type === EnumPrimaryButton.PRIMARY && "text-white bg-primary hover:brightness-90 cursor-pointer uppercase"}
@@ -18,14 +18,14 @@ export const PrimaryButton = ({ isLoading, text, type, disabled, loadingSize, on
     flex
     items-center
     justify-center
-    duration-300 ease-in-out 
+    duration-300 
+    ease-in-out 
     font-black 
-    text-sm
     w-full 
     rounded  
     px-3 
     py-2
-    min-h-10
+    ${styles}
 `} disabled={disabled} onClick={onClick}>
     {type === EnumPrimaryButton.GOOGLE
         ?

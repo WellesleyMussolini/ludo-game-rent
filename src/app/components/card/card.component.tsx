@@ -1,73 +1,58 @@
 "use client"
 
-import { EnumCardStatus, ICard } from "./card.interface";
-import { formatCurrency } from "../../../utils/format-currency";
+import { ImageComponent } from "../image/image.component";
 import { PrimaryButton } from "../primary-button/primary-button.component";
 import { EnumPrimaryButton } from "../primary-button/primary-button.interface";
-import { ImageComponent } from "../image/image.component";
-import { CardStatus } from "./component/status/card-status.component";
-import { BoardgameStats } from "../boardgame-stats/boardgame-stats.component";
+import { ICard } from "./card.interface";
 import { useCard } from "./hooks/use-card.hook";
 
 export const Card = ({ boardgame }: ICard) => {
     const { redirectToBoardgameAbout, handleRentGame } = useCard(boardgame);
     return (
-        <div
-            onClick={redirectToBoardgameAbout}
-            className="bg-white 
-            max-[350px]:w-[77.14%] w-[270px] h-[316px] max-[340px]:h-[366px] 
-            rounded-md shadow-cardShadow z-10 cursor-pointer">
-
-            <div className="relative w-full bg-secondary h-[54%] z-10 leading-5 rounded-t-md">
-                <div className="absolute"><CardStatus status={boardgame.status} /></div>
+        <div className="
+        bg-white 
+        z-10 
+        cursor-pointer
+        rounded-md 
+        shadow-cardShadow 
+        hover:shadow-lg
+        transition-transform
+        transform-gpu
+        hover:scale-105 
+        duration-300
+        ease-in-out
+        w-[200px] 
+        h-[230px]
+        "
+            onClick={redirectToBoardgameAbout}>
+            <div className="relative h-[60%] rounded-md bg-primary">
                 <ImageComponent
                     enableOpacity
-                    height="100%"
+                    image={boardgame.image ?? ""}
+                    alt={boardgame.name ?? ""}
+                    layoutType="fill"
                     width="100%"
-                    image={boardgame.image}
-                    alt={boardgame.name}
+                    height="100%"
                     className="rounded-t-md"
                 />
-                <p className="absolute bottom-4 left-4 font-black text-xl z-20 text-white shadow-cardName drop-shadow-4xl break-words">
-                    {boardgame.name}
-                </p>
-            </div> 
+                <p className="
+            font-cardName
+            absolute 
+            bottom-4 
+            left-4 
+            font-black 
+            text-xl 
+            z-20 
+            text-white 
+            break-words
+            drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">{boardgame.name}</p>
+            </div>
 
-            {/* number of players to play & average time to beat the game */}
-            <BoardgameStats
-                maximumPlayersToPlay={boardgame.maximumPlayersToPlay}
-                minimumPlayersToPlay={boardgame.minimumPlayersToPlay}
-                playTime={boardgame.playTime}
-                iconSize="1.4em"
-                styles="text-gray-500 
-                flex 
-                flex-row 
-                max-[340px]:flex-col 
-                max-[340px]:gap-2
-                max-[340px]:w-full
-                max-[340px]:items-start 
-                px-4 
-                mt-3 
-                justify-between 
-                text-[13px]"
-            />
-
-            <div className="relative w-full flex flex-col gap-3 mt-3 items-start px-4 z-30">
-                {/* currency */}
-                <h5 className="text-2xl font-black text-primary tracking-[.08rem]">{formatCurrency(boardgame.price)}</h5>
-
-                {/* checks if the game status is available to be rent */}
-                {EnumCardStatus.AVAILABLE === boardgame.status && (
-                    <div className="w-full">
-                        <PrimaryButton
-                            loadingSize={20}
-                            onClick={handleRentGame}
-                            text="alugar"
-                            type={EnumPrimaryButton.OUTLINED}
-                        />
-                    </div>
-                )}
+            <div className="flex items-start mt-2 flex-col gap-1 px-5">
+                <p className="text-primary flex text-xl">R${boardgame.price}</p>
+                <PrimaryButton styles="text-[12px]" text="alugar" type={EnumPrimaryButton.OUTLINED} onClick={handleRentGame} />
             </div>
         </div>
+
     );
 };

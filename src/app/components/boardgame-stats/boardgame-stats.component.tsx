@@ -2,16 +2,14 @@ import { BsHourglassSplit } from "react-icons/bs";
 import { MdGroups } from "react-icons/md";
 import { IBoardgameStats } from "./boardgame-stats.interface";
 import { FaBaby } from "react-icons/fa";
-import { IBoardGame } from "@/interfaces/boardgame.interface";
 import React from "react";
 
-export const BoardgameStats = ({ minimumPlayersToPlay, maximumPlayersToPlay, playTime, ageToPlay, iconSize, styles }: IBoardgameStats) => {
+export const BoardgameStats = ({ boardgame, iconSize, styles }: IBoardgameStats) => {
     const boardgameMock = [
-        { icon: MdGroups, text: "jogadores", value: `${minimumPlayersToPlay}-${maximumPlayersToPlay}` },
-        { icon: BsHourglassSplit, text: "minutos", value: playTime },
-        ageToPlay && { icon: FaBaby, text: "anos", value: ageToPlay } // Only include if ageToPlay is provided
-    ].filter(Boolean); // Filter out falsy values (null, undefined, etc.)
-
+        { icon: MdGroups, text: "jogadores", value: `${boardgame.minimumPlayersToPlay}-${boardgame.maximumPlayersToPlay}` },
+        { icon: BsHourglassSplit, text: "minutos", value: boardgame.playTime },
+        { icon: FaBaby, text: "anos", value: boardgame.ageToPlay }
+    ];
     return (
         <ul className={styles}>
             {

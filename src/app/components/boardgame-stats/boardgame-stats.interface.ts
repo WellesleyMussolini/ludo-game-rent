@@ -1,8 +1,7 @@
+import { IBoardGame } from "@/interfaces/boardgame.interface";
+
 export interface IBoardgameStats {
-    minimumPlayersToPlay: string,
-    maximumPlayersToPlay: string,
-    playTime: string,
+    boardgame: IBoardGame,
     iconSize?: string, 
-    ageToPlay?: string,
     styles: string,
 };

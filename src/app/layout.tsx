@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Provider } from "@/utils/lib/provider/provider";
-import { Bounce, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Loading } from "./components/loading/loading.component";
 import { ThemeProvider } from "@/context/context";
 import React from "react";
-import { HeaderWithShoppingCart } from "./layout/header-with-shopping-cart/header-with-shopping-cart.layout";
+import { LayoutWrapper } from "./layout/layout-wrapper/layout-wrapper.layout";
 
-const poppins = Poppins({ weight: "500", subsets: ["latin"] });
+const font = Roboto({ weight: "500", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,28 +19,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cartVisibility = false;
   return (
     <html lang="en">
-      <body className={`${poppins.className} bg-background`}>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover={false}
-          theme="colored"
-          transition={Bounce}
-          className="z-50"
-        />
+      <body className={`${font.className} bg-background`}>
         <Provider>
           <ThemeProvider>
             <React.Suspense fallback={<Loading />}>
-              <HeaderWithShoppingCart />
+              <LayoutWrapper />
               {children}
             </React.Suspense>
           </ThemeProvider>

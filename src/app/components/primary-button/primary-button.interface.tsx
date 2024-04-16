@@ -10,10 +10,11 @@ export enum EnumPrimaryButton {
 };
 
 export interface IPrimaryButton {
+    styles?: string,
     text: string | ReactNode,
     type: EnumPrimaryButton,
     disabled?: boolean | undefined,
     loadingSize?: number,
     isLoading?: boolean,
-    onClick: (() => void) | undefined,
+    onClick: (() => void) | ((event: React.MouseEvent<HTMLElement>) => void), 
 };

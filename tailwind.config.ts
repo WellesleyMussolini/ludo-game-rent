@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        cardName: ["Poppins", "sans-serif"],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -21,12 +24,15 @@ const config: Config = {
         },
         slideOutToRight: {
           "0%": { transform: "translateX(0)", opacity: "1" },
+          "80%": {opacity: "0.5"},
           "100%": { transform: "translateX(100%)", opacity: "0" },
         },
       },
       animation: {
-        slideInFromRight: 'slideInFromRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-        slideOutToRight: 'slideOutToRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        slideInFromRight:
+          "slideInFromRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        slideOutToRight:
+          "slideOutToRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
       },
       boxShadow: {
         cardName: "2px 2px 2px rgba(0,0,0,.1)",

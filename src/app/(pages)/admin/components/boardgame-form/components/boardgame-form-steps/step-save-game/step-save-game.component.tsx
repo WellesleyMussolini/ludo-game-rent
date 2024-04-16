@@ -27,7 +27,7 @@ export const BoardGameFormStepSaveGame = ({
 
             {/* game picture */}
             <div className="flex items-start justify-start w-1/2 ">
-                    <ImageComponent enableOpacity height="100%" width="100%" image={boardgameData["image"]} alt={boardgameData["name"]} />
+                    <ImageComponent enableOpacity height="100%" width="100%" image={boardgameData["image"]?? ""} alt={boardgameData["name"]?? ""} />
             </div>
 
             {/* game's name */}
@@ -50,7 +50,7 @@ export const BoardGameFormStepSaveGame = ({
             {/* game's status */}
             <div className={`flex justify-start items-start gap-3 flex-col w-full mb-4`}>
                 <p className="text-gray-400">SITUAÇÃO</p>
-                <BoardGameDropdown statusList={boardgameStatus} boardgameStatus={boardgameData["status"]}
+                <BoardGameDropdown statusList={boardgameStatus} boardgameStatus={boardgameData["status"]?? ""}
                     handleOnChangeFields={(field, value) => handleOnChangeFields(field, value)}
                 />
             </div>
