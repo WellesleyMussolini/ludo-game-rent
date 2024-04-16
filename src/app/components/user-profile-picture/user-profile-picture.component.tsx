@@ -9,10 +9,10 @@ export const UserProfilePicture = () => {
     return (
         <>
             {isLoading || !authenticated ? (
-                <FaCircleUser className="text-gray-400 animate-pulse h-[45px] w-[45px]" />
+                <FaCircleUser className="text-gray-400 animate-pulse h-[40px] w-[40px]" />
             ) : (
                 <div className="flex flex-col justify-center items-center cursor-pointer">
-                    <ImageComponent image={session?.user?.image ?? ""} alt={session?.user?.name ?? ""} className="rounded-full" width="45px" />
+                    <ImageComponent image={session?.user?.image ?? ""} alt={session?.user?.name ?? ""} className="rounded-full" width="40px" />
                 </div>
             )}
         </>
