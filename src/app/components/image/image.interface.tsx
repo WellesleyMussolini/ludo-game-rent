@@ -1,5 +1,7 @@
+import { StaticImageData } from "next/image";
+
 export interface IImage {
-    image: string,
+    image: string | StaticImageData,
     alt: string,
     className?: string,
     width?: string,
