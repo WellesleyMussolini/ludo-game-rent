@@ -1,10 +1,12 @@
 import { useContext } from "@/context/context";
 import { IBoardGame } from "@/interfaces/boardgame.interface";
 
-export const useBoardgameId = (boardgame: IBoardGame) => {
+export const useBoardgameId = (boardgame: IBoardGame | null) => {
   const { cart, setCart } = useContext();
 
   const handleRentGame = async (event: React.MouseEvent<HTMLElement>) => {
+    if (!boardgame) return;
+
     // Check if the boardgame is already in the cart
     const isDuplicated = cart.some((item) => item.id === boardgame.id);
 

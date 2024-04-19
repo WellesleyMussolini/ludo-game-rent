@@ -44,8 +44,8 @@ export const CartSummary = ({ visibility, handleVisibility }: ICartSummary) => {
                             <p className="font-medium">R$400</p>
                         </div>
                         <div className="w-full flex flex-col gap-3 px-4">
-                            <PrimaryButton handleClick={() => { }} text="finalizar" type={EnumPrimaryButton.SECONDARY} />
-                            <PrimaryButton handleClick={() => { }} text="continuar navegando" type={EnumPrimaryButton.OUTLINED} />
+                            <PrimaryButton onClick={() => { }} text="finalizar" type={EnumPrimaryButton.SECONDARY} />
+                            <PrimaryButton onClick={() => { }} text="continuar navegando" type={EnumPrimaryButton.OUTLINED} />
                         </div>
                     </div>
                 </div>

@@ -18,5 +18,5 @@ export interface IPrimaryInput {
     id?: string,
     htmlFor?: string,
     value?: string,
-    handleOnChange: (event: React.ChangeEvent<HTMLInputElement>) => void, 
+    handleOnChange: (value: string) => void
 };

@@ -20,7 +20,7 @@ export const PrimaryInput = ({
             <div className="flex flex-col gap-2 w-full">
                 {text && <p>{text}</p>}
                 <input
-                    onChange={handleOnChange}
+                    onChange={(event) => handleOnChange(event.target.value)}
                     type={type}
                     placeholder={placeholder}
                     className={`${type === EnumPrimaryInputType.PASSWORD && "tracking-[.2em]"} 
@@ -35,7 +35,7 @@ export const PrimaryInput = ({
                     type={type}
                     required
                     className="w-full h-full peer border-b-2 outline-none border-opacity-45 border-primary focus:border-opacity-100"
-                    onChange={handleOnChange}
+                    onChange={(event) => handleOnChange(event.target.value)}
                     value={value}
                     onKeyDown={preventStringOnInputNumber}
                 />

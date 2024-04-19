@@ -10,7 +10,7 @@ import { signIn } from "next-auth/react";
 import { PrimaryInput } from "../primary-input/primary-input.component";
 import { EnumPrimaryInputStyle, EnumPrimaryInputType } from "../primary-input/primary-input.interface";
 
-export const Auth = ({ type, email, password, handleEmail, handlePassword }: IAuth) => {
+export const Auth = ({ type, email, password, handleEmail = () => { }, handlePassword = () => { } }: IAuth) => {
     const router = useRouter();
     return <>
         {
@@ -29,7 +29,7 @@ export const Auth = ({ type, email, password, handleEmail, handlePassword }: IAu
                 <div className={`w-full max-[425px]:py-0py-4`}>
                     {
                         <>
-                            <PrimaryButton text="Entrar com Google" type={EnumPrimaryButton.GOOGLE} handleClick={() => signIn("google", { callbackUrl: "/" })} />
+                            <PrimaryButton text="Entrar com Google" type={EnumPrimaryButton.GOOGLE} onClick={() => signIn("google", { callbackUrl: "/" })} />
 
                             <div className="flex items-center flex-row gap-3 h-20 w-full">
                                 <div className="opacity-100 bg-gray-200 w-full h-[0.125rem]"></div>
@@ -45,7 +45,7 @@ export const Auth = ({ type, email, password, handleEmail, handlePassword }: IAu
 
                         <div className="w-full"><CheckBox text="Continuar conectado" /></div>
 
-                        <PrimaryButton handleClick={() => router.push("/admin")} text={"entrar"} disabled={!email || !password} type={!email || !password ? EnumPrimaryButton.DISABLED : EnumPrimaryButton.OUTLINED} />
+                        <PrimaryButton onClick={() => router.push("/admin")} text={"entrar"} disabled={!email || !password} type={!email || !password ? EnumPrimaryButton.DISABLED : EnumPrimaryButton.OUTLINED} />
                     </div>
                 </div>
             </div>

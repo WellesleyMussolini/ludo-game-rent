@@ -1,15 +1,17 @@
+"use client"
+
+import React from "react";
 import { BsHourglassSplit } from "react-icons/bs";
 import { MdGroups } from "react-icons/md";
 import { IBoardgameStats } from "./boardgame-stats.interface";
 import { FaBaby } from "react-icons/fa";
-import React from "react";
 
 export const BoardgameStats = ({ boardgame, iconSize, styles }: IBoardgameStats) => {
-    const boardgameMock = [
+    const boardgameMock = boardgame ? [
         { icon: MdGroups, text: "jogadores", value: `${boardgame.minimumPlayersToPlay}-${boardgame.maximumPlayersToPlay}` },
         { icon: BsHourglassSplit, text: "minutos", value: boardgame.playTime },
         { icon: FaBaby, text: "anos", value: boardgame.ageToPlay }
-    ];
+    ] : [];
     return (
         <ul className={styles}>
             {
