@@ -1,11 +1,17 @@
 "use client"
 
 import Sidebar from "../sidebar/sidebar.layout"
-import { Header } from "../header/header.layout";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { LogoutModal } from "@/app/components/modal/logout/logout-modal.component";
+import { signOut } from "next-auth/react";
+import React from "react";
 
 export const LayoutWrapper = () => {
+    const [userOptions, setUserOptions] = React.useState({
+        isLogoutModalOpen: false,
+        isUserOptionsOpen: false,
+    });
     return <>
         <ToastContainer
             position="top-right"
@@ -20,6 +26,12 @@ export const LayoutWrapper = () => {
             theme="colored"
             transition={Bounce}
             className="z-50"
+        />
+
+        <LogoutModal
+            handleLogout={signOut}
+            handleCloseModal={() => setUserOptions(prevState => ({ ...prevState, isLogoutModalOpen: false }))}
+            visibility={userOptions.isLogoutModalOpen}
         />
         {/* <Header /> */}
         <Sidebar />

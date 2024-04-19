@@ -50,6 +50,8 @@ const config: Config = {
       white: "#fff",
       black: "#000",
       background: "#EDF0F2",
+      error: "#f84b4b",
+      alert: "#ebb44f",
       ...colors,
     },
   },

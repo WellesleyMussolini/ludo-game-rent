@@ -4,11 +4,7 @@ import React from "react";
 import { useSidebar } from "../../hooks/use-sidebar.hook";
 import { UserProfilePicture } from "@/app/components/user-profile-picture/user-profile-picture.component";
 import { LoadingSpinner } from "@/app/components/loading-spinner/loading-spinner.component";
-import { sizeIcons } from "@/constants/size-icons";
-import { MoreVertical } from "lucide-react";
-import { signOut } from "next-auth/react";
 import { Logout } from "@/app/layout/sidebar/components/sidebar-account-menu/components/logout";
-
 
 export const SidebarAccountMenu = () => {
     const { expandedSidebar, session, authenticated, isLoading } = useSidebar();
@@ -23,9 +19,7 @@ export const SidebarAccountMenu = () => {
                     <h4 className="font-semibold text-gray-500 ">{session?.user?.name}</h4>
                     <span className="text-xs text-gray-500">{session?.user?.email}</span>
                 </div>
-                {authenticated && !isLoading && 
-                <Logout />
-                }
+                {authenticated && !isLoading && <Logout /> }
             </div>
         </div>
     );
