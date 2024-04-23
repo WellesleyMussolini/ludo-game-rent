@@ -18,6 +18,7 @@ export const SidebarItem = ({ item, expanded }: ISidebarItem) => {
         rounded-md
         cursor-pointer
         transition-colors
+        overflow-hidden
         group
         ${item.active ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800" : "hover:bg-indigo-50 text-gray-600"}
         ${!expanded && "group-hover:bg-indigo-50 group-hover:text-gray-600"}

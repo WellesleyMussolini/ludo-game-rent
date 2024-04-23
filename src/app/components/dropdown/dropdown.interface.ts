@@ -1,4 +1,5 @@
 export interface IDropdown {
-  isOpen: boolean;
-  content: React.ReactNode;
+  isOpen: boolean,
+  width?: string,
+  content: React.ReactNode,
 };

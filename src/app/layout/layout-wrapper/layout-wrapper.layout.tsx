@@ -6,12 +6,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { LogoutModal } from "@/app/components/modal/logout/logout-modal.component";
 import { signOut } from "next-auth/react";
 import React from "react";
+import { useContext } from "@/context/context";
 
 export const LayoutWrapper = () => {
-    const [userOptions, setUserOptions] = React.useState({
-        isLogoutModalOpen: false,
-        isUserOptionsOpen: false,
-    });
+    const {userOptions, setUserOptions} = useContext(); 
     return <>
         <ToastContainer
             position="top-right"
