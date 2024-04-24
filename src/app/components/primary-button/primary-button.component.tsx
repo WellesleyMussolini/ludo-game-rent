@@ -8,13 +8,15 @@ import { GoogleIcon } from "./google-icon.component";
 export const PrimaryButton = ({ styles, isLoading, text, type, disabled, loadingSize, onClick }: IPrimaryButton) => <button
     type="button"
     className={`
-    ${type === EnumPrimaryButton.PRIMARY && "text-white bg-primary hover:brightness-90 cursor-pointer uppercase"}
-    ${type === EnumPrimaryButton.SECONDARY && "text-white bg-secondary hover:brightness-90 cursor-pointer uppercase"}
-    ${type === EnumPrimaryButton.DELETE && "text-white bg-red-500 hover:brightness-90 cursor-pointer uppercase"}
-    ${type === EnumPrimaryButton.OUTLINED && "text-primary bg-white border-2 border-primary hover:bg-primary hover:text-white cursor-pointer uppercase"}
-    ${type === EnumPrimaryButton.DISABLED && "text-white border-2 bg-disabled cursor-not-allowed uppercase"}
+    ${type === EnumPrimaryButton.PRIMARY && "text-white bg-primary hover:brightness-90 cursor-pointer"}
+    ${type === EnumPrimaryButton.SECONDARY && "border border-slate-50 bg-slate-50 text-zinc-950 hover:text-zinc-950 hover:bg-slate-50"}
+    ${type === EnumPrimaryButton.ALERT && "border bg-[#ebb44f] text-white"}
+    ${type === EnumPrimaryButton.DELETE && "text-white bg-red-500 hover:brightness-90 cursor-pointer "}
+    ${type === EnumPrimaryButton.OUTLINED && "text-primary bg-white border-2 border-primary hover:bg-primary hover:text-white cursor-pointer "}
+    ${type === EnumPrimaryButton.DISABLED && "text-white border-2 bg-disabled cursor-not-allowed "}
     ${type === EnumPrimaryButton.GOOGLE && "bg-transparent hover:bg-gray-100 border rounded-[0.5rem] text-gray-500 font-medium py-3 px-6"}
     tracking-widest 
+    uppercase
     flex
     items-center
     justify-center

@@ -7,6 +7,7 @@ export enum EnumPrimaryButton {
     DISABLED="disabled",
     GOOGLE="google",
     DELETE="delete",
+    ALERT="alert",
 };
 
 export interface IPrimaryButton {
