@@ -5,37 +5,32 @@ import { Twirl as Hamburger } from 'hamburger-react'
 import React from "react";
 import Link from "next/link";
 import { useHeader } from "./hooks/use-header.hook";
-import { PrimaryButton } from "@/app/components/primary-button/primary-button.component";
-import { EnumPrimaryButton } from "@/app/components/primary-button/primary-button.interface";
-import { UserProfilePicture } from "@/app/components/user-profile-picture/user-profile-picture.component";
-import { CartIcon } from "./components/cart-icon/cart-icon.component";
-
-interface IHeader {
-    cartVisibility: boolean,
-    handleCartVisibility: (cartVisibility: boolean) => void,
-}
+import { ToggleSidebarMobileButton } from "./components/toggle-sidebar-mobile-button/toggle-sidebar-mobile-button.component";
+import { useSidebar } from "../sidebar/hooks/use-sidebar.hook";
+import { useContext } from "@/context/context";
 
 export const Header = () => {
-    const { authenticated, isCartOpen, setIsCartOpen, isLoading, router, expandedSidebar } = useHeader();
-
+    const { toggleSidebarVisibility } = useSidebar();
+    const { expandedSidebar } = useContext();
     return <div className={`
         fixed 
         top-0 
         flex 
         flex-row 
         items-center 
-        justify-center 
+        justify-between
+        sm:justify-center 
         w-full
-        duration-200
-${expandedSidebar ? "ml-[310px]" : "ml-[90px]"} 
-
+        transition-all
+        ${expandedSidebar ? "max-[400px]:hidden ml-[310px] sm:ml-[19em]" : "sm:ml-20"}
         z-20
-
         h-20
-
         bg-white 
         shadow-md 
+        px-8
     `}>
+        <ToggleSidebarMobileButton handleSidebarVisibility={toggleSidebarVisibility} />
+
         <Link className="flex items-center h-full w-28 max-[320px]:w-24" href={"/"}>
             <Image src={Logo} alt="logo"
                 className="cursor-pointer object-cover select-none"
@@ -44,9 +39,5 @@ ${expandedSidebar ? "ml-[310px]" : "ml-[90px]"}
                 objectFit="cover"
             />
         </Link>
-
-        <div>
-            <CartIcon iconSize="1.4em" onClick={() => setIsCartOpen(true)} />
-        </div>
     </div >;
 };

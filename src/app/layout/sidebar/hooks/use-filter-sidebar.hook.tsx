@@ -3,8 +3,11 @@ import { usePathname } from "next/navigation";
 import * as Fa from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
 import { MdDashboard, MdLogin } from "react-icons/md";
+import { useContext } from "@/context/context";
+import { IoMdCart } from "react-icons/io";
 
 export const useFilterSidebar = () => {
+    const {cart} = useContext();
     const pathName = usePathname();
     const sidebarData = [
         {
@@ -34,6 +37,13 @@ export const useFilterSidebar = () => {
             alert: false,
             active: pathName === "/admin",
             route: "/admin",
+        },
+        {
+            icon: <IoMdCart size={sizeIcons.small} />,
+            label: "Carrinho",
+            alert: cart.length !== 0,
+            active: pathName === "/cart",
+            route: "/cart",
         },
         {
             icon: <MdLogin size={sizeIcons.small} />,

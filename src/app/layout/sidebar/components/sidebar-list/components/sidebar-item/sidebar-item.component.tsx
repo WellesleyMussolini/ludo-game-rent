@@ -4,8 +4,8 @@ import { useSidebar } from "@/app/layout/sidebar/hooks/use-sidebar.hook";
 import { ISidebarItem } from "./interfaces/sidebar-item.interface";
 
 export const SidebarItem = ({ item, expanded }: ISidebarItem) => {
-  const { router } = useSidebar();
-  return <li onClick={() => router.push(item.route)}
+  const { handleSwitchRoute } = useSidebar();
+  return <li onClick={() => handleSwitchRoute(item.route)}
     className={`
         relative
         flex

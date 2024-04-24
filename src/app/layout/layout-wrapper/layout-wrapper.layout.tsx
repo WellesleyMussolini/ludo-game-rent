@@ -7,6 +7,7 @@ import { LogoutModal } from "@/app/components/modal/logout/logout-modal.componen
 import { signOut } from "next-auth/react";
 import React from "react";
 import { useContext } from "@/context/context";
+import { Header } from "../header/header.layout";
 
 export const LayoutWrapper = () => {
     const {userOptions, setUserOptions} = useContext(); 
@@ -31,7 +32,7 @@ export const LayoutWrapper = () => {
             handleCloseModal={() => setUserOptions(prevState => ({ ...prevState, isLogoutModalOpen: false }))}
             visibility={userOptions.isLogoutModalOpen}
         />
-        {/* <Header /> */}
+        <Header />
         <Sidebar />
     </>
 };

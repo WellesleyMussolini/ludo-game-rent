@@ -16,11 +16,15 @@ export const useSidebar = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-
   const authenticated = status === "authenticated";
   const isLoading = status === "loading";
 
   const toggleSidebarVisibility = () => setExpandedSidebar(!expandedSidebar);
+
+  const handleSwitchRoute = async(route: string) => {
+    await router.push(route);
+    setExpandedSidebar(false);
+  };
 
   React.useEffect(() => {
     setAnimation(
@@ -28,7 +32,7 @@ export const useSidebar = () => {
         ? EnumSidebarMobileVisibility.SIDEBAR_HIDDEN
         : EnumSidebarMobileVisibility.SIDEBAR_VISIBLE
     );
-  }, [expandedSidebar]);
+  }, [expandedSidebar, isMobile]);
   return {
     expandedSidebar,
     setExpandedSidebar,
@@ -39,5 +43,6 @@ export const useSidebar = () => {
     isMobile,
     animation,
     toggleSidebarVisibility,
+    handleSwitchRoute,
   };
 };
