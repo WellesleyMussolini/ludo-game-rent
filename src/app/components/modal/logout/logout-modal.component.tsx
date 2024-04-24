@@ -4,6 +4,7 @@ import { sizeIcons } from "@/constants/size-icons";
 import { GoAlertFill } from "react-icons/go";
 import { PrimaryButton } from "../../primary-button/primary-button.component";
 import { OverlayBackground } from "../../overlay-background/overlay-background.component";
+import { EnumPrimaryButton } from "../../primary-button/primary-button.interface";
 
 interface ILogoutModal {
     visibility: boolean,
@@ -18,7 +19,7 @@ export const LogoutModal = ({ visibility, handleCloseModal, handleLogout }: ILog
             <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50">
                 <OverlayBackground onClick={handleCloseModal} />
                 <div
-                    className="relative z-[60] bg-white gap-2 flex flex-col rounded-2xl border border-blue-100 bg-contrastBackground p-4 shadow-lg sm:p-6 lg:p-8 animate-jump-in animate-delay-[1ms]"
+                    className="relative max-[400px]:w-[80%] z-[60] bg-white gap-2 flex flex-col rounded-2xl border border-blue-100 bg-contrastBackground p-4 shadow-lg sm:p-6 lg:p-8 animate-jump-in animate-delay-[1ms]"
                     role="alert">
                     <div className="w-full flex items-center justify-center">
                         <GoAlertFill className="text-alert" size={sizeIcons.larger} />
@@ -28,12 +29,12 @@ export const LogoutModal = ({ visibility, handleCloseModal, handleLogout }: ILog
                         <PrimaryButton
                             text="Desconectar"
                             onClick={handleLogout}
-                            styles="bg-[#ebb44f] uppercase text-white"
+                            type={EnumPrimaryButton.ALERT}
                         />
                         <PrimaryButton
                             text="Cancelar"
                             onClick={handleCloseModal}
-                            styles="uppercase border border-slate-50 bg-slate-50 text-zinc-950 hover:text-zinc-950 hover:bg-slate-50"
+                            type={EnumPrimaryButton.SECONDARY}
                         />
                     </div>
                 </div>
