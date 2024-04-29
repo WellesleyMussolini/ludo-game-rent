@@ -44,5 +44,6 @@ export const useSidebar = () => {
     animation,
     toggleSidebarVisibility,
     handleSwitchRoute,
+
   };
 };
