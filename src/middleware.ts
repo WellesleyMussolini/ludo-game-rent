@@ -4,17 +4,17 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest) {
 
-    const token = await getToken({
-        req: request,
-    });
+    // const token = await getToken({
+    //     req: request,
+    // });
 
-    console.log("Retrieved Token in Middleware:", token);  // Debug: Log the retrieved token
+    // console.log("Retrieved Token in Middleware:", token);  // Debug: Log the retrieved token
 
-    if (token && token.isValid) {
-        return NextResponse.next();
-    }
+    // if (token && token.isValid) {
+    //     return NextResponse.next();
+    // }
 
-    return NextResponse.redirect(new URL("/", request.url));
+    // return NextResponse.redirect(new URL("/", request.url));
 }
 
 export const config = {
