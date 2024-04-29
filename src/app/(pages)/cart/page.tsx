@@ -1,7 +1,9 @@
-import { ErrorMessage } from "@/app/components/error-message/error-message.component";
+"use server"
 
-export default function Cart(){
-    return <div className="flex justify-center items-center h-[calc(100vh-80px)]">
-        <ErrorMessage title="IN DEVELOPMENT" message="WE'RE STILL WORKING ON IT YET" />
+import { CartSummary } from "./components/cart-summary/cart-summary.component";
+
+export default async function Cart(){
+    return <div className="flex flex-col justify-center items-center min-h-screen pt-20">
+        <CartSummary />
     </div>
 };
