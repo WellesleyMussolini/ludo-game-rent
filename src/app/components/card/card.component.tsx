@@ -1,13 +1,16 @@
 "use client"
 
+import { toast } from "react-toastify";
 import { ImageComponent } from "../image/image.component";
 import { PrimaryButton } from "../primary-button/primary-button.component";
 import { EnumPrimaryButton } from "../primary-button/primary-button.interface";
 import { ICard } from "./card.interface";
 import { useCard } from "./hooks/use-card.hook";
+import { useHandleRentGame } from "@/app/hooks/use-handle-rent-game.hook";
 
 export const Card = ({ boardgame }: ICard) => {
-    const { redirectToBoardgameAbout, handleRentGame } = useCard(boardgame);
+    const { redirectToBoardgameAbout} = useCard(boardgame);
+    const {handleRentGame} = useHandleRentGame(boardgame);
     return (
         <div className="
         bg-white 
@@ -50,7 +53,10 @@ export const Card = ({ boardgame }: ICard) => {
 
             <div className="flex items-start mt-2 flex-col gap-1 px-5">
                 <p className="text-primary flex text-xl">R${boardgame.price}</p>
-                <PrimaryButton styles="text-[12px]" text="alugar" type={EnumPrimaryButton.OUTLINED} onClick={handleRentGame} />
+                <PrimaryButton styles="text-[12px]" text="alugar" type={EnumPrimaryButton.OUTLINED} onClick={(event) => {
+                    event.stopPropagation(); // Prevents the user to switch page 
+                    handleRentGame(); // Call the handleRentGame function
+                }} />
             </div>
         </div>
 
