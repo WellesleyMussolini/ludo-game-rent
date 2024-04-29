@@ -25,6 +25,7 @@ export const useBoardgameStepForm = (handleVisibility: (visibility: boolean) => 
 
     // save to the database
     const [boardgame] = React.useState<IBoardGame>({
+        id: "",
         image: "",
         name: "",
         price: "",
