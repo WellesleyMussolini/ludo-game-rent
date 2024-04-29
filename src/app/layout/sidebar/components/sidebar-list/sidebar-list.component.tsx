@@ -14,7 +14,7 @@ export const SidebarList = () => {
     const sidebarFooterItem = sidebarData[sidebarData.length - 1]; // Get the last item as the footer
     return (
         <div className="flex flex-col h-full">
-            <ul className="flex-1 overflow-auto px-3 py-2">
+            <ul className="flex-1 px-3 py-2">
                 {sidebarData.slice(0, -1).map((sidebarItem, index) => (
                     <React.Fragment key={index}>
                         <SidebarItem item={sidebarItem} expanded={expandedSidebar} />
