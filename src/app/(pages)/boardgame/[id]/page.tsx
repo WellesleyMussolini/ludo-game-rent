@@ -9,7 +9,7 @@ import { ButtonRentGame } from "./components/button-rent-game/button-rent-game.c
 export default async function BoardGame({ params: { id } }: { params: { id: string } }) {
     const boardgameData = await prisma.boardgames.findUnique({ where: { id } });
     return (
-        <div className="flex items-center justify-center py-16 flex-col gap-4 min-h-[calc(100vh-80px)]">
+        <div className="flex items-center justify-center py-28 flex-col gap-4 min-h-screen">
             {/* boardgame image */}
             <ImageComponent layoutType="responsive" width="10em" image={boardgameData?.image?? ""} alt={boardgameData?.name?? ""} />
 
