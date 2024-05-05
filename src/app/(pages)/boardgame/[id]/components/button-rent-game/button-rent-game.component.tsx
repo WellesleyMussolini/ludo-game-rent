@@ -17,7 +17,7 @@ export const ButtonRentGame = ({ boardgame }: ButtonRentGameProps) => {
     }
     
     return (
-        <div className="w-96 mt-4 max-[450px]:w-[80%]">
+        <div className="w-96 mt-4 max-[450px]:w-[80%] ring-2 ring-white rounded-md">
             <PrimaryButton text="alugar" type={EnumPrimaryButton.PRIMARY} onClick={handleRentGame} />
         </div>
     );

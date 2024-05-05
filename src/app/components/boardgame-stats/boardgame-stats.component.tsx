@@ -17,8 +17,8 @@ export const BoardgameStats = ({ boardgame, iconSize, styles }: IBoardgameStats)
         <div className={styles}>
             {
                 boardgameMock.map((information, index) => (
-                    <span className="flex items-center gap-2" key={index}>
-                        <information.icon className="text-[#48a3e0]" style={{ fontSize: iconSize }} />
+                    <span className="flex text-white items-center gap-2" key={index}>
+                        <information.icon style={{ fontSize: iconSize }} />
                         <p className="0.8em">{information.value} {information.text}</p>
                     </span>
                 ))
