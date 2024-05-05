@@ -10,7 +10,7 @@ import { useContext } from "@/context/context";
 export const Header = () => {
   const { toggleSidebarVisibility } = useSidebar();
   const { expandedSidebar } = useContext();
-  const headerClasses = `fixed top-0 flex flex-row items-center justify-between sm:justify-center w-full transition-all
+  const headerClasses = `max-md:fixed top-0 flex items-center justify-between sm:justify-center w-full transition-all
     ${
       expandedSidebar ? "max-[400px]:ml-[310px]" : ""
     } z-20 h-20 bg-white shadow-md`;

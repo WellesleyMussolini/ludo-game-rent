@@ -12,10 +12,9 @@ export const SidebarAccountMenu = () => {
             w-full 
             flex 
             justify-center
-            ${expandedSidebar && "max-[400px]:justify-start max-[400px]:px-3"}
+            ${expandedSidebar && "max-[400px]:justify-start max-[400px]:p-3"}
             items-center 
             h-20
-            z-10
         `}>
             <div className={"flex justify-center items-center"}><UserProfilePicture /></div>
             <div className={`

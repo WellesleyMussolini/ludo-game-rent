@@ -3,7 +3,7 @@ import BoardGameCatalogue from "./components/boardgame-catalogue/boardgame-catal
 
 export default async function Home() {
   return (
-    <div className="flex max-md:justify-center lg:px-28 py-8">
+    <div className="flex max-md:justify-center lg:px-28">
       <BoardGameCatalogue />
     </div>
   );
