@@ -21,7 +21,6 @@ export default function Sidebar() {
             left-0
             h-screen
             bg-white
-            border-r
             shadow-md
             overflow-y-auto
             ${isMobile && animation}

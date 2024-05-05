@@ -1,6 +1,6 @@
-import "@/app/styles/Animations/animations.scss"
+import "@/app/styles/Animations/animations.scss";
 
-export const LoadingSpinner = ({ size }: { size: number | string }) => (
+export const LoadingSpinner = () => (
   <div role="status">
     <svg
       id="diceLoader"
@@ -8,7 +8,7 @@ export const LoadingSpinner = ({ size }: { size: number | string }) => (
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 133.85 155.44"
     >
-      <title>dice</title>
+      <title>Dado</title>
       <polygon
         className="breathe second"
         points="66.92 154.13 131.55 116.12 66.92 108.51 66.92 154.13"
@@ -19,11 +19,7 @@ export const LoadingSpinner = ({ size }: { size: number | string }) => (
           strokeWidth: "1.5px",
           fillRule: "evenodd",
         }}
-      >
-        <text x="75" y="130" fill="#fff" fontSize="12" textAnchor="middle">
-          Texto dentro do Polígono 1
-        </text>
-      </polygon>
+      />
       <polygon
         className="breathe second"
         points="66.92 154.13 66.92 108.51 2.3 116.12 66.92 154.13"
@@ -118,6 +114,6 @@ export const LoadingSpinner = ({ size }: { size: number | string }) => (
         }}
       />
     </svg>
-    <span className="sr-only">Loading...</span>
+    <span className="sr-only text-zinc-900 z-20">Carregando...</span>
   </div>
 );
