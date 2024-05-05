@@ -12,16 +12,19 @@ export const BoardgameStats = ({ boardgame, iconSize, styles }: IBoardgameStats)
         { icon: BsHourglassSplit, text: "minutos", value: boardgame.playTime },
         { icon: FaBaby, text: "anos", value: boardgame.ageToPlay }
     ] : [];
+    
     return (
-        <ul className={styles}>
+        <div className={styles}>
             {
                 boardgameMock.map((information, index) => (
-                    <li className="flex items-center justify-center gap-2" key={index}>
+                    <span className="flex items-center gap-2" key={index}>
                         <information.icon className="text-[#48a3e0]" style={{ fontSize: iconSize }} />
                         <p className="0.8em">{information.value} {information.text}</p>
-                    </li>
+                    </span>
                 ))
             }
-        </ul>
+        </div>
     );
 };
+
+//info dos cards
