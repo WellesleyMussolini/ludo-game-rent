@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Logo from "../../../images/logo.png";
+import Logo from "../../../../public/images/logo.png";
 import React from "react";
 import Link from "next/link";
 import { ToggleSidebarMobileButton } from "./components/toggle-sidebar-mobile-button/toggle-sidebar-mobile-button.component";

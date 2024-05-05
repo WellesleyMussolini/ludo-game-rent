@@ -2,7 +2,7 @@
 
 import { ChevronFirst, ChevronLast } from "lucide-react";
 import Image from "next/image"
-import Logo from "../../../../../images/logo.png";
+import Logo from "../../../../../../public/images/logo.png";
 import { IToggleSidebar } from "./interfaces/toggle-sidebar.interface";
 
 export const ToggleSidebar = ({ sidebarVisibility, handleSidebarVisibility }: IToggleSidebar) => (
