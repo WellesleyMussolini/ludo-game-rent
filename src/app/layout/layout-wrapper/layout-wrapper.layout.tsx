@@ -32,7 +32,7 @@ export const LayoutWrapper = () => {
             handleCloseModal={() => setUserOptions(prevState => ({ ...prevState, isLogoutModalOpen: false }))}
             visibility={userOptions.isLogoutModalOpen}
         />
-        <Header />
+        {/* <Header /> */}
         <Sidebar />
     </>
 };

@@ -11,7 +11,7 @@ export default async function BoardGameCatalogue() {
       orderBy: { id: "desc" },
     });
     return (
-      <div className="flex flex-col md:grid md:grid-cols-4 gap-10 pt-20">
+      <div className="flex flex-col md:grid md:grid-cols-6 gap-10 pt-28 pb-12 lg:py-12">
         {findAllBoardGames.map((boardgame: IBoardGame, index: number) => (
           <Card key={index} boardgame={boardgame} />
         ))}
