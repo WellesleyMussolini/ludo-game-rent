@@ -3,7 +3,6 @@
 import React from "react";
 import { useContext } from "@/context/context";
 import { useMediaQuery } from "@react-hook/media-query";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { EnumSidebarMobileVisibility } from "../interfaces/sidebar.enum";
 
@@ -13,11 +12,7 @@ export const useSidebar = () => {
     EnumSidebarMobileVisibility.SIDEBAR_VISIBLE
   );
   const isMobile = useMediaQuery("(max-width: 640px)");
-  const { data: session, status } = useSession();
   const router = useRouter();
-
-  const authenticated = status === "authenticated";
-  const isLoading = status === "loading";
 
   const toggleSidebarVisibility = () => setExpandedSidebar(!expandedSidebar);
 
@@ -34,16 +29,10 @@ export const useSidebar = () => {
     );
   }, [expandedSidebar, isMobile]);
   return {
-    expandedSidebar,
-    setExpandedSidebar,
-    session,
-    authenticated,
     router,
-    isLoading,
     isMobile,
     animation,
     toggleSidebarVisibility,
     handleSwitchRoute,
-
   };
 };
