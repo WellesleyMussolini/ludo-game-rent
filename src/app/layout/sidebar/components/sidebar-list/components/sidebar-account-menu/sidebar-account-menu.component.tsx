@@ -1,26 +1,39 @@
 "use client"
 
-import { MoreVertical } from "lucide-react";
-import { useSidebar } from "../../../../hooks/use-sidebar.hook";
-import { sizeIcons } from "@/constants/size-icons";
-import { signOut } from "next-auth/react";
+import React from "react";
 import { UserProfilePicture } from "@/app/components/user-profile-picture/user-profile-picture.component";
-import { LoadingSpinner } from "@/app/components/loading-spinner/loading-spinner.component";
+import { useContext } from "@/context/context";
+import { useUserSession } from "@/app/hooks/use-user-session.hook";
+import { Logout } from "./components/logout/logout.component";
 
 export const SidebarAccountMenu = () => {
-    const { expandedSidebar, session, authenticated, isLoading } = useSidebar();
+    const {expandedSidebar} = useContext();
+    const {session, isAuthenticated, isLoading} = useUserSession();
     return (
-        <div className="border-t w-full flex justify-center items-center h-20">
-            <div className="flex justify-center items-center">
-            <UserProfilePicture />
-            {isLoading && <div className={`transition-all overflow-hidden ${expandedSidebar ? "w-52 ml-5" : "w-0"}`}><LoadingSpinner size={25} /></div>}
-            </div>
-            <div className={`flex justify-between items-center overflow-hidden transition-all ${expandedSidebar ? "w-52 ml-3" : "w-0"}`}>
+        <div className={`
+            w-full 
+            flex 
+            justify-center
+            ${expandedSidebar && "max-[400px]:justify-start max-[400px]:px-3"}
+            items-center 
+            h-20
+            z-10
+        `}>
+            <div className={"flex justify-center items-center"}><UserProfilePicture /></div>
+            <div className={`
+                flex 
+                flex-row
+                items-center
+                justify-between
+                transition-all
+                overflow-hidden
+                ${expandedSidebar ? "max-[400px]:w-full w-48 ml-3" : "w-0"}
+            `}>
                 <div className="leading-4">
-                    <h4 className="font-semibold text-gray-500 ">{session?.user?.name}</h4>
+                    <h4 className="font-semibold text-gray-500 max-[280px]:text-xs">{session?.user?.name}</h4>
                     <span className="text-xs text-gray-500">{session?.user?.email}</span>
                 </div>
-                {authenticated && !isLoading && <MoreVertical size={sizeIcons.small} onClick={() => signOut()} />}
+                {isAuthenticated && !isLoading && <Logout />}
             </div>
         </div>
     );
