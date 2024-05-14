@@ -1,9 +1,6 @@
 ### Tarefas Pendentes
 
-- Colocar ícone e uma descrição para a aplicação.
-- Escolher fonte personalizada para a aplicação.
 - Verificar classes repetidas e passar para o globals.css
-- Tratar a responsividade do sidebar e do header.
 - Refatorar o arquivo Cartitem component.
 
 ### BUGS

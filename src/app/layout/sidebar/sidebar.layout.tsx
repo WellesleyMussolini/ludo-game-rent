@@ -22,7 +22,7 @@ export default function Sidebar() {
             h-screen
             bg-white
             shadow-md
-            overflow-y-auto
+            max-sm:overflow-y-auto
             ${isMobile && animation}
             ${isMobile ? EnumSidebarType.MOBILE : EnumSidebarType.DESKTOP}`}>
             <ToggleSidebar sidebarVisibility={expandedSidebar} handleSidebarVisibility={toggleSidebarVisibility} />

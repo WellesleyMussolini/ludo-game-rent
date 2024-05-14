@@ -5,11 +5,14 @@ import { FaUser } from "react-icons/fa6";
 import { MdDashboard, MdLogin } from "react-icons/md";
 import { useContext } from "@/context/context";
 import { IoMdCart } from "react-icons/io";
+import { useUserSession } from "@/app/hooks/use-user-session.hook";
 
 export const useFilterSidebar = () => {
-    const {cart} = useContext();
+    const { cart } = useContext();
+    const { isAuthenticated } = useUserSession();
     const pathName = usePathname();
-    const sidebarData = [
+    
+    let sidebarData = [
         {
             icon: <Fa.FaHome size={sizeIcons.small} />,
             label: "Home",
@@ -31,13 +34,19 @@ export const useFilterSidebar = () => {
             active: pathName === "/about",
             route: "/about",
         },
-        {
+    ];
+
+    if (isAuthenticated) {
+        sidebarData.push({
             icon: <MdDashboard size={sizeIcons.small} />,
             label: "Dashboard",
             alert: false,
             active: pathName === "/admin",
             route: "/admin",
-        },
+        });
+    }
+
+    sidebarData.push(
         {
             icon: <IoMdCart size={sizeIcons.small} />,
             label: "Carrinho",
@@ -52,9 +61,7 @@ export const useFilterSidebar = () => {
             active: pathName === "/login",
             route: "/login"
         },
-    ];
+    );
 
-    return {
-        sidebarData
-    };
+    return { sidebarData };
 };

@@ -5,9 +5,5 @@ export enum EnumAuth {
 };
 
 export interface IAuth {
-    type: EnumAuth,
-    email?: string,
-    password?: string,
-    handleEmail?: (email: string) => void,
-    handlePassword?: (password: string) => void,
+    type: EnumAuth
 }

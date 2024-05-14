@@ -13,21 +13,14 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    jwt: async ({ token, user, account }: any) => {
-      if (user) {
-        token.user = user;
-        token.isValid = true;
-      } else if (account && !token.isValid) {
-        token.isValid = false; // Ensure token validity is correctly set
-      }
-      return token;
-    },
-    session: async ({ session, token }: any) => {
-      if (token) {
-        session.user = token.user;
-        session.isValid = token.isValid;
-      }
-      return session;
+    session: async ({ session, user }: any) => {
+      const userAuth = {
+        ...session,
+        role: (session.user.role = user.role),
+        session: true,
+      };
+      console.log(userAuth);
+      return userAuth;
     },
   },
 };
