@@ -4,9 +4,11 @@ import { HiOutlineMenuAlt2 } from "react-icons/hi"
 
 export const ToggleSidebarMobileButton = ({ handleSidebarVisibility }: { handleSidebarVisibility: () => void }) => {
     const {expandedSidebar} = useContext();
+    
     return (
         <div onClick={handleSidebarVisibility}
             className={`
+            pl-3
             inline-flex 
             items-center 
             text-gray-500 

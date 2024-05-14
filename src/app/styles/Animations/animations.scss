@@ -1,0 +1,25 @@
+#diceLoader {
+  width: 186px;
+  height: 186px; 
+}
+
+.breathe { 
+  animation: breathe 5s infinite;
+}
+.first { animation-delay: .6s; }
+.second { animation-delay: 1.2s; }
+.third { animation-delay: 1.8s; }
+.fourth { animation-delay: 2.4s; }
+
+@keyframes breathe {
+  0%, 50% { 
+    transform: scale(1.0);
+    opacity: 1
+  }
+  20% {
+    opacity: .25;
+  }
+  33% { 
+    transform: scale(.5) translate(50%, 50%);
+  }
+}
