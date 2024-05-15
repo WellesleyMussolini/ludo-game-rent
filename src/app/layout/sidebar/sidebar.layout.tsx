@@ -6,9 +6,11 @@ import { SidebarList } from "./components/sidebar-list/sidebar-list.component";
 import { EnumSidebarType } from "./interfaces/sidebar.enum";
 import { useSidebar } from "./hooks/use-sidebar.hook";
 import { OverlayBackground } from "@/app/components/overlay-background/overlay-background.component";
+import { useContext } from "@/context/context";
 
 export default function Sidebar() {
-    const { expandedSidebar, isMobile, animation, toggleSidebarVisibility, setExpandedSidebar } = useSidebar();
+    const { isMobile, animation, toggleSidebarVisibility } = useSidebar();
+    const {expandedSidebar, setExpandedSidebar} = useContext();
     return <>
         {
             expandedSidebar &&
@@ -26,7 +28,6 @@ export default function Sidebar() {
             ${isMobile && animation}
             ${isMobile ? EnumSidebarType.MOBILE : EnumSidebarType.DESKTOP}`}>
             <ToggleSidebar sidebarVisibility={expandedSidebar} handleSidebarVisibility={toggleSidebarVisibility} />
-
             <SidebarList />
         </nav>
     </>
