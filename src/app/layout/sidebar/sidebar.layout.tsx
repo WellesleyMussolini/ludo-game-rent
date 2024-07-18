@@ -7,11 +7,14 @@ import { EnumSidebarType } from "./interfaces/sidebar.enum";
 import { useSidebar } from "./hooks/use-sidebar.hook";
 import { OverlayBackground } from "@/app/components/overlay-background/overlay-background.component";
 import { useContext } from "@/context/context";
+import { usePathname } from "next/navigation";
+import { isAdminPath } from "@/utils/is-admin-path";
 
 export default function Sidebar() {
     const { isMobile, animation, toggleSidebarVisibility } = useSidebar();
     const {expandedSidebar, setExpandedSidebar} = useContext();
-    return <>
+    const pathname = usePathname()
+    return <div className={`${isAdminPath(pathname) && "hidden"}`}>
         {
             expandedSidebar &&
             <OverlayBackground onClick={() => setExpandedSidebar(false)} />
@@ -30,5 +33,5 @@ export default function Sidebar() {
             <ToggleSidebar sidebarVisibility={expandedSidebar} handleSidebarVisibility={toggleSidebarVisibility} />
             <SidebarList />
         </nav>
-    </>
+    </div>
 };
