@@ -6,7 +6,6 @@ import { CreateBoardgameStepsForm } from "./components/create-boardgame-steps-fo
 import { redirect } from "next/navigation";
 import { authOptions } from "@/utils/auth-options";
 import { getServerSession } from "next-auth";
-import { getSession } from "next-auth/react";
 
 enum EnumCheckSessionRole {
     ADMIN = "ADMIN",
@@ -23,7 +22,7 @@ export default async function Admin() {
     }
 
     return <div className="flex flex-col items-center justify-center min-h-screen py-10">
-        {/* <CreateBoardgameStepsForm /> */}
-        {/* <BoardGameCatalogue /> */}
+        <CreateBoardgameStepsForm />
+        <BoardGameCatalogue />
     </div>
 };
