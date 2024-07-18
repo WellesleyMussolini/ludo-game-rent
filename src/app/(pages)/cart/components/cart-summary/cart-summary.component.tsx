@@ -1,9 +1,10 @@
 "use client";
+
+import React from "react";
 import { CartList } from "../cart-list/cart-list.component";
 import { useContext } from "@/context/context";
 import { ErrorMessage } from "@/app/components/error-message/error-message.component";
 import { calculateCartAmount } from "../../utils/calculate-cart-amount";
-import React from "react";
 import { PrimaryButton } from "@/app/components/primary-button/primary-button.component";
 import { EnumPrimaryButton } from "@/app/components/primary-button/primary-button.interface";
 
