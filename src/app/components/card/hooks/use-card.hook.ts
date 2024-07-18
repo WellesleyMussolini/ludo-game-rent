@@ -1,6 +1,6 @@
 "use client"
 
-import { IBoardGame } from "@/interfaces/boardgame.interface";
+import { IBoardGame } from "@/types/boardgame.interface";
 import { useRouter } from "next/navigation";
 
 export const useCard = (boardgame: IBoardGame) => {

@@ -2,7 +2,7 @@
 
 import { prisma } from "@/utils/lib/database/prisma";
 import { Card } from "../card/card.component";
-import { IBoardGame } from "@/interfaces/boardgame.interface";
+import { IBoardGame } from "@/types/boardgame.interface";
 import { ErrorMessage } from "../error-message/error-message.component";
 
 export default async function BoardGameCatalogue() {

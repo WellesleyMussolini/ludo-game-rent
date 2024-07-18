@@ -1,4 +1,4 @@
-import { IBoardGame } from "@/interfaces/boardgame.interface";
+import { IBoardGame } from "@/types/boardgame.interface";
 import { ResponseBoardGame } from "../types/board-games.types";
 
 class BoardGameMapper {

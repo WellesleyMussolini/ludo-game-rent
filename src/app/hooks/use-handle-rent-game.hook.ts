@@ -1,7 +1,7 @@
 "use client"
 
 import { useContext } from "@/context/context";
-import { IBoardGame } from "@/interfaces/boardgame.interface";
+import { IBoardGame } from "@/types/boardgame.interface";
 import { toast } from "react-toastify";
 
 export const useHandleRentGame = (boardgame: IBoardGame | null) => {

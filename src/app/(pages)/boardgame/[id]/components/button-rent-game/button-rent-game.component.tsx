@@ -3,7 +3,7 @@
 import { PrimaryButton } from "@/app/components/primary-button/primary-button.component"
 import { EnumPrimaryButton } from "@/app/components/primary-button/primary-button.interface"
 import { useHandleRentGame } from "@/app/hooks/use-handle-rent-game.hook";
-import { IBoardGame } from "@/interfaces/boardgame.interface";
+import { IBoardGame } from "@/types/boardgame.interface";
 
 interface ButtonRentGameProps {
     boardgame: IBoardGame | null;

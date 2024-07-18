@@ -1,4 +1,4 @@
-import { IBoardGame } from "@/interfaces/boardgame.interface";
+import { IBoardGame } from "@/types/boardgame.interface";
 
 export enum EnumCardStatus {
     AVAILABLE = "Disponível",

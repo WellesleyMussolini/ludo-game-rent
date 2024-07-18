@@ -5,7 +5,7 @@ import { useContext } from "@/context/context";
 import Image from "next/image";
 import { FaTrashAlt } from "react-icons/fa";
 import { sizeIcons } from "@/constants/size-icons";
-import { IBoardGame } from "@/interfaces/boardgame.interface";
+import { IBoardGame } from "@/types/boardgame.interface";
 import { removeCartItem } from "../../utils/remove-cart-item";
 
 export const CartList = () => {

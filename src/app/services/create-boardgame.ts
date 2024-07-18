@@ -1,6 +1,6 @@
 "use server";
 
-import { IBoardGame } from "@/interfaces/boardgame.interface";
+import { IBoardGame } from "@/types/boardgame.interface";
 import { prisma } from "@/utils/lib/database/prisma";
 
 export const createBoardGame = async (boardgame: IBoardGame) => {

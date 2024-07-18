@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import { IBoardGame } from '@/interfaces/boardgame.interface';
+import { IBoardGame } from '@/types/boardgame.interface';
 
 interface IUserOptions {
     isLogoutModalOpen: boolean;

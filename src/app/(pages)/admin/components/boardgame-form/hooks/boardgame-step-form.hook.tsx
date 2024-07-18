@@ -1,6 +1,6 @@
 import React from "react";
 import { iGameApiData } from "../../../interfaces/game-api-data.interface";
-import { IBoardGame } from "@/interfaces/boardgame.interface";
+import { IBoardGame } from "@/types/boardgame.interface";
 import { EnumBoardGameFormAnimation, EnumBoardGameFormSteps } from "../boardgame-step-form.interface";
 import { generatePreviewBoardgame } from "../../../services/generate-preview-boardgame";
 import { toast } from "react-toastify";

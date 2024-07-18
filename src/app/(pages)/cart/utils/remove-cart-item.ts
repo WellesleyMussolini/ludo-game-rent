@@ -1,4 +1,4 @@
-import { IBoardGame } from "@/interfaces/boardgame.interface";
+import { IBoardGame } from "@/types/boardgame.interface";
 
 export const removeCartItem = (cart: Array<IBoardGame>, setCart: React.Dispatch<React.SetStateAction<Array<IBoardGame>>>, id: string) => {
     if (id) {  // Ensure id is not undefined
