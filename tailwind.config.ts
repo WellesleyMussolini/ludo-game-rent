@@ -27,12 +27,19 @@ const config: Config = {
           "80%": {opacity: "0.5"},
           "100%": { transform: "translateX(100%)", opacity: "0" },
         },
+        loadingSpinner: {
+          "0%, 50%": { transform: "scale(1.0)", opacity: "1" },
+          "20%": { opacity: ".25" },
+          "33%": { transform: "scale(.5) translate(50%, 50%)" },
+        },
       },
       animation: {
         slideInFromRight:
           "slideInFromRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         slideOutToRight:
           "slideOutToRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+          loadingSpinner: 
+          "loadingSpinner 5s infinite",
       },
       boxShadow: {
         cardName: "2px 2px 2px rgba(0,0,0,.1)",
@@ -59,5 +66,3 @@ const config: Config = {
 };
 
 export default config;
-
-// gray: "#00000080",

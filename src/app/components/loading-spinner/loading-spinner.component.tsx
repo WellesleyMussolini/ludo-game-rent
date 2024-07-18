@@ -1,16 +1,15 @@
-import "@/app/styles/Animations/animations.scss";
-
 export const LoadingSpinner = () => (
   <div role="status">
     <svg
       id="diceLoader"
+      className="w-44 h-44"
       data-name="5"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 133.85 155.44"
     >
       <title>Dado</title>
       <polygon
-        className="breathe second"
+        className="animate-loadingSpinner animate-delay-[1.2s]"
         points="66.92 154.13 131.55 116.12 66.92 108.51 66.92 154.13"
         style={{
           fill: "#446075",
@@ -21,7 +20,7 @@ export const LoadingSpinner = () => (
         }}
       />
       <polygon
-        className="breathe second"
+        className="animate-loadingSpinner animate-delay-[1.2s]"
         points="66.92 154.13 66.92 108.51 2.3 116.12 66.92 154.13"
         style={{
           fill: "#40749b",
@@ -31,7 +30,7 @@ export const LoadingSpinner = () => (
         }}
       />
       <polygon
-        className="breathe third"
+        className="animate-loadingSpinner animate-delay-[1.8s]"
         points="2.3 116.12 36.51 55.3 2.3 40.09 2.3 116.12"
         style={{
           fill: "#255780",
@@ -42,7 +41,7 @@ export const LoadingSpinner = () => (
         }}
       />
       <polygon
-        className="breathe third"
+        className="animate-loadingSpinner animate-delay-[1.8s]"
         points="36.51 55.3 2.3 40.09 66.92 2.08 36.51 55.3"
         style={{
           fill: "#40749b",
@@ -52,7 +51,7 @@ export const LoadingSpinner = () => (
         }}
       />
       <polygon
-        className="breathe fourth"
+        className="animate-loadingSpinner animate-delay-[2.4s]"
         points="97.33 55.3 131.55 40.09 66.92 2.08 97.33 55.3"
         style={{
           fill: "#2da1c4",
@@ -62,7 +61,7 @@ export const LoadingSpinner = () => (
         }}
       />
       <polygon
-        className="breathe fourth"
+        className="animate-loadingSpinner animate-delay-[2.4s]"
         points="97.33 55.3 131.55 116.12 131.55 40.09 97.33 55.3"
         style={{
           fill: "#0e6d8a",
@@ -73,7 +72,7 @@ export const LoadingSpinner = () => (
         }}
       />
       <polygon
-        className="breathe first"
+        className="animate-loadingSpinner animate-delay-[.6s]"
         points="66.92 108.51 131.55 116.12 97.33 55.3 66.92 108.51"
         style={{
           fill: "#5e9cbf",
@@ -83,7 +82,7 @@ export const LoadingSpinner = () => (
         }}
       />
       <polygon
-        className="breathe first"
+        className="animate-loadingSpinner animate-delay-[.6s]"
         points="36.51 55.3 2.3 116.12 66.92 108.51 36.51 55.3"
         style={{
           fill: "#6ab0d8",
@@ -93,7 +92,7 @@ export const LoadingSpinner = () => (
         }}
       />
       <polygon
-        className="breathe first"
+        className="animate-loadingSpinner animate-delay-[.6s]"
         points="36.51 55.3 66.92 2.08 97.33 55.3 36.51 55.3"
         style={{
           fill: "#6ab0d8",
@@ -103,7 +102,7 @@ export const LoadingSpinner = () => (
         }}
       />
       <polygon
-        className="breathe"
+        className="animate-loadingSpinner"
         points="66.92 108.51 97.33 55.3 36.51 55.3 66.92 108.51"
         style={{
           fill: "#9fe1ee",
