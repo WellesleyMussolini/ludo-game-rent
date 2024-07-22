@@ -8,13 +8,13 @@ import { useSidebar } from "./hooks/use-sidebar.hook";
 import { OverlayBackground } from "@/app/components/overlay-background/overlay-background.component";
 import { useContext } from "@/context/context";
 import { usePathname } from "next/navigation";
-import { isAdminPath } from "@/utils/is-admin-path";
+import { EnumPathnames } from "@/types/pathnames.enum";
 
 export default function Sidebar() {
     const { isMobile, animation, toggleSidebarVisibility } = useSidebar();
     const {expandedSidebar, setExpandedSidebar} = useContext();
-    const pathname = usePathname()
-    return <div className={`${isAdminPath(pathname) && "hidden"}`}>
+    const pathname = usePathname();
+    return <div className={`${pathname === EnumPathnames.ADMIN_LOGIN && "hidden"}`}>
         {
             expandedSidebar &&
             <OverlayBackground onClick={() => setExpandedSidebar(false)} />
