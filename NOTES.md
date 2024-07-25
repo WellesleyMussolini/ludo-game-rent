@@ -9,6 +9,8 @@
 
 - A sidebar está apenas oculta na rota de login da ADMIN. Se eu não estiver autenticado e tentar acessar apenas a rota "/admin" eu consigo visualizar a sidebar piscando.
 
+- Ao adicionar um cargo ( role ) aos usuários a informação atualiza instantaneamente no banco de dados, porém leva um tempo para atualizar no site.
+
 ### Código Personalizado da Home
 
 ```javascript
