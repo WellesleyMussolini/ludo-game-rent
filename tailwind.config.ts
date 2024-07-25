@@ -24,7 +24,7 @@ const config: Config = {
         },
         slideOutToRight: {
           "0%": { transform: "translateX(0)", opacity: "1" },
-          "80%": {opacity: "0.5"},
+          "80%": { opacity: "0.5" },
           "100%": { transform: "translateX(100%)", opacity: "0" },
         },
         loadingSpinner: {
@@ -38,8 +38,7 @@ const config: Config = {
           "slideInFromRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
         slideOutToRight:
           "slideOutToRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-          loadingSpinner: 
-          "loadingSpinner 5s infinite",
+        loadingSpinner: "loadingSpinner 5s infinite",
       },
       boxShadow: {
         cardName: "2px 2px 2px rgba(0,0,0,.1)",
@@ -48,6 +47,9 @@ const config: Config = {
       dropShadow: {
         "3xl": "0 35px 35px rgba(0, 0, 0, 0.25)",
         "4xl": "0 45px 65px rgba(0, 0, 0, 0.15)",
+      },
+      screens:{
+        'xs': '375px'
       },
     },
     colors: {
