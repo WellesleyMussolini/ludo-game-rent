@@ -19,7 +19,6 @@ export const authOptions = {
         role: (session.user.role = user.role),
         session: true,
       };
-      console.log(userAuth);
       return userAuth;
     },
   },

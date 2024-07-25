@@ -4,10 +4,10 @@ import { IBoardGame } from "@/types/boardgame.interface";
 import { EnumBoardGameFormAnimation, EnumBoardGameFormSteps } from "../boardgame-step-form.interface";
 import { generatePreviewBoardgame } from "../../../services/generate-preview-boardgame";
 import { toast } from "react-toastify";
-import { createBoardGame } from "@/app/services/create-boardgame";
 import { BoardGameFormStepSaveId } from "../components/boardgame-form-steps/step-save-id/step-save-id.component";
 import { BoardGameFormStepSaveGame } from "../components/boardgame-form-steps/step-save-game/step-save-game.component";
 import { useMediaQuery } from "@react-hook/media-query";
+import { createBoardGame } from "@/app/services/create-boardgame.service";
 
 export const useBoardgameStepForm = (handleVisibility: (visibility: boolean) => void) => {
     const [gameApiData, setGameApiData] = React.useState<iGameApiData>({

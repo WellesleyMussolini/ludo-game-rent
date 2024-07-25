@@ -11,7 +11,6 @@ class BoardGames {
       const response = findAllBoardGames.map((boardGame) =>
         boardGameMapper.toDomain(boardGame)
       );
-      console.log("response", response);
       return response;
     } catch (error) {
       throw new Error(`Error getting board games`);
