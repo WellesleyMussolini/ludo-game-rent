@@ -4,7 +4,7 @@ import { sizeIcons } from "@/constants/size-icons";
 import { GoAlertFill } from "react-icons/go";
 import { PrimaryButton } from "../../primary-button/primary-button.component";
 import { OverlayBackground } from "../../overlay-background/overlay-background.component";
-import { EnumPrimaryButton } from "../../primary-button/primary-button.interface";
+import { EnumPrimaryButton } from "../../primary-button/types/primary-button.types";
 
 interface ILogoutModal {
     visibility: boolean,

@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { ImageComponent } from "../image/image.component";
-import { PrimaryButton } from "../primary-button/primary-button.component";
-import { EnumPrimaryButton } from "../primary-button/primary-button.interface";
+import { EnumPrimaryButton } from "../primary-button/types/primary-button.types";
 import { ICard } from "./card.interface";
 import { useCard } from "./hooks/use-card.hook";
-import { useHandleRentGame } from "@/app/hooks/use-handle-rent-game.hook";
+import { PrimaryButton } from "../primary-button/primary-button.component";
+import { useHandleRentGame } from "@/app/hooks/handle-rent-game.hook";
 
 export const Card = ({ boardgame }: ICard) => {
   const { redirectToBoardgameAbout } = useCard(boardgame);
