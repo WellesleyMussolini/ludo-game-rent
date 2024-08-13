@@ -1,5 +1,6 @@
 export enum EnumPathnames {
     HOME="/",
+    AUTH="/auth",
     ADMIN="/admin",
-    ADMIN_LOGIN="/admin/login"
+    ADMIN_AUTH="/admin/auth"
 };
