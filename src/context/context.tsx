@@ -3,18 +3,13 @@
 import React from 'react';
 import { IBoardGame } from '@/types/boardgame.interface';
 
-interface IUserOptions {
-    isLogoutModalOpen: boolean;
-    isUserOptionsOpen: boolean;
-};
-
 interface IContext {
     cart: Array<IBoardGame>,
     setCart: React.Dispatch<React.SetStateAction<Array<IBoardGame>>>,
     expandedSidebar: boolean,
     setExpandedSidebar: (expandedSidebar: boolean) => void,
-    userOptions: {isLogoutModalOpen: boolean, isUserOptionsOpen: boolean},
-    setUserOptions: React.Dispatch<React.SetStateAction<IUserOptions>>;
+    isLogoutModalOpen: boolean,
+    setIsLogoutModalOpen: (isLogoutModalOpen: boolean) => void,
 };
 
 const ContextProvider = React.createContext<IContext | undefined>(undefined);
@@ -23,10 +18,7 @@ interface IProviderProps { children: React.ReactNode };
 
 export const ThemeProvider = ({ children }: IProviderProps) => {
     const [cart, setCart] = React.useState<Array<IBoardGame>>([]);
-    const [userOptions, setUserOptions] = React.useState({
-        isLogoutModalOpen: false,
-        isUserOptionsOpen: false,
-    });
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = React.useState<boolean>(false);
     const [expandedSidebar, setExpandedSidebar] = React.useState<boolean>(false)
 
     return <ContextProvider.Provider value={{
@@ -34,8 +26,8 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
         expandedSidebar, 
         setCart, 
         setExpandedSidebar,
-        userOptions,
-        setUserOptions,
+        isLogoutModalOpen,
+        setIsLogoutModalOpen
     }}>{children}</ContextProvider.Provider>;
 };
 
