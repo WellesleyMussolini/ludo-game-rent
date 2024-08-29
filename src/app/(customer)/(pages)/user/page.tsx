@@ -4,7 +4,6 @@ import { ErrorMessage } from "@/app/components/error-message/error-message.compo
 import { UserProfilePicture } from "@/app/components/user-profile-picture/user-profile-picture.component";
 import { authOptions } from "@/utils/auth-options";
 import { getServerSession } from "next-auth";
-import Image from "next/image";
 
 export default async function User() {
     const session = await getServerSession(authOptions);

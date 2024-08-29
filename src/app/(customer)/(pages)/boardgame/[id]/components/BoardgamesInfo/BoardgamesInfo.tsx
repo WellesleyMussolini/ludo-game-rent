@@ -1,8 +1,6 @@
 "use server";
 
 import React from "react";
-import { BoardgameStats } from "@/app/components/boardgame-stats/boardgame-stats.component";
-import { ImageComponent } from "@/app/components/image/image.component";
 import { prisma } from "@/utils/lib/database/prisma";
 import { ButtonRentGame } from "../button-rent-game/button-rent-game.component";
 import Link from "next/link";
@@ -29,12 +27,12 @@ export default async function BoardGameInfo({ id }: BoardGameInfoProps) {
           {/* boardgame stats */}
           <div className="flex flex-col justify-center items-center mt-[15%] lg:mt-[35%]">
             {/* boardgame image */}
-            <ImageComponent
+            {/* <ImageComponent
               layoutType="responsive"
               width="16em"
               image={boardgameData?.image ?? ""}
               alt={boardgameData?.name ?? ""}
-            />
+            /> */}
             {/* boardgame name & title */}
             <h1 className="text-3xl mt-4 font-black font-cardName">
               {boardgameData?.name}
@@ -50,11 +48,11 @@ export default async function BoardGameInfo({ id }: BoardGameInfoProps) {
               </button>
             </div>
             <div className="flex flex-col justify-center items-center lg:space-y-8">
-              <BoardgameStats
+              {/* <BoardgameStats
                 boardgame={boardgameData}
                 iconSize="20px"
                 styles="flex justify-around gap-6 flex-wrap break-words w-full text-sm mt-4 text-gray-500"
-              />
+              /> */}
               <div className="max-lg:hidden">
                 <CategoriasGames />
               </div>

@@ -7,7 +7,7 @@ import { findAllBoardGames } from "@/services/find-all-boardgames.service";
 
 export default async function BoardGameCatalogue() {
   try {
-    return <div className="flex items-center justify-center flex-wrap gap-10 pt-20 px-10">
+    return <div className={`flex items-center justify-center flex-wrap gap-10 pt-28 min-h-screen px-10`}>
       {
         findAllBoardGames.map((boardgame: IBoardGame, index: number) => (
           <Card key={index} boardgame={boardgame} />
@@ -15,7 +15,7 @@ export default async function BoardGameCatalogue() {
       }
     </div>
   } catch {
-    return <div className="flex items-center justify-center h-full">
+    return <div className="flex items-center justify-center pt-28 min-h-screen">
       <ErrorMessage
         title="404"
         message="Oops! Por algum motivo não foi possível encontrar o catálogo de jogos..."

@@ -1,8 +1,15 @@
 import React from "react";
+import { useRouter } from "next/navigation";
+import { useUserSession } from "@/app/hooks/session.hook";
+import { useContext } from "@/context/context";
 
 export const useUserMenu = () => {
     const [isDropdownOpen, setIsDropdownOpen] = React.useState<boolean>(false);
+    const { setIsLogoutModalOpen } = useContext();
+    const { session } = useUserSession();
     const menuRef = React.useRef<HTMLDivElement>(null);
+
+    const router = useRouter();
 
     const handleDropdownVisibility = () => setIsDropdownOpen(prev => !prev);
 
@@ -19,7 +26,20 @@ export const useUserMenu = () => {
         };
     }, []);
 
-    const menuOptions = [{ label: "Perfil" }, { label: "Sair" }];
+    const userInfo = {
+        userId: session?.user.id ?? "",
+        userImage: session?.user.image ?? "",
+        userName: session?.user.name ?? "",
+    };
 
-    return { isDropdownOpen, menuOptions, handleDropdownVisibility, handleCloseDropdown, menuRef };
+    const menuOptions = [{
+        label: "Perfil",
+        onClick: () => router.push("user"),
+    },
+    {
+        label: "Sair",
+        onClick: () => setIsLogoutModalOpen(true), 
+    }];
+
+    return { isDropdownOpen, menuOptions, handleDropdownVisibility, handleCloseDropdown, menuRef, userInfo };
 };

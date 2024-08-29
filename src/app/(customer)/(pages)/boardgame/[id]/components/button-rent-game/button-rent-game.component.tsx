@@ -1,8 +1,8 @@
 "use client"
 
 import { PrimaryButton } from "@/app/components/primary-button/primary-button.component"
-import { EnumPrimaryButton } from "@/app/components/primary-button/primary-button.interface"
-import { useHandleRentGame } from "@/app/hooks/use-handle-rent-game.hook";
+import { EnumPrimaryButton } from "@/app/components/primary-button/types/primary-button.types";
+import { useHandleRentGame } from "@/app/hooks/handle-rent-game.hook";
 import { IBoardGame } from "@/types/boardgame.interface";
 
 interface ButtonRentGameProps {
