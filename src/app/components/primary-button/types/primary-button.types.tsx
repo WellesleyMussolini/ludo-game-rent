@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React from "react";
 
 export enum EnumPrimaryButton {
     PRIMARY="primary",
@@ -12,10 +12,10 @@ export enum EnumPrimaryButton {
 
 export interface IPrimaryButton {
     styles?: string,
-    text: string | ReactNode,
+    text: string | React.ReactNode,
     type: EnumPrimaryButton,
     disabled?: boolean | undefined,
     loadingSize?: number,
     isLoading?: boolean,
-    onClick: (() => void), 
+    onClick: (() => void) | ((event: React.MouseEvent<HTMLButtonElement>) => void), 
 };
