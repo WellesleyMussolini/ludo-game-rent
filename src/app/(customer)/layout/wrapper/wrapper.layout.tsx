@@ -9,7 +9,7 @@ import { useContext } from "@/context/context";
 import { Header } from "../header/header.layout";
 
 export const LayoutWrapper = () => {
-    const {userOptions, setUserOptions} = useContext(); 
+    const {isLogoutModalOpen, setIsLogoutModalOpen} = useContext(); 
     return <>
         <ToastContainer
             position="top-right"
@@ -28,8 +28,8 @@ export const LayoutWrapper = () => {
 
         <LogoutModal
             handleLogout={signOut}
-            handleCloseModal={() => setUserOptions(prevState => ({ ...prevState, isLogoutModalOpen: false }))}
-            visibility={userOptions.isLogoutModalOpen}
+            handleCloseModal={() => setIsLogoutModalOpen(false)}
+            visibility={isLogoutModalOpen}
         />
         <Header />
     </>
