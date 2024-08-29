@@ -3,6 +3,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { Adapter } from "next-auth/adapters";
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "@/utils/lib/database/prisma";
+import { Session } from "next-auth";
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
@@ -13,13 +14,12 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    session: async ({ session, user }: any) => {
-      const userAuth = {
-        ...session,
-        role: (session.user.role = user.role),
-        session: true,
+    session: async ({ user }: Session) => {
+      return {
+        user: {
+          ...user,
+        },
       };
-      return userAuth;
     },
   },
 };
