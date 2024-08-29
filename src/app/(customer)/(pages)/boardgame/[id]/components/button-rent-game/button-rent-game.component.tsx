@@ -5,17 +5,9 @@ import { EnumPrimaryButton } from "@/app/components/primary-button/types/primary
 import { useHandleRentGame } from "@/app/hooks/handle-rent-game.hook";
 import { IBoardGame } from "@/types/boardgame.interface";
 
-interface ButtonRentGameProps {
-    boardgame: IBoardGame | null;
-}
-
-export const ButtonRentGame = ({ boardgame }: ButtonRentGameProps) => {
-    const { handleRentGame } = useHandleRentGame(boardgame); 
-    
-    if (!boardgame) {
-        return null;
-    }
-    
+export const ButtonRentGame = ({ boardgame }: { boardgame: IBoardGame | null }) => {
+    const { handleRentGame } = useHandleRentGame(boardgame);
+    if (!boardgame) return null;
     return (
         <div className="w-96 mt-4 max-[450px]:w-[80%] ring-2 ring-white rounded-md">
             <PrimaryButton text="alugar" type={EnumPrimaryButton.PRIMARY} onClick={handleRentGame} />
