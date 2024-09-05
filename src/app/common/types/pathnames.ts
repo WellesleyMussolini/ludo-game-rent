@@ -1,4 +1,4 @@
-export enum EnumPathnames {
+export enum Pathnames {
     HOME="/",
     AUTH="/auth",
     ADMIN="/admin",

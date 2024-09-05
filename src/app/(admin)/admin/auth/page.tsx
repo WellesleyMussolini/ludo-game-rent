@@ -1,7 +1,7 @@
 "use server"
 
 import { EnumAuth } from "@/app/components/auth/types/auth.types";
-import { authOptions } from "@/utils/auth-options";
+import { authOptions } from "../../../(auth)/utils/auth-options";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { Auth as AuthComponent } from "../../../components/auth/auth.component";

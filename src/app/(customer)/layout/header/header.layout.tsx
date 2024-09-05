@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useUserSession } from "@/app/hooks/session.hook";
 import { PrimaryButton } from "@/app/components/primary-button/primary-button.component";
-import { EnumPathnames } from "@/types/pathnames.enum";
+import { Pathnames } from "@/app/common/types/pathnames";
 import { EnumPrimaryButton } from "@/app/components/primary-button/types/primary-button.types";
 import { UserMenu } from "./components/user-menu.component";
 import { LoadingSpinner } from "@/app/components/loading/loading-spinner/loading-spinner.component";
@@ -34,7 +34,7 @@ export const Header = () => {
                 ) : (
                     <PrimaryButton
                         styles={"max-xs:text-sm max-xs:w-24 xs:text-base xs:w-32"}
-                        onClick={() => redirect.push(EnumPathnames.AUTH)}
+                        onClick={() => redirect.push(Pathnames.AUTH)}
                         text="entrar"
                         type={EnumPrimaryButton.PRIMARY}
                     />

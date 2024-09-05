@@ -6,7 +6,7 @@ import { useSidebar } from "./hooks/sidebar.hook";
 import { OverlayBackground } from "@/app/components/overlay-background/overlay-background.component";
 import { useContext } from "@/context/context";
 import { usePathname } from "next/navigation";
-import { EnumPathnames } from "@/types/pathnames.enum";
+import { Pathnames } from "@/app/common/types/pathnames";
 import Image from "next/image";
 import { ChevronFirst, ChevronLast } from "lucide-react";
 import Logo from "../../../../../public/images/logo.png";
@@ -16,7 +16,7 @@ export default function Sidebar() {
     const { isMobile, animation, toggleSidebarVisibility } = useSidebar();
     const { expandedSidebar, setExpandedSidebar } = useContext();
     const pathname = usePathname();
-    return <div className={`${pathname === EnumPathnames.ADMIN_LOGIN && "hidden"}`}>
+    return <div className={`${pathname === Pathnames.ADMIN_AUTH && "hidden"}`}>
         {
             expandedSidebar &&
             <OverlayBackground onClick={() => setExpandedSidebar(false)} />

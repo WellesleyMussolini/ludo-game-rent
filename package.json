@@ -1,6 +1,6 @@
 {
-  "name": "ludo-game-rent",
-  "version": "0.1.0",
+  "name": "ludo-games-rent",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -15,8 +15,8 @@
     "@react-hook/media-query": "^1.1.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "axios": "^1.6.7",
-    "boardgamegeek": "^0.5.5",
     "hamburger-react": "^2.5.0",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.368.0",
     "mongodb": "^6.3.0",
     "next": "^14.2.5",
@@ -25,7 +25,6 @@
     "react-dom": "^18",
     "react-icons": "^5.0.1",
     "react-toastify": "^10.0.4",
-    "swiper": "^11.0.6",
     "tailwindcss-animated": "^1.0.1",
     "xml-js": "^1.6.11",
     "xml2js": "^0.6.2"

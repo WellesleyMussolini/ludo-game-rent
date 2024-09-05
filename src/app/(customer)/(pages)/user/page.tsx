@@ -2,7 +2,7 @@
 
 import { ErrorMessage } from "@/app/components/error-message/error-message.component";
 import { UserProfilePicture } from "@/app/components/user-profile-picture/user-profile-picture.component";
-import { authOptions } from "@/utils/auth-options";
+import { authOptions } from "../../../(auth)/utils/auth-options";
 import { getServerSession } from "next-auth";
 
 export default async function User() {
