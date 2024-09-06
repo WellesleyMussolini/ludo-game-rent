@@ -4,6 +4,8 @@
 
 ### BUGS
 
+- Deslogar da conta está causando error.
+
 - Quando a tela do projeto atinge 640 píxels o header não vai para 100% o seu tamanho, o ícone não aparece nessa resolução. O bug não acontece nas resoluções a partir de 639 píxels para baixo e 641 píxels para cima, apenas em 640 píxels.
 
 - tratar a responsividade do formulario de criar jogos.

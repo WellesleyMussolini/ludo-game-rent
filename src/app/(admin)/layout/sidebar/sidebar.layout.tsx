@@ -6,7 +6,7 @@ import { useSidebar } from "./hooks/sidebar.hook";
 import { OverlayBackground } from "@/app/components/overlay-background/overlay-background.component";
 import { useContext } from "@/context/context";
 import { usePathname } from "next/navigation";
-import { Pathnames } from "@/app/common/types/pathnames";
+import { Pathnames } from "@/app/common/types/pathnames.enum";
 import Image from "next/image";
 import { ChevronFirst, ChevronLast } from "lucide-react";
 import Logo from "../../../../../public/images/logo.png";

@@ -1,13 +1,9 @@
-const { default: NextAuth } = require("next-auth/next");
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "../../../utils/lib/database/prisma";
-import { cookies } from "next/headers";
 import { AUTHENTICATION_COOKIE } from "../constants/auth-cookie.type";
 import { handleAuthCookie } from "../services/handle-auth-cookie.service";
-import { jwtDecode } from "jwt-decode";
-import { signIn } from "next-auth/react";
-import { NextResponse } from "next/server";
+import { UserRoles } from "@/app/common/types/user-roles.enum";
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -19,10 +15,8 @@ export const authOptions = {
   ],
   callbacks: {
     async session({ user, session }: any) {
-
-      // Set the role based on the user
       let cookie_auth_role;
-      if (user.role === "ADMIN") {
+      if (user.role === UserRoles.ADMIN) {
         cookie_auth_role = AUTHENTICATION_COOKIE.ADMIN;
       } else {
         cookie_auth_role = AUTHENTICATION_COOKIE.USER;
@@ -30,13 +24,15 @@ export const authOptions = {
 
       if (user) {
         handleAuthCookie(cookie_auth_role, new Date(session.expires));
-      } 
-      return {
+      }
+
+      const result = {
         user: {
           ...user,
           expires: session.expires,
         },
-      };
+      }
+      return result;
     },
   },
 };

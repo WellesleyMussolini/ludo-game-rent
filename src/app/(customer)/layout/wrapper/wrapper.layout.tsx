@@ -1,16 +1,12 @@
-"use client"
-
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LogoutModal } from "@/app/components/modal/logout/logout-modal.component";
-import { signOut } from "next-auth/react";
 import React from "react";
-import { useContext } from "@/context/context";
 import { Header } from "../header/header.layout";
+import { handleLogout } from "../../utils/handle-logout";
 
-export const LayoutWrapper = () => {
-    const {isLogoutModalOpen, setIsLogoutModalOpen} = useContext(); 
-    return <>
+export const LayoutWrapper = () => (
+    <>
         <ToastContainer
             position="top-right"
             autoClose={5000}
@@ -27,10 +23,8 @@ export const LayoutWrapper = () => {
         />
 
         <LogoutModal
-            handleLogout={signOut}
-            handleCloseModal={() => setIsLogoutModalOpen(false)}
-            visibility={isLogoutModalOpen}
+            handleLogout={handleLogout}
         />
         <Header />
     </>
-};
+)

@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useUserSession } from "@/app/hooks/session.hook";
 import { PrimaryButton } from "@/app/components/primary-button/primary-button.component";
-import { Pathnames } from "@/app/common/types/pathnames";
+import { Pathnames } from "@/app/common/types/pathnames.enum";
 import { EnumPrimaryButton } from "@/app/components/primary-button/types/primary-button.types";
 import { UserMenu } from "./components/user-menu.component";
 import { LoadingSpinner } from "@/app/components/loading/loading-spinner/loading-spinner.component";

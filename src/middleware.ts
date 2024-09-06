@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Pathnames } from "@/app/common/types/pathnames";
+import { Pathnames } from "@/app/common/types/pathnames.enum";
 import { AUTHENTICATION_COOKIE } from "./app/(auth)/constants/auth-cookie.type";
 import { cookies } from "next/headers";
 
@@ -20,7 +20,6 @@ export async function middleware(request: NextRequest) {
   if ((!userCookie || !adminCookie) && pathname === Pathnames.ADMIN) return NextResponse.redirect(new URL(Pathnames.ADMIN_AUTH, request.url));
 
 
-  // Proceed to the next middleware or route
   return NextResponse.next();
 }
 

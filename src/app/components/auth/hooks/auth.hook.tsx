@@ -1,5 +1,5 @@
 import React from "react";
-import { Pathnames } from "../../../common/types/pathnames";
+import { Pathnames } from "../../../common/types/pathnames.enum";
 import { EnumAuth, IAuth } from "../types/auth.types";
 import { signIn } from "next-auth/react";
 
