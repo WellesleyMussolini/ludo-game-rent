@@ -1,9 +1,9 @@
 "use server";
 
-import { IBoardGame } from "@/types/boardgame.interface";
+import { BoardGame } from "@/app/common/types/boardgame.types";
 import { prisma } from "@/utils/lib/database/prisma";
 
-export const createBoardGame = async (boardgame: IBoardGame) => {
+export const createBoardGame = async (boardgame: BoardGame) => {
   try {
     return await prisma.boardgames.create({
       data: {

@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useUserSession } from "@/app/hooks/session.hook";
 import { PrimaryButton } from "@/app/components/primary-button/primary-button.component";
 import { Pathnames } from "@/app/common/types/pathnames.enum";
-import { EnumPrimaryButton } from "@/app/components/primary-button/types/primary-button.types";
+import { PrimaryButtonStyles } from "@/app/components/primary-button/types/primary-button.types";
 import { UserMenu } from "./components/user-menu.component";
 import { LoadingSpinner } from "@/app/components/loading/loading-spinner/loading-spinner.component";
 
@@ -16,7 +16,7 @@ export const Header = () => {
     const redirect = useRouter();
     const { isAuthenticated, isLoading } = useUserSession();
     return (
-        <div className="fixed top-0 flex items-center justify-between w-full px-8 h-20 bg-white z-20">
+        <div className="fixed top-0 flex items-center justify-between w-full px-8 h-20 bg-white z-30">
             <Link href={"/"} className="flex items-center h-full cursor-pointer w-24 xs:w-28">
                 <Image
                     src={Logo}
@@ -36,7 +36,7 @@ export const Header = () => {
                         styles={"max-xs:text-sm max-xs:w-24 xs:text-base xs:w-32"}
                         onClick={() => redirect.push(Pathnames.AUTH)}
                         text="entrar"
-                        type={EnumPrimaryButton.PRIMARY}
+                        type={PrimaryButtonStyles.PRIMARY}
                     />
                 )
             )}

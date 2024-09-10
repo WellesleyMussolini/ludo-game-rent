@@ -6,6 +6,7 @@ import Sidebar from "../layout/sidebar/sidebar.layout";
 import { Provider } from "@/utils/lib/provider/provider";
 import { ThemeProvider } from "@/context/context";
 import { LoadingScreen } from "@/app/components/loading/loading-screen/loading-screen.component";
+import { LayoutWrapper } from "../layout/wrapper/wrapper.layout";
 
 const font = Roboto({ weight: "500", subsets: ["latin"] });
 
@@ -28,7 +29,7 @@ export default function RootLayout({
         <Provider>
           <ThemeProvider>
             <React.Suspense fallback={<LoadingScreen />}>
-              <Sidebar />
+              <LayoutWrapper />
               {children}
             </React.Suspense>
           </ThemeProvider>

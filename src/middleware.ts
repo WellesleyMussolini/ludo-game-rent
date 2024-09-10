@@ -10,14 +10,14 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // home redirection
-  if ((userCookie || adminCookie) && pathname === Pathnames.AUTH || userCookie && pathname === Pathnames.ADMIN) return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
+  // // home redirection
+  // if ((userCookie || adminCookie) && pathname === Pathnames.AUTH || userCookie && pathname === Pathnames.ADMIN) return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
   
-  // auth redirection
-  if ((!userCookie || !adminCookie) && pathname === Pathnames.USER) return NextResponse.redirect(new URL(Pathnames.AUTH, request.url));
+  // // auth redirection
+  // if ((!userCookie || !adminCookie) && pathname === Pathnames.USER) return NextResponse.redirect(new URL(Pathnames.AUTH, request.url));
 
-  // admin auth redirection
-  if ((!userCookie || !adminCookie) && pathname === Pathnames.ADMIN) return NextResponse.redirect(new URL(Pathnames.ADMIN_AUTH, request.url));
+  // // admin auth redirection
+  // if ((!userCookie || !adminCookie) && pathname === Pathnames.ADMIN) return NextResponse.redirect(new URL(Pathnames.ADMIN_AUTH, request.url));
 
 
   return NextResponse.next();

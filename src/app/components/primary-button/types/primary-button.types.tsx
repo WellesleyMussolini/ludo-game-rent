@@ -1,6 +1,6 @@
 import React from "react";
 
-export enum EnumPrimaryButton {
+export enum PrimaryButtonStyles {
     PRIMARY="primary",
     SECONDARY="secondary",
     OUTLINED="outlined",
@@ -13,7 +13,7 @@ export enum EnumPrimaryButton {
 export interface IPrimaryButton {
     styles?: string,
     text: string | React.ReactNode,
-    type: EnumPrimaryButton,
+    type: PrimaryButtonStyles,
     disabled?: boolean | undefined,
     loadingSize?: number,
     isLoading?: boolean,

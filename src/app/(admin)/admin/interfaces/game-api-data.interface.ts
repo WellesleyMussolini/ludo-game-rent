@@ -1,3 +1,3 @@
-import { IBoardGame } from "@/types/boardgame.interface";
+import { BoardGame } from "@/app/common/types/boardgame.types";
 
-export interface iGameApiData extends IBoardGame { id: string };
+export interface iGameApiData extends BoardGame { id: string };

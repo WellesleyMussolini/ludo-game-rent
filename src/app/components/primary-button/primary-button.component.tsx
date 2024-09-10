@@ -13,7 +13,7 @@ export const PrimaryButton = ({
     loadingSize,
     onClick,
 }: IPrimaryButton) => {
-    const {typeClasses, buttonContent} = usePrimaryButton(isLoading, loadingSize, text, type);
+    const { typeClasses, buttonContent } = usePrimaryButton(isLoading, loadingSize, text, type);
     return (
         <button
             type="button"

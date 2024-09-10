@@ -1,22 +1,23 @@
-// "use server";
-"use client";
+"use server"
 
-import { Card } from "../card/card.component";
-import { IBoardGame } from "@/types/boardgame.interface";
+import { BoardGame } from "@/app/common/types/boardgame.types";
+import { Card } from "../../common/components/card/card.component";
 import { ErrorMessage } from "../error-message/error-message.component";
 import { findAllBoardGames } from "@/services/find-all-boardgames.service";
-import { PrimaryInput } from "../primary-input/primary-input.component";
-import { EnumPrimaryInputType } from "../primary-input/primary-input.types";
 
-export default async function BoardGameCatalogue() {
+export const BoardGameCatalogue = () => {
   try {
-    return <div className={`flex items-center justify-center flex-wrap gap-10 pt-28 min-h-screen px-10`}>
-      <PrimaryInput text="" placeholder="Digite seu nome" handleOnChange={() => {}} type={EnumPrimaryInputType.TEXT} />
-      {/* {
-        findAllBoardGames.map((boardgame: IBoardGame, index: number) => (
+    return <div className={`
+      grid grid-cols-1 gap-10 pt-28
+      sm:grid sm:grid-cols-2 
+      lg:grid lg:grid-cols-3 
+      xl:grid xl:grid-cols-4 
+    `}>
+      {
+        findAllBoardGames.map((boardgame: BoardGame, index: number) => (
           <Card key={index} boardgame={boardgame} />
         ))
-      } */}
+      }
     </div>
   } catch {
     return <div className="flex items-center justify-center pt-28 min-h-screen">

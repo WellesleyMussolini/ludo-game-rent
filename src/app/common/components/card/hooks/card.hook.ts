@@ -1,10 +1,11 @@
 "use client"
 
-import { IBoardGame } from "@/types/boardgame.interface";
+import { BoardGame } from "@/app/common/types/boardgame.types";
 import { formatCurrency } from "@/utils/format-currency";
 import { useRouter } from "next/navigation";
+import { CardStatus } from "../types/card.types";
 
-export const useCard = (boardgame: IBoardGame) => {
+export const useCard = (boardgame: BoardGame) => {
   const router = useRouter();
   const boardgamePrice = formatCurrency(boardgame.price);
 

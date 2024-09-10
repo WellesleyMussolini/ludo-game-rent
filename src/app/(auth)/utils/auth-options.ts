@@ -15,24 +15,22 @@ export const authOptions = {
   ],
   callbacks: {
     async session({ user, session }: any) {
-      let cookie_auth_role;
-      if (user.role === UserRoles.ADMIN) {
-        cookie_auth_role = AUTHENTICATION_COOKIE.ADMIN;
-      } else {
-        cookie_auth_role = AUTHENTICATION_COOKIE.USER;
-      }
+      // let cookie_auth_role;
+      // if (user.role === UserRoles.ADMIN) {
+      //   cookie_auth_role = AUTHENTICATION_COOKIE.ADMIN;
+      // } else {
+      //   cookie_auth_role = AUTHENTICATION_COOKIE.USER;
+      // }
 
-      if (user) {
-        handleAuthCookie(cookie_auth_role, new Date(session.expires));
-      }
-
-      const result = {
+      // if (user) {
+      //   handleAuthCookie(cookie_auth_role, new Date(session.expires));
+      // }
+      return {
         user: {
           ...user,
           expires: session.expires,
         },
-      }
-      return result;
+      };
     },
   },
 };

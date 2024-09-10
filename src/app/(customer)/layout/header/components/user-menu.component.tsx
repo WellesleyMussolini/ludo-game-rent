@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { useUserMenu } from "../hooks/user-menu.hook";
+import { Dropdown } from "@/app/common/components/dropdown/dropdown.component";
 
 export const UserMenu = () => {
     const { isDropdownOpen, menuOptions, handleDropdownVisibility, menuRef, userInfo } = useUserMenu();
@@ -16,21 +17,19 @@ export const UserMenu = () => {
                 width={0}
                 onClick={handleDropdownVisibility}
             />
-
-            {/* Dropdown */}
-            {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-md py-2 px-2 z-20">
-                    {menuOptions.map((option, index) => (
-                        <p
-                            key={index}
-                            className="block w-full text-left px-4 py-2 text-sm rounded-md text-gray-700 hover:text-white hover:bg-primary cursor-pointer"
-                            onClick={option.onClick}
-                        >
-                            {option.label}
-                        </p>
-                    ))}
-                </div>
-            )}
+            <Dropdown
+                visibility={isDropdownOpen}
+                content={menuOptions.map((option, index) => (
+                    <p
+                        key={index}
+                        className="block w-full text-left px-4 py-2 text-sm rounded-md text-gray-700 hover:text-white hover:bg-primary cursor-pointer"
+                        onClick={option.onClick}
+                    >
+                        {option.label}
+                    </p>
+                ))}
+                styles="mt-2 w-48 rounded-md"
+            />
         </div>
     );
 };
