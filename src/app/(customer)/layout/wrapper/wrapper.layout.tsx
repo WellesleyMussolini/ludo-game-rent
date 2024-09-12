@@ -6,25 +6,23 @@ import { Header } from "../header/header.layout";
 import { handleLogout } from "../../utils/handle-logout";
 
 export const LayoutWrapper = () => (
-    <>
-        <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover={false}
-            theme="colored"
-            transition={Bounce}
-            className="z-50"
-        />
+  <>
+    <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover={false}
+      theme="colored"
+      transition={Bounce}
+      className="z-50"
+    />
 
-        <LogoutModal
-            handleLogout={handleLogout}
-        />
-        <Header />
-    </>
-)
+    <LogoutModal handleLogout={handleLogout} />
+    <Header />
+  </>
+);
