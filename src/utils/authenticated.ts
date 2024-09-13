@@ -1,4 +1,4 @@
-import { AUTHENTICATION_COOKIE } from "@/app/(auth)/constants/auth-cookie.type";
+import { AUTHENTICATION_COOKIE } from "@/app/common/constants/auth-cookie.type";
 import { cookies } from "next/headers";
 
 export const authenticated = () => {
