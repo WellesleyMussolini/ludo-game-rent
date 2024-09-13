@@ -54,3 +54,69 @@
 //   },
 // };
 ```
+
+### This code bellow is working in the middleware to get the user session
+
+```javascript
+// auth-options code
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import GoogleProvider from "next-auth/providers/google";
+import { prisma } from "../../../utils/lib/database/prisma";
+
+export const authOptions = {
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    GoogleProvider({
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET as string,
+    }),
+  ],
+  session: {
+    strategy: "jwt", // This enables JWT-based session
+  },
+  callbacks: {
+    async jwt({ token, user }: any) {
+      // Attach user roles and other info to the token
+      if (user) {
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ user, session, token }: any) {
+      session.user.role = token.role;
+      return {
+        user: {
+          ...user,
+          expires: session.expires,
+        }
+      }
+    },
+  },
+  secret: process.env.NEXT_PUBLIC_SECRET,
+};
+```
+
+
+```javascript
+// middleware
+"use server"
+
+import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
+
+export async function middleware(request: NextRequest) {
+  // Use getToken to retrieve the JWT token from the request
+  const token = await getToken({ req: request, secret: process.env.NEXT_PUBLIC_SECRET });
+  console.log("token", token)
+
+  // console.log("token", token);
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+    "/admin/:path*",
+  ],
+};
+```
