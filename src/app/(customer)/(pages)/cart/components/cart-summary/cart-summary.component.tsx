@@ -6,7 +6,7 @@ import { useContext } from "@/context/context";
 import { ErrorMessage } from "@/app/components/error-message/error-message.component";
 import { calculateCartAmount } from "../../utils/calculate-cart-amount";
 import { PrimaryButton } from "@/app/components/primary-button/primary-button.component";
-import { EnumPrimaryButton } from "@/app/components/primary-button/primary-button.interface";
+import { PrimaryButtonStyles } from "@/app/components/primary-button/types/primary-button.types";
 
 export const CartSummary = () => {
   const { cart } = useContext();
@@ -31,7 +31,7 @@ export const CartSummary = () => {
                 <span className="text-xl max-[400px]:text-lg font-bold">Total</span>
                 <span className="text-primary text-xl max-[400px]:text-lg font-bold">R$ {calculateCartAmount(cart)}</span>
               </div>
-              <PrimaryButton styles="mt-8" text="Finalizar" onClick={() => {}} type={EnumPrimaryButton.PRIMARY} />
+              <PrimaryButton styles="mt-8" text="Finalizar" onClick={() => {}} type={PrimaryButtonStyles.PRIMARY} />
             </div>
           </div>
         </div>
