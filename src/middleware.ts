@@ -1,50 +1,43 @@
+"use server"
+
 import { NextRequest, NextResponse } from "next/server";
 import { Pathnames } from "@/app/common/types/pathnames.enum";
-import { authenticated } from "./utils/authenticated";
-import { adminProtectedRoutes } from "./constants/protected-routes";
-import { GiConsoleController } from "react-icons/gi";
+import { getToken } from "next-auth/jwt";
+import { adminProtectedRoutes } from "./app/common/constants/protected-routes";
+import { UserRoles } from "./app/common/types/user-roles.enum";
 
 export async function middleware(request: NextRequest) {
-  const { adminCookie, userCookie } = authenticated();
+  const authenticated = await getToken({ req: request, secret: process.env.NEXT_PUBLIC_SECRET });
   const { pathname } = request.nextUrl;
 
-  const isAuthenticated = adminCookie || userCookie;
-  const isNotAuthenticated = !adminCookie || !userCookie;
-  const isNotAdmin = !adminCookie && userCookie;
-  const isAdmin = adminCookie && !userCookie;
+  const isNotAdmin = authenticated?.role === UserRoles.USER;
+  const isAdmin = authenticated?.role === UserRoles.ADMIN;
 
-  const isAuthenticatedAdminRoute = adminProtectedRoutes.some((route) =>
-    request.nextUrl.pathname.startsWith(route)
-  );
+  const isNotAuthenticated = !authenticated || authenticated === null;
 
-  // if (isNotAdmin && isAuthenticatedAdminRoute) {
-  //   return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
-  // }
+  if (isNotAuthenticated && adminProtectedRoutes.includes(pathname as Pathnames)) {
+    return NextResponse.redirect(new URL(Pathnames.ADMIN_AUTH, request.url));
+  }
 
-  // if (!isAuthenticated && pathname !== "/auth") {
-  //   return NextResponse.redirect(new URL(Pathnames.AUTH, request.url));
-  // }
+  if (authenticated) {
+    if (isNotAdmin && (adminProtectedRoutes.includes(pathname as Pathnames) || pathname === Pathnames.ADMIN_AUTH)) {
+      return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
+    }
 
-  // if (pathname === "/auth" && isAuthenticated) {
-  //   return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
-  // }
+    if (isAdmin && pathname === Pathnames.ADMIN_AUTH) {
+      return NextResponse.redirect(new URL(Pathnames.ADMIN, request.url));
+    }
 
-  // if (pathname === "/" && (!adminCookie || !userCookie)) {
-  //   return NextResponse.redirect(new URL(Pathnames.AUTH, request.url));
-  // }
+    if (pathname === Pathnames.AUTH) {
+      return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
+    }
+  }
 
-  // if (!adminCookie || !userCookie) {
-  //   return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
-  // }
+  if (isNotAuthenticated && (pathname === Pathnames.CART || pathname === Pathnames.USER)) {
+    return NextResponse.redirect(new URL(Pathnames.AUTH, request.url));
+  }
 
-  // // home redirection
-  // if ((userCookie || adminCookie) && pathname === Pathnames.AUTH || userCookie && pathname === Pathnames.ADMIN) return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
-
-  // // auth redirection
-  // if ((!userCookie || !adminCookie) && pathname === Pathnames.USER) return NextResponse.redirect(new URL(Pathnames.AUTH, request.url));
-
-  // // admin auth redirection
-  // if ((!userCookie || !adminCookie) && pathname === Pathnames.ADMIN) return NextResponse.redirect(new URL(Pathnames.ADMIN_AUTH, request.url));
+  return NextResponse.next();
 }
 
 export const config = {
