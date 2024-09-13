@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { AUTHENTICATION_COOKIE } from "../constants/auth-cookie.type";
+import { AUTHENTICATION_COOKIE } from "../../common/constants/auth-cookie.type";
 
 export const handleAuthCookie = (cookie: AUTHENTICATION_COOKIE, expires: Date) => {
   cookies().set({
