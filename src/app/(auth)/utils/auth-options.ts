@@ -1,9 +1,9 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "../../../utils/lib/database/prisma";
-import { AUTHENTICATION_COOKIE } from "../constants/auth-cookie.type";
-import { handleAuthCookie } from "../services/handle-auth-cookie.service";
 import { UserRoles } from "@/app/common/types/user-roles.enum";
+import { AUTHENTICATION_COOKIE } from "../../common/constants/auth-cookie.type";
+import { handleAuthCookie } from "../services/handle-auth-cookie.service";
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -13,24 +13,36 @@ export const authOptions = {
       clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET as string,
     }),
   ],
+  session: {
+    strategy: "jwt", // This enables JWT-based session
+  },
   callbacks: {
-    async session({ user, session }: any) {
-      let cookie_auth_role;
-      if (user.role === UserRoles.ADMIN) {
-        cookie_auth_role = AUTHENTICATION_COOKIE.ADMIN;
-      } else {
-        cookie_auth_role = AUTHENTICATION_COOKIE.USER;
-      }
-
+    async jwt({ token, user }: any) {
+      // Attach user roles and other info to the token
       if (user) {
-        handleAuthCookie(cookie_auth_role, new Date(session.expires));
+        token.role = user.role;
       }
+      return token;
+    },
+    async session({ session, token }: any) {
+      // // Attach user role to session object
+      // session.user.role = token.role;
+
+      // // Determine the role for the authentication cookie
+      // let cookieAuthRole = token.role === UserRoles.ADMIN
+      //   ? AUTHENTICATION_COOKIE.ADMIN
+      //   : AUTHENTICATION_COOKIE.USER;
+
+      // if (session) {
+      //   handleAuthCookie(cookieAuthRole, new Date(session.expires));
+      // }
       return {
         user: {
-          ...user,
+          ...session.user,
           expires: session.expires,
         },
       };
     },
   },
+  secret: process.env.NEXT_PUBLIC_SECRET,
 };
