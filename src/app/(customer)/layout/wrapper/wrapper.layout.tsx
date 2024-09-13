@@ -3,7 +3,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { LogoutModal } from "@/app/components/modal/logout/logout-modal.component";
 import React from "react";
 import { Header } from "../header/header.layout";
-import { handleLogout } from "../../utils/handle-logout";
 
 export const LayoutWrapper = () => (
   <>
@@ -22,7 +21,7 @@ export const LayoutWrapper = () => (
       className="z-50"
     />
 
-    <LogoutModal handleLogout={handleLogout} />
+    <LogoutModal />
     <Header />
   </>
 );
