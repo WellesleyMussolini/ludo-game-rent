@@ -5,32 +5,32 @@ import { UserRoles } from "@/app/common/types/user-roles.enum";
 import { IUser } from "@/app/common/types/user.interface";
 
 type JWT = {
-  token: Token,
-  user: IUser,
+  token: Token;
+  user: IUser;
 };
 
 type Token = {
-  name: string,
-  email: string,
-  picture: string,
-  sub: string,
-  role: UserRoles,
-  iat: number,
-  exp: number,
-  jti: string,
-}
+  name: string;
+  email: string;
+  picture: string;
+  sub: string;
+  role: UserRoles;
+  iat: number;
+  exp: number;
+  jti: string;
+};
 
 type Session = {
   session: {
     user: {
-      name: string,
-      email: string,
-      image: string,
-      role: UserRoles,
-    },
-    expires: string,
-  },
-  token: Token,
+      name: string;
+      email: string;
+      image: string;
+      role: UserRoles;
+    };
+    expires: string;
+  };
+  token: Token;
 };
 
 export const authOptions = {
@@ -52,15 +52,14 @@ export const authOptions = {
       return token;
     },
     async session({ session, token }: Session) {
-      console.log(token);
       // if token has a role then adds it to the session.
       session.user.role = token.role;
       return {
         user: {
           ...session.user,
-          expires: session.expires
-        }
-      }
+          expires: session.expires,
+        },
+      };
     },
   },
   secret: process.env.NEXT_PUBLIC_SECRET,

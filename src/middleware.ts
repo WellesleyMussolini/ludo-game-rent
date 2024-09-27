@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import { NextRequest, NextResponse } from "next/server";
 import { Pathnames } from "@/app/common/types/pathnames.enum";
@@ -7,7 +7,10 @@ import { adminProtectedRoutes } from "./app/common/constants/protected-routes";
 import { UserRoles } from "./app/common/types/user-roles.enum";
 
 export async function middleware(request: NextRequest) {
-  const authenticated = await getToken({ req: request, secret: process.env.NEXT_PUBLIC_SECRET });
+  const authenticated = await getToken({
+    req: request,
+    secret: process.env.NEXT_PUBLIC_SECRET,
+  });
   const { pathname } = request.nextUrl;
 
   const isNotAdmin = authenticated?.role === UserRoles.USER;
@@ -15,25 +18,34 @@ export async function middleware(request: NextRequest) {
 
   const isNotAuthenticated = !authenticated || authenticated === null;
 
-  if (isNotAuthenticated && adminProtectedRoutes.includes(pathname as Pathnames)) {
+  if (
+    isNotAuthenticated &&
+    adminProtectedRoutes.includes(pathname as Pathnames)
+  ) {
     return NextResponse.redirect(new URL(Pathnames.ADMIN_AUTH, request.url));
   }
 
-  if (authenticated) {
-    if (isNotAdmin && (adminProtectedRoutes.includes(pathname as Pathnames) || pathname === Pathnames.ADMIN_AUTH)) {
-      return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
-    }
-
-    if (isAdmin && pathname === Pathnames.ADMIN_AUTH) {
-      return NextResponse.redirect(new URL(Pathnames.ADMIN, request.url));
-    }
-
-    if (pathname === Pathnames.AUTH) {
-      return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
-    }
+  if (
+    authenticated &&
+    isNotAdmin &&
+    (adminProtectedRoutes.includes(pathname as Pathnames) ||
+      pathname === Pathnames.ADMIN_AUTH)
+  ) {
+    return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
   }
 
-  if (isNotAuthenticated && (pathname === Pathnames.CART || pathname === Pathnames.USER)) {
+  if (authenticated && isAdmin && pathname === Pathnames.ADMIN_AUTH) {
+    return NextResponse.redirect(new URL(Pathnames.ADMIN, request.url));
+  }
+
+  if (authenticated && pathname === Pathnames.AUTH) {
+    return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
+  }
+
+  if (
+    isNotAuthenticated &&
+    (pathname === Pathnames.CART || pathname === Pathnames.USER)
+  ) {
     return NextResponse.redirect(new URL(Pathnames.AUTH, request.url));
   }
 
