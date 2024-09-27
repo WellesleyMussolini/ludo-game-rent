@@ -1,30 +1,30 @@
-"use server";
+"use server"
 
-import { prisma } from "@/utils/lib/database/prisma";
-import { Card } from "../card/card.component";
-import { IBoardGame } from "@/types/boardgame.interface";
+import { BoardGame } from "@/app/common/types/boardgame.types";
+import { Card } from "../../common/components/card/card.component";
 import { ErrorMessage } from "../error-message/error-message.component";
+import { findAllBoardGames } from "@/services/find-all-boardgames.service";
 
-export default async function BoardGameCatalogue() {
+export const BoardGameCatalogue = () => {
   try {
-    const findAllBoardGames = await prisma.boardgames.findMany({
-      orderBy: { id: "desc" },
-    });
-    return (
-      <div className="flex flex-col md:grid md:grid-cols-6 gap-10 pt-28 pb-12 lg:py-12">
-        {findAllBoardGames.map((boardgame: IBoardGame, index: number) => (
+    return <div className={`
+      grid grid-cols-1 gap-10 pt-28
+      sm:grid sm:grid-cols-2 
+      lg:grid lg:grid-cols-3 
+      xl:grid xl:grid-cols-4 
+    `}>
+      {
+        findAllBoardGames.map((boardgame: BoardGame, index: number) => (
           <Card key={index} boardgame={boardgame} />
-        ))}
-      </div>
-    );
+        ))
+      }
+    </div>
   } catch {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <ErrorMessage
-          title="404"
-          message="Oops! Por algum motivo não foi possível encontrar o catálogo de jogos..."
-        />
-      </div>
-    );
+    return <div className="flex items-center justify-center pt-28 min-h-screen">
+      <ErrorMessage
+        title="404"
+        message="Oops! Por algum motivo não foi possível encontrar o catálogo de jogos..."
+      />
+    </div>
   }
-}
+};
