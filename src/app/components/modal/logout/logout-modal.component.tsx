@@ -8,12 +8,7 @@ import { PrimaryButtonStyles } from "../../primary-button/types/primary-button.t
 import { useContext } from "@/context/context";
 import { signOut } from "next-auth/react";
 
-export const LogoutModal = ({ handleLogout }: { handleLogout: () => void }) => {
-  const logout = () => {
-    handleLogout();
-    signOut();
-  };
-
+export const LogoutModal = () => {
   const { isLogoutModalOpen, setIsLogoutModalOpen } = useContext();
   return (
     <>
@@ -33,7 +28,7 @@ export const LogoutModal = ({ handleLogout }: { handleLogout: () => void }) => {
             <div className="mt-6 flex flex-wrap gap-4 lg:grid lg:grid-cols-2 lg:gap-4">
               <PrimaryButton
                 text="Desconectar"
-                onClick={() => logout()}
+                onClick={signOut}
                 type={PrimaryButtonStyles.ALERT}
               />
               <PrimaryButton
