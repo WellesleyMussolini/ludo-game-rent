@@ -14,7 +14,6 @@
     "@prisma/client": "^5.9.1",
     "@react-hook/media-query": "^1.1.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
-    "axios": "^1.6.7",
     "hamburger-react": "^2.5.0",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.368.0",
