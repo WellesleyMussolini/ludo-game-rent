@@ -1,19 +1,28 @@
+import { ludoUsersApi } from "@/app/common/api/ludo-games-api/users.api";
 import { UserRoles } from "@/app/common/types/user-roles.enum";
-import { handleUserRole } from "@/services/handle-user-role.service";
+import { IUser } from "@/app/common/types/user.interface";
 import React from "react";
 
-export const useUserTable = (id: string, role: UserRoles) => {
-    const [selectedRole, setSelectedRole] = React.useState<UserRoles>(role);
+export const useUserTable = (allUsers: Array<IUser>) => {
+  const [selectedRoles, setSelectedRoles] = React.useState<UserRoles[]>(
+    allUsers.map((user) => user.role)
+  );
 
-    const handleRoleChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const newRole = event.target.value as UserRoles;
-        setSelectedRole(newRole);
+  const handleRoleChange = async (
+    id: string,
+    index: number,
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const newRole = event.target.value as UserRoles;
 
-        try {
-            await handleUserRole(id, newRole);
-        } catch {
-            console.error("Error while trying to update role");
-        }
-    };
-    return { selectedRole, handleRoleChange }
+    setSelectedRoles(() =>
+      selectedRoles.map((role, position) =>
+        position === index ? newRole : role
+      )
+    );
+
+    await ludoUsersApi.findAndUpdate(id, newRole);
+  };
+
+  return { selectedRoles, handleRoleChange };
 };
