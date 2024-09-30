@@ -7,7 +7,7 @@ import { IUser } from "@/app/common/types/user.interface";
 
 export default async function Users() {
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex justify-center items-center py-10">
       {findAllUsers.length === 0 ? (
         <ErrorMessage
           title="404"
