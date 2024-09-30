@@ -4,6 +4,8 @@
 
 ### BUGS
 
+- Mudança de Role na rota "/admin/users" está funcionando, porém não está atualizando no frontend.
+
 - tratar a responsividade do formulario de criar jogos.
 
 - Ao adicionar um cargo ( role ) aos usuários a informação atualiza instantaneamente no banco de dados, porém leva um tempo para atualizar no site.
