@@ -5,7 +5,7 @@ import {
   PrimaryButton,
   PrimaryButtonTypes,
 } from "@/app/components/primary-button";
-import { sizeIcons } from "@/constants/size-icons";
+import { sizeIcons } from "@/app/common/constants/size-icons";
 import { useContext } from "@/context/context";
 import { GoAlertFill } from "react-icons/go";
 

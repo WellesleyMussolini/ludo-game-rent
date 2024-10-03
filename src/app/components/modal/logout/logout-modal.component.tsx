@@ -1,6 +1,6 @@
 "use client";
 
-import { sizeIcons } from "@/constants/size-icons";
+import { sizeIcons } from "@/app/common/constants/size-icons";
 import { GoAlertFill } from "react-icons/go";
 import {
   PrimaryButton,

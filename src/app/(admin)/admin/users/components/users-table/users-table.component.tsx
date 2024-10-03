@@ -2,7 +2,7 @@
 
 import React from "react";
 import { IUser } from "@/app/common/types/user.interface";
-import { userRoles } from "@/constants/user-roles";
+import { userRoles } from "@/app/common/constants/user-roles";
 import Image from "next/image";
 import { useUserTable } from "../../hooks/user-table.hook";
 
