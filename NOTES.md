@@ -17,3 +17,5 @@
 ### MODIFICAÇÕES
 
 - Deletar o arquivo "boardgames.api.ts" e mover a logica dos métodos HTTP para o arquivo: "boardgames.service.ts".
+
+- Utilizar as funções preventStringOnInputNumber e formatString que não estão sendo utilizadas.
