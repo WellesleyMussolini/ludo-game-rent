@@ -1,4 +1,4 @@
-import { prisma } from "@/utils/lib/database/prisma";
+import { prisma } from "@/app/common/utils/lib/database/prisma";
 import boardGameMapper from "./mapper/board-game.mapper";
 import { BoardGame } from "@/app/common/types/boardgame.types";
 

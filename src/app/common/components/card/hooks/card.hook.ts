@@ -3,7 +3,7 @@
 import { BoardGame } from "@/app/common/types/boardgame.types";
 import { Pathnames } from "@/app/common/types/pathnames.enum";
 import { useContext } from "@/app/common/context/context";
-import { formatCurrency } from "@/utils/format-currency";
+import { formatCurrency } from "@/app/common/utils/format-currency";
 import { usePathname, useRouter } from "next/navigation";
 
 export const useCard = (boardgame: BoardGame) => {

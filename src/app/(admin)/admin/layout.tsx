@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "../../globals.css";
 import React from "react";
-import { Provider } from "@/utils/lib/provider/provider";
+import { Provider } from "@/app/common/utils/lib/provider/provider";
 import { ThemeProvider } from "@/app/common/context/context";
 import { LoadingScreen } from "@/app/components/loading/loading-screen/loading-screen.component";
 import { LayoutWrapper } from "../layout/wrapper/wrapper.layout";
