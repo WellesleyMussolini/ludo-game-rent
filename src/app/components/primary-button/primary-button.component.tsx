@@ -1,23 +1,30 @@
 "use client";
 
 import React from "react";
-import { IPrimaryButton } from "./types/primary-button.types";
-import { usePrimaryButton } from "./hooks/primary-button.hook";
+import {
+  IPrimaryButton,
+  usePrimaryButton,
+} from "@/app/components/primary-button";
 
 export const PrimaryButton = ({
-    styles = "",
-    isLoading = false,
-    text,
-    type,
-    disabled = false,
-    loadingSize,
-    onClick,
+  styles = "",
+  isLoading = false,
+  text,
+  type,
+  disabled = false,
+  loadingSize,
+  onClick,
 }: IPrimaryButton) => {
-    const { typeClasses, buttonContent } = usePrimaryButton(isLoading, loadingSize, text, type);
-    return (
-        <button
-            type="button"
-            className={`
+  const { typeClasses, buttonContent } = usePrimaryButton(
+    isLoading,
+    loadingSize,
+    text,
+    type
+  );
+  return (
+    <button
+      type="button"
+      className={`
               tracking-widest 
               uppercase
               flex
@@ -33,10 +40,10 @@ export const PrimaryButton = ({
               ${typeClasses[type]}
               ${styles}
           `}
-            disabled={disabled}
-            onClick={onClick}
-        >
-            {buttonContent}
-        </button>
-    );
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {buttonContent}
+    </button>
+  );
 };
