@@ -2,7 +2,7 @@
 
 import { ErrorMessage } from "@/app/components/error-message/error-message.component";
 import { UsersTable } from "./components/users-table/users-table.component";
-import { findAllUsers } from "@/services/find-all-users.service";
+import { findAllUsers } from "@/app/common/services/find-all-users.service";
 import { IUser } from "@/app/common/types/user.interface";
 
 export default async function Users() {

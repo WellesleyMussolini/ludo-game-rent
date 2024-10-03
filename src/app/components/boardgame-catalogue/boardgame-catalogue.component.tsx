@@ -3,7 +3,7 @@
 import { BoardGame } from "@/app/common/types/boardgame.types";
 import { Card } from "../../common/components/card/card.component";
 import { ErrorMessage } from "../error-message/error-message.component";
-import { findAllBoardGames } from "@/services/find-all-boardgames.service";
+import { findAllBoardGames } from "@/app/common/services/find-all-boardgames.service";
 
 export const BoardGameCatalogue = () => {
   try {
