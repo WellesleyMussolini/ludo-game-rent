@@ -1,27 +1,26 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { ludoGamesApi } from "../../api/ludo-games-api/boardgames.api";
-import { ErrorMessage } from "@/app/components/error-message/error-message.component";
+import React from "react";
 import Image from "next/image";
-import { ButtonRentGame } from "../button-rent-game/button-rent-game.component";
+import { useSearchParams } from "next/navigation";
+import { ErrorMessage } from "@/app/common/components/error-message/error-message.component";
+import { ButtonRentGame } from "@/app/common/components/buttons";
+import { ludoApi } from "../../services/api/ludo.api";
+import { formatStringForApi } from "../../utils/format-string";
 
 export const BoardGame = async () => {
   const searchParams = useSearchParams()!;
   const param = searchParams.get("boardgame")!;
 
-  const formattedName = param
-    .replace(/-/g, " ")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
+  const foundGame = await ludoApi.boardgames.findByName(
+    formatStringForApi(param)
+  );
 
-  const foundGame = await ludoGamesApi.findByName(formattedName);
-
-  if (foundGame.length === 0) {
-    <div>
-      <ErrorMessage title="404" message="BoardGame não encontrado" />;
-    </div>;
+  if (!foundGame || foundGame.statusCode === 404) {
+    return (
+      <ErrorMessage title={foundGame.statusCode} message={foundGame.message} />
+    );
   }
-
   const boardgame = foundGame[0];
   return (
     <div className="flex flex-col items-center justify-center py-12 pt-28 gap-6 px-20">
@@ -33,10 +32,12 @@ export const BoardGame = async () => {
         className="w-56 h-56 object-cover rounded-xl"
       />
       <h1 className="text-5xl font-bold mb-4">{boardgame?.name}</h1>
-      <div
-        className="text-lg text-gray-700"
-        dangerouslySetInnerHTML={{ __html: boardgame.description }}
-      />
+      {boardgame?.description && (
+        <div
+          className="text-lg text-gray-700"
+          dangerouslySetInnerHTML={{ __html: boardgame.description }}
+        />
+      )}
       <ButtonRentGame boardgame={boardgame} />
     </div>
   );

@@ -5,14 +5,15 @@ import Image from "next/image";
 import Logo from "../../../../../public/images/logo.png";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useUserSession } from "@/app/hooks/session.hook";
+import { useUserSession } from "@/app/common/hooks/session.hook";
+
+import { Pathnames } from "@/app/common/types/pathnames.enum";
+import { UserMenu } from "./components/user-menu.component";
+import { LoadingSpinner } from "@/app/common/components/loading/loading-spinner/loading-spinner.component";
 import {
   PrimaryButton,
   PrimaryButtonTypes,
-} from "@/app/components/primary-button";
-import { Pathnames } from "@/app/common/types/pathnames.enum";
-import { UserMenu } from "./components/user-menu.component";
-import { LoadingSpinner } from "@/app/components/loading/loading-spinner/loading-spinner.component";
+} from "@/app/common/components/buttons";
 
 export const Header = () => {
   const redirect = useRouter();

@@ -5,18 +5,18 @@ import {
   BoardGameFormSteps,
   IBoardGameStepForm,
 } from "./types/boardgame-form.types";
-import { OverlayBackground } from "@/app/components/overlay-background/overlay-background.component";
 import { useBoardgameForm } from "./hooks/boardgame-form.hook";
 import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { PrimaryInput } from "@/app/common/components/primary-input/primary-input.component";
 import { PrimaryInputTypes } from "@/app/common/components/primary-input/primary-input.types";
-import {
-  PrimaryButton,
-  PrimaryButtonTypes,
-} from "@/app/components/primary-button";
 import Image from "next/image";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { Dropdown } from "@/app/common/components/dropdown/dropdown.component";
+import { OverlayBackground } from "@/app/common/components/overlay-background/overlay-background.component";
+import {
+  PrimaryButton,
+  PrimaryButtonTypes,
+} from "@/app/common/components/buttons";
 
 export const BoardGameForm = ({
   visibility,

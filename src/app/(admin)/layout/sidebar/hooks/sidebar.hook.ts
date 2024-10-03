@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useContext } from "@/context/context";
+import { useContext } from "@/app/common/context/context";
 import { useMediaQuery } from "@react-hook/media-query";
 import { useRouter } from "next/navigation";
 import { EnumSidebarMobileVisibility } from "../types/sidebar.enum";
@@ -16,7 +16,7 @@ export const useSidebar = () => {
 
   const toggleSidebarVisibility = () => setExpandedSidebar(!expandedSidebar);
 
-  const handleSwitchRoute = async(route: string) => {
+  const handleSwitchRoute = async (route: string) => {
     await router.push(route);
     setExpandedSidebar(false);
   };

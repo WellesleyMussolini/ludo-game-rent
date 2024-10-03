@@ -7,9 +7,9 @@ import { Pathnames } from "../../types/pathnames.enum";
 import {
   PrimaryButton,
   PrimaryButtonTypes,
-} from "@/app/components/primary-button";
+  ButtonRentGame,
+} from "@/app/common/components/buttons";
 import { useCard } from "./hooks/card.hook";
-import { ButtonRentGame } from "../button-rent-game/button-rent-game.component";
 import { BsHourglassSplit } from "react-icons/bs";
 import { MdGroup } from "react-icons/md";
 

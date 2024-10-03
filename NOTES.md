@@ -1,4 +1,4 @@
-### Tarefas Pendentes
+### Tarefas
 
 - Verificar classes repetidas e passar para o globals.css
 
@@ -10,6 +10,8 @@
 
 - Ao deletar um jogo no frontend, a informação é deletada em tempo real na api mas demora para aparecer no frontend.
 
-- tratar a responsividade do formulario de criar jogos.
-
 - Ao adicionar um cargo ( role ) aos usuários a informação atualiza instantaneamente no banco de dados, porém leva um tempo para atualizar no site.
+
+### MODIFICAÇÕES
+
+- Deletar o arquivo "boardgames.api.ts" e mover a logica dos métodos HTTP para o arquivo: "boardgames.service.ts".

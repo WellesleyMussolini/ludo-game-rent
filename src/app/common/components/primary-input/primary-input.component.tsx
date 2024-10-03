@@ -1,13 +1,16 @@
-"use client"
+"use client";
 
-import { IPrimaryInput } from "./primary-input.types";
+import { IPrimaryInput, PrimaryInputTypes } from "./primary-input.types";
+import { preventStringOnInputNumber } from "./utils/prevent-string-on-input-number";
 
 export const PrimaryInput = ({
-    text,
-    type,
-    placeholder,
-    handleOnChange,
-}: IPrimaryInput) => <input className="
+  text,
+  type,
+  placeholder,
+  handleOnChange,
+}: IPrimaryInput) => (
+  <input
+    className="
     block 
     w-full 
     p-4 
@@ -21,4 +24,10 @@ export const PrimaryInput = ({
     placeholder={placeholder}
     value={text}
     onChange={(event) => handleOnChange(event.target.value)}
-    />
+    onKeyDown={(event) => {
+      if (type === PrimaryInputTypes.NUMBER) {
+        preventStringOnInputNumber(event);
+      }
+    }}
+  />
+);

@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { useContext } from "@/context/context";
+import { useContext } from "@/app/common/context/context";
 import { CartList } from "../cart-list/cart-list.component";
+import { ErrorMessage } from "@/app/common/components/error-message/error-message.component";
+import { calculateCartAmount } from "../../utils/calculate-cart-amount";
 import {
   PrimaryButton,
   PrimaryButtonTypes,
-} from "@/app/components/primary-button";
-import { ErrorMessage } from "@/app/components/error-message/error-message.component";
-import { calculateCartAmount } from "../../utils/calculate-cart-amount";
+} from "@/app/common/components/buttons";
 
 export const CartSummary = () => {
   const { cart } = useContext();

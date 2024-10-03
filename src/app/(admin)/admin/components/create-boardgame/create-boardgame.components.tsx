@@ -5,7 +5,7 @@ import { BoardGameForm } from "../boardgame-form/boardgame-form.component";
 import {
   PrimaryButton,
   PrimaryButtonTypes,
-} from "@/app/components/primary-button";
+} from "@/app/common/components/buttons";
 
 export const CreateBoardgame = () => {
   const [isOpenBoardgameStepForms, setIsOpenBoardgameStepForms] =

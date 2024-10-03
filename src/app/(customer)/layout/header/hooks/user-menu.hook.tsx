@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
-import { useUserSession } from "@/app/hooks/session.hook";
-import { useContext } from "@/context/context";
+import { useUserSession } from "@/app/common/hooks/session.hook";
+import { useContext } from "@/app/common/context/context";
 
 export const useUserMenu = () => {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState<boolean>(false);
@@ -28,7 +28,6 @@ export const useUserMenu = () => {
   }, []);
 
   const userInfo = {
-    userId: session?.user.id ?? "",
     userImage: session?.user.image ?? "",
     userName: session?.user.name ?? "",
   };
