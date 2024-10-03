@@ -1,15 +1,30 @@
-"use client"
+"use client";
 
 import { BoardGame } from "@/app/common/types/boardgame.types";
+import { Pathnames } from "@/app/common/types/pathnames.enum";
+import { useContext } from "@/context/context";
 import { formatCurrency } from "@/utils/format-currency";
-import { useRouter } from "next/navigation";
-import { CardStatus } from "../types/card.types";
+import { usePathname, useRouter } from "next/navigation";
 
 export const useCard = (boardgame: BoardGame) => {
   const router = useRouter();
+  const pathname = usePathname();
+  const { modals, setModals, setGetBoardGameId } = useContext();
+
   const boardgamePrice = formatCurrency(boardgame.price);
 
-  const redirectToBoardgameAbout = () => router.push(`/boardgame/${boardgame.id}`);
+  const formatName = boardgame.name.toLowerCase().replace(/\s+/g, "-");
 
-  return { redirectToBoardgameAbout, boardgamePrice };
+  const redirectToBoardgameAbout = () => {
+    pathname === Pathnames.HOME && router.push(`?boardgame=${formatName}`);
+  };
+
+  return {
+    redirectToBoardgameAbout,
+    boardgamePrice,
+    pathname,
+    modals,
+    setModals,
+    setGetBoardGameId,
+  };
 };
