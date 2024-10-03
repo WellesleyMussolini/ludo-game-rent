@@ -1,7 +1,7 @@
 "use server";
 
-import { EnumAuth } from "@/app/components/auth/types/auth.types";
-import { Auth as AuthComponent } from "../../../components/auth/auth.component";
+import { EnumAuth } from "@/app/common/components/auth/types/auth.types";
+import { Auth as AuthComponent } from "@/app/common/components/auth/auth.component";
 
 export default async function Auth() {
   return (

@@ -1,4 +1,4 @@
-import { ludoUsersApi } from "@/app/common/api/ludo-games-api/users.api";
+import { ludoApi } from "@/app/common/services/api/ludo.api";
 import { UserRoles } from "@/app/common/types/user-roles.enum";
 import { IUser } from "@/app/common/types/user.interface";
 import React from "react";
@@ -21,7 +21,7 @@ export const useUserTable = (allUsers: Array<IUser>) => {
       )
     );
 
-    await ludoUsersApi.findAndUpdate(id, newRole);
+    await ludoApi.users.findAndUpdate(id, newRole);
   };
 
   return { selectedRoles, handleRoleChange };

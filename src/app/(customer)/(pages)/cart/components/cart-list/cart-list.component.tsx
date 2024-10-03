@@ -5,14 +5,14 @@ import { useContext } from "@/app/common/context/context";
 import Image from "next/image";
 import { FaTrashAlt } from "react-icons/fa";
 import { sizeIcons } from "@/app/common/constants/size-icons";
-import { IBoardGame } from "@/types/boardgame.interface";
 import { removeCartItem } from "../../utils/remove-cart-item";
+import { BoardGame } from "@/app/common/types/boardgame.types";
 
 export const CartList = () => {
   const { cart, setCart } = useContext();
   return (
     <div className="overflow-y-auto h-36 max-[400px]:h-28 sm:h-auto max overflow-x-hidden">
-      {cart.map((item: IBoardGame, index: number) => (
+      {cart.map((item: BoardGame, index: number) => (
         <div
           key={index}
           className="flex items-center justify-between mb-4 max-[400px]:px-3 py-3 break-words"

@@ -1,6 +1,6 @@
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { LogoutModal } from "@/app/components/modal/logout/logout-modal.component";
+import { LogoutModal } from "@/app/common/components/modal/logout/logout-modal.component";
 import React from "react";
 import { Header } from "../header/header.layout";
 
@@ -20,7 +20,6 @@ export const LayoutWrapper = () => (
       transition={Bounce}
       className="z-50"
     />
-
     <LogoutModal />
     <Header />
   </>

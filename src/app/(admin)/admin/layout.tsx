@@ -4,8 +4,9 @@ import "../../globals.css";
 import React from "react";
 import { Provider } from "@/app/common/utils/lib/provider/provider";
 import { ThemeProvider } from "@/app/common/context/context";
-import { LoadingScreen } from "@/app/components/loading/loading-screen/loading-screen.component";
+import { LoadingScreen } from "@/app/common/components/loading/loading-screen/loading-screen.component";
 import { LayoutWrapper } from "../layout/wrapper/wrapper.layout";
+import { ProgressBar } from "@/app/common/components/progress-bar/progress-bar.component";
 
 const font = Roboto({ weight: "500", subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${font.className} bg-background`}>
         <Provider>
+          <ProgressBar />
           <ThemeProvider>
             <React.Suspense fallback={<LoadingScreen />}>
               <LayoutWrapper />

@@ -1,5 +1,9 @@
-export const formatString = (boardgameName: string): string => {
-    const words = boardgameName.split(' ');
-    const formattedWords = words.map(word => word.toLowerCase());
-    return formattedWords.join('-');
+export const formatStringForApi = (boardgameName: string): string => {
+  return boardgameName
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+};
+
+export const formatStringForUrl = (boardgameName: string): string => {
+  return boardgameName.toLowerCase().replace(/\s+/g, "-");
 };

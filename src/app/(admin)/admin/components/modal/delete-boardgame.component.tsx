@@ -1,13 +1,13 @@
-import { ludoGamesApi } from "@/app/common/api/ludo-games-api/boardgames.api";
 import { useIsLoading } from "@/app/common/hooks/is-loading.hook";
-import { OverlayBackground } from "@/app/components/overlay-background/overlay-background.component";
-import {
-  PrimaryButton,
-  PrimaryButtonTypes,
-} from "@/app/components/primary-button";
 import { sizeIcons } from "@/app/common/constants/size-icons";
 import { useContext } from "@/app/common/context/context";
 import { GoAlertFill } from "react-icons/go";
+import { ludoApi } from "@/app/common/services/api/ludo.api";
+import { OverlayBackground } from "@/app/common/components/overlay-background/overlay-background.component";
+import {
+  PrimaryButton,
+  PrimaryButtonTypes,
+} from "@/app/common/components/buttons";
 
 export const DeleteBoardGame = () => {
   const { modals, setModals, getBoardGameId, setGetBoardGameId } = useContext();
@@ -33,7 +33,7 @@ export const DeleteBoardGame = () => {
                 isLoading={isLoading}
                 onClick={async () => {
                   setIsLoading(true);
-                  await ludoGamesApi.findAndDelete(getBoardGameId);
+                  await ludoApi.boardgames.findAndDelete(getBoardGameId);
                   setGetBoardGameId("");
                   setModals({ ...modals, deleteBoardGame: false });
                   setIsLoading(false);

@@ -5,6 +5,7 @@ import { Pathnames } from "@/app/common/types/pathnames.enum";
 import { useContext } from "@/app/common/context/context";
 import { formatCurrency } from "@/app/common/utils/format-currency";
 import { usePathname, useRouter } from "next/navigation";
+import { formatStringForUrl } from "@/app/common/utils/format-string";
 
 export const useCard = (boardgame: BoardGame) => {
   const router = useRouter();
@@ -13,10 +14,9 @@ export const useCard = (boardgame: BoardGame) => {
 
   const boardgamePrice = formatCurrency(boardgame.price);
 
-  const formatName = boardgame.name.toLowerCase().replace(/\s+/g, "-");
-
   const redirectToBoardgameAbout = () => {
-    pathname === Pathnames.HOME && router.push(`?boardgame=${formatName}`);
+    pathname === Pathnames.HOME &&
+      router.push(`?boardgame=${formatStringForUrl(boardgame.name)}`);
   };
 
   return {
