@@ -7,7 +7,7 @@ import {
   PrimaryButtonTypes,
 } from "@/app/components/primary-button";
 import { OverlayBackground } from "../../overlay-background/overlay-background.component";
-import { useContext } from "@/context/context";
+import { useContext } from "@/app/common/context/context";
 import { signOut } from "next-auth/react";
 
 export const LogoutModal = () => {

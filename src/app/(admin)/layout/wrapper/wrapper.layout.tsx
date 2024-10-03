@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext } from "@/context/context";
+import { useContext } from "@/app/common/context/context";
 import Sidebar from "../sidebar/sidebar.layout";
 import { Squash as Hamburger } from "hamburger-react";
 import { usePathname } from "next/navigation";

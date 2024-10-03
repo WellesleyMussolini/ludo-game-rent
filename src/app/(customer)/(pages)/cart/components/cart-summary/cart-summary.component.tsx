@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useContext } from "@/context/context";
+import { useContext } from "@/app/common/context/context";
 import { CartList } from "../cart-list/cart-list.component";
 import {
   PrimaryButton,

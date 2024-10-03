@@ -6,7 +6,7 @@ import {
   PrimaryButtonTypes,
 } from "@/app/components/primary-button";
 import { sizeIcons } from "@/app/common/constants/size-icons";
-import { useContext } from "@/context/context";
+import { useContext } from "@/app/common/context/context";
 import { GoAlertFill } from "react-icons/go";
 
 export const DeleteBoardGame = () => {

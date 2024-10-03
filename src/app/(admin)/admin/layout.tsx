@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "../../globals.css";
 import React from "react";
-import Sidebar from "../layout/sidebar/sidebar.layout";
 import { Provider } from "@/utils/lib/provider/provider";
-import { ThemeProvider } from "@/context/context";
+import { ThemeProvider } from "@/app/common/context/context";
 import { LoadingScreen } from "@/app/components/loading/loading-screen/loading-screen.component";
 import { LayoutWrapper } from "../layout/wrapper/wrapper.layout";
 
@@ -12,7 +11,8 @@ const font = Roboto({ weight: "500", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "LudoCafé",
-  description: "Oferecemos uma seleção diversificada de jogos de tabuleiro para aluguel. Nosso catálogo abrange desde clássicos a jogos modernos. Em vez de comprar jogos caros, alugue e experimente novos títulos quando quiser. Reserve seu jogo hoje e divirta-se!",
+  description:
+    "Oferecemos uma seleção diversificada de jogos de tabuleiro para aluguel. Nosso catálogo abrange desde clássicos a jogos modernos. Em vez de comprar jogos caros, alugue e experimente novos títulos quando quiser. Reserve seu jogo hoje e divirta-se!",
   icons: {
     icon: "../images/joystick.png",
   },
@@ -37,4 +37,4 @@ export default function RootLayout({
       </body>
     </html>
   );
-};
+}

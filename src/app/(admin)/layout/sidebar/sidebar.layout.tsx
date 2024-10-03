@@ -4,7 +4,7 @@ import React from "react";
 import { EnumSidebarResponsive } from "./types/sidebar.enum";
 import { useSidebar } from "./hooks/sidebar.hook";
 import { OverlayBackground } from "@/app/components/overlay-background/overlay-background.component";
-import { useContext } from "@/context/context";
+import { useContext } from "@/app/common/context/context";
 import { usePathname } from "next/navigation";
 import { Pathnames } from "@/app/common/types/pathnames.enum";
 import Image from "next/image";

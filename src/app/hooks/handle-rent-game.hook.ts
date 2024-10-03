@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext } from "@/context/context";
+import { useContext } from "@/app/common/context/context";
 import { IBoardGame } from "@/types/boardgame.interface";
 import { toast } from "react-toastify";
 
@@ -20,7 +20,7 @@ export const useHandleRentGame = (boardgame: IBoardGame | null) => {
       toast.success(`${boardgame.name} adicionado no carrinho!`);
     } else {
       toast.warn(`${boardgame.name} já adicionado no carrinho.`);
-    };
+    }
   };
 
   return { handleRentGame };

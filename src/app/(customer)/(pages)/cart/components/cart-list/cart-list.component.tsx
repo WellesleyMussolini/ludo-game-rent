@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useContext } from "@/context/context";
+import { useContext } from "@/app/common/context/context";
 import Image from "next/image";
 import { FaTrashAlt } from "react-icons/fa";
 import { sizeIcons } from "@/app/common/constants/size-icons";
