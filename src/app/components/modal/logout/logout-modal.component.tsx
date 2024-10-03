@@ -2,19 +2,23 @@
 
 import { sizeIcons } from "@/constants/size-icons";
 import { GoAlertFill } from "react-icons/go";
-import { PrimaryButton } from "../../primary-button/primary-button.component";
+import {
+  PrimaryButton,
+  PrimaryButtonTypes,
+} from "@/app/components/primary-button";
 import { OverlayBackground } from "../../overlay-background/overlay-background.component";
-import { PrimaryButtonStyles } from "../../primary-button/types/primary-button.types";
 import { useContext } from "@/context/context";
 import { signOut } from "next-auth/react";
 
 export const LogoutModal = () => {
-  const { isLogoutModalOpen, setIsLogoutModalOpen } = useContext();
+  const { modals, setModals } = useContext();
   return (
     <>
-      {isLogoutModalOpen && (
+      {modals.logout && (
         <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50">
-          <OverlayBackground onClick={() => setIsLogoutModalOpen(false)} />
+          <OverlayBackground
+            onClose={() => setModals({ ...modals, logout: false })}
+          />
           <div
             className="relative max-[400px]:w-[80%] z-[60] bg-white gap-2 flex flex-col rounded-2xl border border-blue-100 bg-contrastBackground p-4 shadow-lg sm:p-6 lg:p-8 animate-jump-in animate-delay-[1ms]"
             role="alert"
@@ -29,12 +33,12 @@ export const LogoutModal = () => {
               <PrimaryButton
                 text="Desconectar"
                 onClick={signOut}
-                type={PrimaryButtonStyles.ALERT}
+                type={PrimaryButtonTypes.ALERT}
               />
               <PrimaryButton
                 text="Cancelar"
-                onClick={() => setIsLogoutModalOpen(false)}
-                type={PrimaryButtonStyles.SECONDARY}
+                onClick={() => setModals({ ...modals, logout: false })}
+                type={PrimaryButtonTypes.SECONDARY}
               />
             </div>
           </div>
