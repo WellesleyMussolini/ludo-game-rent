@@ -13,3 +13,7 @@
 - tratar a responsividade do formulario de criar jogos.
 
 - Ao adicionar um cargo ( role ) aos usuários a informação atualiza instantaneamente no banco de dados, porém leva um tempo para atualizar no site.
+
+### MODIFICAÇÕES
+
+- Deletar o arquivo "boardgames.api.ts" e mover a logica dos métodos HTTP para o arquivo: "boardgames.service.ts".
