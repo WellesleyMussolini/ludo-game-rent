@@ -3,10 +3,12 @@
 import React from "react";
 import { useContext } from "@/context/context";
 import { CartList } from "../cart-list/cart-list.component";
-import { PrimaryButton } from "@/app/components/primary-button/primary-button.component";
+import {
+  PrimaryButton,
+  PrimaryButtonTypes,
+} from "@/app/components/primary-button";
 import { ErrorMessage } from "@/app/components/error-message/error-message.component";
 import { calculateCartAmount } from "../../utils/calculate-cart-amount";
-import { PrimaryButtonStyles } from "@/app/components/primary-button/types/primary-button.types";
 
 export const CartSummary = () => {
   const { cart } = useContext();
@@ -43,7 +45,7 @@ export const CartSummary = () => {
                 styles="mt-8"
                 text="Finalizar"
                 onClick={() => {}}
-                type={PrimaryButtonStyles.PRIMARY}
+                type={PrimaryButtonTypes.PRIMARY}
               />
             </div>
           </div>
