@@ -3,8 +3,10 @@
 import React from "react";
 import { useAuth } from "./hooks/auth.hook";
 import { IAuth } from "./types/auth.types";
-import { PrimaryButton } from "@/app/components/primary-button/primary-button.component";
-import { PrimaryButtonStyles } from "../primary-button/types/primary-button.types";
+import {
+  PrimaryButton,
+  PrimaryButtonTypes,
+} from "@/app/components/primary-button";
 
 export const Auth = ({ type }: IAuth) => {
   const { isLoading, handleSignIn } = useAuth({ type });
@@ -17,7 +19,7 @@ export const Auth = ({ type }: IAuth) => {
         <PrimaryButton
           isLoading={isLoading}
           text="Entrar com Google"
-          type={PrimaryButtonStyles.GOOGLE}
+          type={PrimaryButtonTypes.GOOGLE}
           onClick={handleSignIn}
         />
       </div>

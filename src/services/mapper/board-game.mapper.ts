@@ -1,8 +1,8 @@
-import { IBoardGame } from "@/types/boardgame.interface";
+import { BoardGame } from "@/app/common/types/boardgame.types";
 import { ResponseBoardGame } from "../types/board-games.types";
 
 class BoardGameMapper {
-  toDomain(persistence: ResponseBoardGame): IBoardGame {
+  toDomain(persistence: ResponseBoardGame): BoardGame {
     return {
       id: persistence.id,
       name: persistence.name,
@@ -16,6 +16,6 @@ class BoardGameMapper {
       description: persistence.description,
     };
   }
-};
+}
 
 export default new BoardGameMapper();
