@@ -12,6 +12,37 @@
 
 - Ao adicionar um cargo ( role ) aos usuários a informação atualiza instantaneamente no banco de dados, porém leva um tempo para atualizar no site.
 
+- Não estou conseguindo utilizar o método find by name dentro do component boardgame por conflito da logica
+
 ### MODIFICAÇÕES
 
 - Deletar o arquivo "boardgames.api.ts" e mover a logica dos métodos HTTP para o arquivo: "boardgames.service.ts".
+
+### CODE
+
+- Substituir esse trecho de código:
+
+```javascript
+const foundGame = await ludoApi.boardgames.findByName(
+  formatStringForApi(param)
+);
+if (!foundGame || foundGame.statusCode === 404) {
+  return (
+    <ErrorMessage title={foundGame.statusCode} message={foundGame.message} />
+  );
+}
+
+const boardgame = foundGame[0];
+```
+
+- Por esse:
+
+```javascript
+const foundGame = await boardGamesService.getByName(formatStringForApi(param));
+
+const boardgame = foundGame;
+```
+
+- A alteração acima so poderá ser feita quando o find all for substituido do prisma pelo find all da api no arquivo boardgame.service.tsx.
+
+- Rota da substituição da lógica: "src/app/common/components/boardgame/boardgame.component.tsx"

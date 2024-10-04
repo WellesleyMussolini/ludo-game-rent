@@ -3,10 +3,10 @@
 import React from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { ErrorMessage } from "@/app/common/components/error-message/error-message.component";
 import { ButtonRentGame } from "@/app/common/components/buttons";
-import { ludoApi } from "../../services/api/ludo.api";
 import { formatStringForApi } from "../../utils/format-string";
+import { ludoApi } from "../../services/api/ludo.api";
+import { ErrorMessage } from "../error-message/error-message.component";
 
 export const BoardGame = async () => {
   const searchParams = useSearchParams()!;
@@ -15,12 +15,12 @@ export const BoardGame = async () => {
   const foundGame = await ludoApi.boardgames.findByName(
     formatStringForApi(param)
   );
-
   if (!foundGame || foundGame.statusCode === 404) {
     return (
       <ErrorMessage title={foundGame.statusCode} message={foundGame.message} />
     );
   }
+
   const boardgame = foundGame[0];
   return (
     <div className="flex flex-col items-center justify-center py-12 pt-28 gap-6 px-20">

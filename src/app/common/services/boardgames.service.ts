@@ -26,18 +26,14 @@ class BoardGames {
     return boardGameMapper.toDomain(findBoardgame);
   }
   async getByName(name: string): Promise<BoardGame | null> {
-    // const findBoardgame = await prisma.boardgames.findUnique({
-    //   where: { id: id },
-    // });
-
     const findBoardgame = await ludoApi.boardgames.findByName(name);
 
-    if (!findBoardgame) return null; // Return null if no board game is found
+    if (!findBoardgame || !findBoardgame[0]) return null; // Adjust if the API returns an array
 
-    return boardGameMapper.toDomain(findBoardgame);
+    return boardGameMapper.toDomain(findBoardgame[0]); // Assuming the first result is the match
   }
 }
 
-const boardGamesService = new BoardGames();
+export const boardGamesService = new BoardGames();
 
 export const findAllBoardGames = await boardGamesService.get();
