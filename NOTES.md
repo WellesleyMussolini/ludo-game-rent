@@ -20,6 +20,8 @@
 
 - adicionar tratativas caso o usuario tente acessar a rota: "/search" pois esta causando loop infinito.
 
+- refatorar a pagina cart e seus componentes e funções. E tratar a responsividade do cart summary.
+
 ### MODIFICAÇÕES
 
 - Deletar o arquivo "boardgames.api.ts" e mover a logica dos métodos HTTP para o arquivo: "boardgames.service.ts".
