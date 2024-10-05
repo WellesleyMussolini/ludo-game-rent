@@ -1,17 +1,12 @@
 "use server";
 
-import { BoardGame } from "../common/components/boardgame/boardgame.component";
 import { BoardGameCatalogue } from "../common/components/boardgame-catalogue/boardgame-catalogue.component";
+import { findAllBoardGames } from "../common/services/boardgames.service";
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: { boardgame: string | null };
-}) {
-  const isBoardGameSelected = searchParams.boardgame?.trim();
+export default async function Home() {
   return (
     <div className="flex items-center justify-center min-h-screen">
-      {isBoardGameSelected ? <BoardGame /> : <BoardGameCatalogue />}
+      <BoardGameCatalogue boardgames={findAllBoardGames} />
     </div>
   );
 }

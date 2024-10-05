@@ -4,7 +4,7 @@ import { ResponseBoardGame } from "../types/board-games.types";
 class BoardGameMapper {
   toDomain(persistence: ResponseBoardGame): BoardGame {
     return {
-      id: persistence.id,
+      id: persistence._id,
       name: persistence.name,
       image: persistence.image,
       price: persistence.price,

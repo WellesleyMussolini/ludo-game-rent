@@ -29,7 +29,10 @@ interface IProviderProps {
 }
 
 export const ThemeProvider = ({ children }: IProviderProps) => {
-  const [cart, setCart] = React.useState<Array<BoardGame>>([]);
+  const [cart, setCart] = React.useState<Array<BoardGame>>(() => {
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
   const [getBoardGameId, setGetBoardGameId] = React.useState<string>("");
   const [modals, setModals] = React.useState<{
     logout: boolean;
@@ -40,6 +43,11 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
   });
 
   const [expandedSidebar, setExpandedSidebar] = React.useState<boolean>(false);
+
+  // Update local storage whenever the cart changes
+  React.useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
 
   return (
     <ContextProvider.Provider

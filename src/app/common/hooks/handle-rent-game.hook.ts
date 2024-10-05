@@ -7,20 +7,20 @@ import { BoardGame } from "../types/boardgame.types";
 export const useHandleRentGame = (boardgame: BoardGame | null) => {
   const { cart, setCart } = useContext();
 
-  const handleRentGame = async () => {
-    // Handle the case where boardgame is null
+  const handleRentGame = async (event: any) => {
+    event.stopPropagation();
+
     if (!boardgame) return;
 
-    // Check if the boardgame is already in the cart
-    const isDuplicated = cart.some((item) => item.id === boardgame.id);
+    const isGameInCart = cart.some((item) => item.id === boardgame.id);
 
-    // If it's not duplicated then it'll add to the cart
-    if (!isDuplicated) {
-      setCart([...cart, boardgame]);
-      toast.success(`${boardgame.name} adicionado no carrinho!`);
-    } else {
-      toast.warn(`${boardgame.name} já adicionado no carrinho.`);
+    if (isGameInCart) {
+      toast.warn(` ${boardgame.name} is already in your cart`);
+      return;
     }
+
+    setCart([...cart, boardgame]);
+    toast.success(`${boardgame.name} added to your cart`);
   };
 
   return { handleRentGame };

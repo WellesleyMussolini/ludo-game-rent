@@ -2,7 +2,11 @@ export const ludoApi = {
   boardgames: {
     findAll: async () => {
       return (
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/boardgames`)
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/boardgames`, {
+          headers: {
+            "Cache-Control": "no-cache",
+          },
+        })
       ).json();
     },
 

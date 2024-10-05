@@ -14,6 +14,12 @@
 
 - Não estou conseguindo utilizar o método find by name dentro do component boardgame por conflito da logica
 
+- substituir a logica de acessar o boardgame about pelo nome para acessar pelo ID, a logica esta redundante e ao inves de acessar apenas um jogo esta retornando varios.
+
+- tratars os bugs no console.log ao acessar o boardgame about, quando a tela esta em carregando mensagens de error sao geradas.
+
+- adicionar tratativas caso o usuario tente acessar a rota: "/search" pois esta causando loop infinito.
+
 ### MODIFICAÇÕES
 
 - Deletar o arquivo "boardgames.api.ts" e mover a logica dos métodos HTTP para o arquivo: "boardgames.service.ts".

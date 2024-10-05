@@ -16,7 +16,7 @@ export const useCard = (boardgame: BoardGame) => {
 
   const redirectToBoardgameAbout = () => {
     pathname === Pathnames.HOME &&
-      router.push(`?boardgame=${formatStringForUrl(boardgame.name)}`);
+      router.push(`search?boardgame=${formatStringForUrl(boardgame.name)}`);
   };
 
   return {

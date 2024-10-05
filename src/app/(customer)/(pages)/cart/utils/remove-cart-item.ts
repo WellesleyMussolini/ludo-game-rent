@@ -6,8 +6,7 @@ export const removeCartItem = (
   id: string
 ) => {
   if (id) {
-    // Ensure id is not undefined
     const updatedCart = cart.filter((item: BoardGame) => item.id !== id);
-    setCart(updatedCart); // Update the cart with the new array
+    setCart(updatedCart);
   }
 };
