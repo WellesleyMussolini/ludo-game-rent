@@ -1,5 +1,3 @@
-"use server";
-
 import { BoardGameCatalogue } from "../common/components/boardgame-catalogue/boardgame-catalogue.component";
 import { findAllBoardGames } from "../common/services/boardgames.service";
 

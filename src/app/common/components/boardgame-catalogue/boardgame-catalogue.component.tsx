@@ -15,6 +15,8 @@ export const BoardGameCatalogue = ({
 }) => {
   const [inputText, setInputText] = React.useState<string>("");
   const pathname = usePathname();
+
+  // Trazer via api
   const filteredBoardGames = inputText
     ? boardgames.filter((game) =>
         game.name.toLowerCase().includes(inputText.toLowerCase())
