@@ -22,6 +22,10 @@
 
 - refatorar a pagina cart e seus componentes e funções. E tratar a responsividade do cart summary.
 
+- Ao atualizar algum codigo ou página erros aparecem no terminal.
+
+- Limpar todas as mensagens de error no console do browser e remover todos os trechos de condigo com console.log
+
 ### MODIFICAÇÕES
 
 - Deletar o arquivo "boardgames.api.ts" e mover a logica dos métodos HTTP para o arquivo: "boardgames.service.ts".
