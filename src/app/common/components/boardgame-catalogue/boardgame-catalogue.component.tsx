@@ -17,11 +17,9 @@ export const BoardGameCatalogue = () => {
   const searchParams = useSearchParams();
 
   const handleSearch = async (): Promise<void> => {
-    // Use hyphens for the URL
-    const searchUrl = inputText.replace(/\s+/g, "-").toLowerCase();
+    const searchUrl = inputText.replace(/\s+/g, "-").toLowerCase(); // Use hyphens for the URL
 
-    // Convert hyphens back to spaces for backend search
-    const searchQuery = inputText.toLowerCase();
+    const searchQuery = inputText.toLowerCase(); // Convert hyphens back to spaces for backend search
 
     const result = await boardGamesService.getByName(searchQuery); // searchQuery with spaces
 
@@ -36,10 +34,10 @@ export const BoardGameCatalogue = () => {
       const boardgameQuery = searchParams.get("boardgame");
 
       if (boardgameQuery) {
-        // Convert hyphens back to spaces for backend search
-        const searchQuery = boardgameQuery.replace(/-/g, " ");
+        const searchQuery = boardgameQuery.replace(/-/g, " "); // Convert hyphens back to spaces for backend search
 
         const result = await boardGamesService.getByName(searchQuery); // searchQuery with spaces
+
         setBoardgames(result as BoardGame[]);
       } else {
         const result = await boardGamesService.get();
