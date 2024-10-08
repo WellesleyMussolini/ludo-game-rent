@@ -1,7 +1,7 @@
-import { ludoApi } from "@/app/common/services/api/ludo.api";
+import React from "react";
+import { usersService } from "@/app/common/services/users.service";
 import { UserRoles } from "@/app/common/types/user-roles.enum";
 import { IUser } from "@/app/common/types/user.interface";
-import React from "react";
 
 export const useUserTable = (allUsers: Array<IUser>) => {
   const [selectedRoles, setSelectedRoles] = React.useState<UserRoles[]>(
@@ -21,7 +21,7 @@ export const useUserTable = (allUsers: Array<IUser>) => {
       )
     );
 
-    await ludoApi.users.findAndUpdate(id, newRole);
+    await usersService.update(id, newRole);
   };
 
   return { selectedRoles, handleRoleChange };

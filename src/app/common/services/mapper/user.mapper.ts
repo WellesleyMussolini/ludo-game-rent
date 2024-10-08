@@ -1,11 +1,13 @@
 import { IUser } from "../../types/user.interface";
 
-interface ResponseUser extends IUser {}
+export interface ResponseUser extends IUser {
+  _id: string;
+}
 
 class UserMapper {
   toDomain(persistence: ResponseUser): IUser {
     return {
-      id: persistence.id,
+      id: persistence._id,
       name: persistence.name,
       email: persistence.email,
       emailVerified: persistence.emailVerified,

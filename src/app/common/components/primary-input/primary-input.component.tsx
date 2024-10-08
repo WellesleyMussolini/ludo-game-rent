@@ -4,39 +4,30 @@ import { IoSearchSharp } from "react-icons/io5";
 import { IPrimaryInput, PrimaryInputTypes } from "./primary-input.types";
 import { preventStringOnInputNumber } from "./utils/prevent-string-on-input-number";
 import { sizeIcons } from "../../constants/size-icons";
-import { MdOutlineEmail } from "react-icons/md";
-import { BiLockAlt } from "react-icons/bi";
-import { IconType } from "react-icons";
-
-const InputIconMap: Record<PrimaryInputTypes, IconType | null> = {
-  [PrimaryInputTypes.SEARCH]: IoSearchSharp,
-  [PrimaryInputTypes.EMAIL]: MdOutlineEmail,
-  [PrimaryInputTypes.PASSWORD]: BiLockAlt,
-  [PrimaryInputTypes.TEXT]: null,
-  [PrimaryInputTypes.NUMBER]: null,
-};
-
-const InputIcon = ({ type }: { type: PrimaryInputTypes }) => {
-  const IconComponent = InputIconMap[type];
-  return (
-    IconComponent && (
-      <div className="flex justify-center items-center w-16 text-gray-500 bg-white">
-        <IconComponent size={sizeIcons.medium} />
-      </div>
-    )
-  );
-};
+import { useRouter } from "next/navigation";
 
 export const PrimaryInput = ({
   text,
   type,
   placeholder,
   handleOnChange,
+  handleOnSearch,
 }: IPrimaryInput) => {
+  const router = useRouter();
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (type === PrimaryInputTypes.NUMBER) {
-      preventStringOnInputNumber(event);
+    if (type === PrimaryInputTypes.NUMBER)
+      return preventStringOnInputNumber(event);
+  };
+
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+
+    if (value === "") {
+      handleOnChange("");
+      router.push("/");
     }
+
+    handleOnChange(value);
   };
   return (
     <div className="flex items-center bg-white w-full border-2 border-gray-300 rounded-lg focus-within:border-primary focus-within:outline-none">
@@ -45,10 +36,17 @@ export const PrimaryInput = ({
         type={type}
         placeholder={placeholder}
         value={text}
-        onChange={(event) => handleOnChange(event.target.value)}
+        onInput={handleInput}
         onKeyDown={handleKeyDown}
       />
-      <InputIcon type={type} />
+      <div
+        className={`flex justify-center items-center ${
+          type !== PrimaryInputTypes.SEARCH && "hidden"
+        } w-16 text-gray-500 bg-white`}
+        onClick={handleOnSearch}
+      >
+        <IoSearchSharp size={sizeIcons.medium} />
+      </div>
     </div>
   );
 };

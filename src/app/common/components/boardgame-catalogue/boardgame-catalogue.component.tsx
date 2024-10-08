@@ -5,61 +5,87 @@ import { Card } from "../card/card.component";
 import { BoardGame } from "@/app/common/types/boardgame.types";
 import { ErrorMessage } from "../error-message/error-message.component";
 import { PrimaryInput, PrimaryInputTypes } from "../primary-input";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Pathnames } from "../../types/pathnames.enum";
+import { boardGamesService } from "../../services/boardgames.service";
 
-export const BoardGameCatalogue = ({
-  boardgames,
-}: {
-  boardgames: Array<BoardGame>;
-}) => {
+export const BoardGameCatalogue = () => {
+  const [boardgames, setBoardgames] = React.useState<Array<BoardGame>>([]);
   const [inputText, setInputText] = React.useState<string>("");
   const pathname = usePathname();
-  const filteredBoardGames = inputText
-    ? boardgames.filter((game) =>
-        game.name.toLowerCase().includes(inputText.toLowerCase())
-      )
-    : boardgames;
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handleSearch = async (): Promise<void> => {
+    // Use hyphens for the URL
+    const searchUrl = inputText.replace(/\s+/g, "-").toLowerCase();
+
+    // Convert hyphens back to spaces for backend search
+    const searchQuery = inputText.toLowerCase();
+
+    const result = await boardGamesService.getByName(searchQuery); // searchQuery with spaces
+
+    setBoardgames(result as BoardGame[]);
+
+    const url = `?boardgame=${searchUrl}`; // searchUrl with hyphens
+    return router.push(url);
+  };
+
+  React.useEffect(() => {
+    const fetchBoardGames = async () => {
+      const boardgameQuery = searchParams.get("boardgame");
+
+      if (boardgameQuery) {
+        // Convert hyphens back to spaces for backend search
+        const searchQuery = boardgameQuery.replace(/-/g, " ");
+
+        const result = await boardGamesService.getByName(searchQuery); // searchQuery with spaces
+        setBoardgames(result as BoardGame[]);
+      } else {
+        const result = await boardGamesService.get();
+        setBoardgames(result);
+      }
+    };
+
+    fetchBoardGames();
+  }, [searchParams]);
 
   return (
     <div
-      className={`flex items-center justify-center ${
+      className={`flex items-center justify-center flex-col w-full gap-10 ${
         pathname === Pathnames.HOME ? "pt-28" : "pt-16"
-      } pb-5`}
+      } `}
     >
-      <div className="flex flex-col w-full px-5 gap-10">
-        <div className="flex items-center justify-center w-full duration-300 flex-row">
-          <PrimaryInput
-            text={inputText}
-            type={PrimaryInputTypes.SEARCH}
-            handleOnChange={setInputText}
-            placeholder="Digite o nome do jogo..."
-          />
-        </div>
-        <div className="flex flex-col justify-between h-full">
-          <div className="flex justify-center w-full h-[40em]">
-            {filteredBoardGames.length === 0 ? (
-              <ErrorMessage
-                title="404"
-                message="Oops! Por algum motivo não foi possível encontrar o catálogo de jogos..."
-              />
-            ) : (
-              <div
-                className={`grid grid-cols-1 gap-10
-            md:grid md:grid-cols-2
-            xl:grid xl:grid-cols-3
-            2xl:grid 2xl:grid-cols-4`}
-              >
-                {filteredBoardGames.map(
-                  (boardgame: BoardGame, index: number) => (
-                    <Card key={index} boardgame={boardgame} />
-                  )
-                )}
-              </div>
-            )}
+      <div className="flex justify-center items-center flex-col w-full max-w-[1200px] px-5 gap-10">
+        <PrimaryInput
+          text={inputText}
+          type={PrimaryInputTypes.SEARCH}
+          handleOnChange={setInputText}
+          handleOnSearch={handleSearch}
+          placeholder="Digite o nome do jogo..."
+        />
+      </div>
+
+      <div className="flex justify-center w-full max-w-[1160px] h-[40em]">
+        {boardgames.length === 0 ? (
+          <div className="w-full">
+            <ErrorMessage
+              title="NÃO ENCONTRADO"
+              message="Oops! parece que o jogo inserido não existe"
+            />
           </div>
-          <div className="pb-5" /> {/* This div adds space at the bottom */}
-        </div>
+        ) : (
+          <div
+            className={`grid grid-cols-1 gap-10
+    md:grid md:grid-cols-2
+    xl:grid xl:grid-cols-3
+    2xl:grid 2xl:grid-cols-4`}
+          >
+            {boardgames.map((boardgame: BoardGame, index: number) => (
+              <Card key={index} boardgame={boardgame} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

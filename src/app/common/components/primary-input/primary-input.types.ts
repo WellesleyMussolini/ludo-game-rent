@@ -11,4 +11,5 @@ export interface IPrimaryInput {
   text: string;
   placeholder: string;
   handleOnChange: (value: string) => void;
+  handleOnSearch: () => void;
 }

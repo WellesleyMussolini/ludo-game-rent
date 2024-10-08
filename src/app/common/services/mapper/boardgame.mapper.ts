@@ -1,5 +1,8 @@
 import { BoardGame } from "@/app/common/types/boardgame.types";
-import { ResponseBoardGame } from "../types/board-games.types";
+
+export interface ResponseBoardGame extends BoardGame {
+  _id: string;
+}
 
 class BoardGameMapper {
   toDomain(persistence: ResponseBoardGame): BoardGame {
