@@ -1,10 +1,7 @@
 "use client";
 
 import React from "react";
-import {
-  BoardGameFormSteps,
-  IBoardGameStepForm,
-} from "./types/boardgame-form.types";
+import { BoardGameFormSteps } from "./types/boardgame-form.types";
 import { useBoardgameForm } from "./hooks/boardgame-form.hook";
 import { IoIosArrowDown, IoIosArrowUp, IoMdClose } from "react-icons/io";
 import { PrimaryInput } from "@/app/common/components/primary-input/primary-input.component";
@@ -18,14 +15,12 @@ import {
   PrimaryButtonTypes,
 } from "@/app/common/components/buttons";
 
-export const BoardGameForm = ({
-  visibility,
-  handleVisibility,
-}: IBoardGameStepForm) => {
+export const BoardGameForm = () => {
   const {
+    modals,
     handleCloseForm,
+    boardgame,
     isSmallHeight,
-    gameApiData,
     handleOnChangeFields,
     handleNextStep,
     handleReturnPreviousStep,
@@ -34,32 +29,32 @@ export const BoardGameForm = ({
     formStatus,
     setFormStatus,
     dropdownContent,
-  } = useBoardgameForm(handleVisibility);
+  } = useBoardgameForm();
   return (
-    visibility && (
+    modals.isFormVisible && (
       <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
         <OverlayBackground onClose={handleCloseForm} />
         <div
           className={`
-                text-base 
-                px-10 
-                z-50 
-                flex 
-                flex-col 
-                items-center 
-                justify-center 
-                bg-white 
-                rounded 
-                duration-300 
-                ${formState.animation} 
+                text-base
+                px-10
+                z-50
+                flex
+                flex-col
+                items-center
+                justify-center
+                bg-white
+                rounded
+                duration-300
+                ${formState.animation}
                 text-gray-500
                 max-[450px]:w-[85.33%]
-                gap-3 
-                w-96 
-                py-10 
+                gap-3
+                w-96
+                py-10
                 overflow-y-auto
-                ease-in-out       
-                scroll-smooth         
+                ease-in-out
+                scroll-smooth
                 ${
                   isSmallHeight &&
                   formState.formStep === BoardGameFormSteps.SAVE_GAME_FORM_STEP
@@ -79,7 +74,7 @@ export const BoardGameForm = ({
               <div className="w-full">
                 <PrimaryInput
                   placeholder="Digite o id..."
-                  text={gameApiData.id}
+                  text={boardgame.id}
                   handleOnChange={(event) => handleOnChangeFields("id", event)}
                   type={PrimaryInputTypes.NUMBER}
                 />
@@ -89,9 +84,9 @@ export const BoardGameForm = ({
                   isLoading={formStatus.isLoading}
                   onClick={handleNextStep}
                   text="avançar"
-                  disabled={!gameApiData.id}
+                  disabled={!boardgame.id}
                   type={
-                    !gameApiData.id
+                    !boardgame.id
                       ? PrimaryButtonTypes.DISABLED
                       : PrimaryButtonTypes.OUTLINED
                   }
@@ -119,8 +114,8 @@ export const BoardGameForm = ({
               {/* Game Image */}
               <div className="w-full flex justify-center items-center mb-4">
                 <Image
-                  src={gameApiData.image ?? ""}
-                  alt={gameApiData.name ?? ""}
+                  src={boardgame.image ?? ""}
+                  alt={boardgame.name ?? ""}
                   height={60}
                   width={60}
                   className="rounded shadow-md"
@@ -134,7 +129,7 @@ export const BoardGameForm = ({
                   handleOnChange={(event) =>
                     handleOnChangeFields("name", event)
                   }
-                  text={gameApiData.name}
+                  text={boardgame.name}
                   type={PrimaryInputTypes.TEXT}
                 />
               </div>
@@ -145,7 +140,7 @@ export const BoardGameForm = ({
                   handleOnChange={(event) =>
                     handleOnChangeFields("price", event)
                   }
-                  text={gameApiData.price}
+                  text={boardgame.price}
                   placeholder="Digite o preço do jogo"
                   type={PrimaryInputTypes.NUMBER}
                 />
@@ -167,7 +162,7 @@ export const BoardGameForm = ({
                     }
                   >
                     <p className="font-medium text-gray-700">
-                      {gameApiData.status ?? "Selecione o status"}
+                      {boardgame.status ?? "Selecione o status"}
                     </p>
                     <div>
                       {formStatus.dropdown ? (

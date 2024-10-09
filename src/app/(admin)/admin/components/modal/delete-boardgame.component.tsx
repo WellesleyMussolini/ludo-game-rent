@@ -10,7 +10,7 @@ import {
 import { boardGamesService } from "@/app/common/services/boardgames.service";
 
 export const DeleteBoardGame = () => {
-  const { modals, setModals, getBoardGameId, setGetBoardGameId } = useContext();
+  const { modals, setModals, boardgame, setBoardGame } = useContext();
   const { isLoading, setIsLoading } = useIsLoading();
   return (
     <>
@@ -33,8 +33,19 @@ export const DeleteBoardGame = () => {
                 isLoading={isLoading}
                 onClick={async () => {
                   setIsLoading(true);
-                  await boardGamesService.delete(getBoardGameId);
-                  setGetBoardGameId("");
+                  await boardGamesService.delete(boardgame.id);
+                  setBoardGame({
+                    id: "",
+                    name: "",
+                    image: "",
+                    price: "",
+                    status: "",
+                    ageToPlay: "",
+                    playTime: "",
+                    minimumPlayersToPlay: "",
+                    maximumPlayersToPlay: "",
+                    description: "",
+                  });
                   setModals({ ...modals, deleteBoardGame: false });
                   setIsLoading(false);
                 }}

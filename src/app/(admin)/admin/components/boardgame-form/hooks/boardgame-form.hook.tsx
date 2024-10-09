@@ -1,46 +1,16 @@
 import React from "react";
-import { iGameApiData } from "../../../interfaces/game-api-data.interface";
 import { generatePreviewBoardgame } from "../../../services/generate-preview-boardgame";
 import { toast } from "react-toastify";
 import { useMediaQuery } from "@react-hook/media-query";
-import { createBoardGame } from "@/app/common/services/create-boardgame.service";
-import { BoardGame } from "@/app/common/types/boardgame.types";
 import {
   BoardGameFormAnimation,
   BoardGameFormSteps,
 } from "../types/boardgame-form.types";
 import { boardgameStatus } from "../mock/boardgame-status.mock";
+import { boardGamesService } from "@/app/common/services/boardgames.service";
+import { useContext } from "@/app/common/context/context";
 
-export const useBoardgameForm = (
-  handleVisibility: (visibility: boolean) => void
-) => {
-  const [gameApiData, setGameApiData] = React.useState<iGameApiData>({
-    id: "",
-    image: "",
-    name: "",
-    price: "",
-    ageToPlay: "",
-    description: "",
-    playTime: "",
-    maximumPlayersToPlay: "",
-    minimumPlayersToPlay: "",
-    status: "Disponível",
-  });
-
-  // save to the database
-  const [boardgame] = React.useState<BoardGame>({
-    id: "",
-    image: "",
-    name: "",
-    price: "",
-    ageToPlay: "",
-    description: "",
-    playTime: "",
-    maximumPlayersToPlay: "",
-    minimumPlayersToPlay: "",
-    status: "Disponível",
-  });
-
+export const useBoardgameForm = () => {
   const [formState, setFormState] = React.useState<{
     animation: string;
     formStep: string;
@@ -57,10 +27,12 @@ export const useBoardgameForm = (
     dropdown: false,
   });
 
+  const { boardgame, setBoardGame, modals, setModals } = useContext();
+
   const handleNextStep = async () => {
     setFormStatus({ ...formStatus, isLoading: true });
     try {
-      await generatePreviewBoardgame(gameApiData.id, setGameApiData);
+      await generatePreviewBoardgame(boardgame.id, setBoardGame);
       setFormState({
         ...formState,
         formStep: BoardGameFormSteps.SAVE_GAME_FORM_STEP,
@@ -76,7 +48,7 @@ export const useBoardgameForm = (
 
   const handleReturnPreviousStep = () => {
     setFormState({ ...formState, formStep: BoardGameFormSteps.SEARCH_ID_STEP });
-    setGameApiData({ ...gameApiData, id: "" });
+    setBoardGame({ ...boardgame, id: "" });
     return;
   };
 
@@ -91,24 +63,24 @@ export const useBoardgameForm = (
         animation: BoardGameFormAnimation.ANIMATION_JUMP_IN,
       });
       handleReturnPreviousStep();
-      handleVisibility(false);
+      setModals({ ...modals, isFormVisible: false });
     }, 600);
   };
 
   const handleSaveGame = async () => {
     setFormStatus({ ...formStatus, isLoading: true });
     try {
-      if (!gameApiData.name || !gameApiData.price) {
+      if (!boardgame.name || !boardgame.price) {
         toast.warn("Não é possível salvar as informações com campos vazios!");
         setFormStatus({ ...formStatus, isLoading: false });
         return;
       } else {
-        await createBoardGame({
+        await boardGamesService.create({
           ...boardgame,
-          ...gameApiData,
         });
         handleCloseForm();
         toast.success("O JOGO FOI SALVO COM SUCESSO!");
+        setFormStatus({ ...formStatus, isLoading: false });
         return;
       }
     } catch {
@@ -121,8 +93,8 @@ export const useBoardgameForm = (
   const handleOnChangeFields = React.useCallback(
     (field: string, event: React.ChangeEvent<HTMLInputElement> | string) => {
       typeof event === "string"
-        ? setGameApiData((prevState) => ({ ...prevState, [field]: event }))
-        : setGameApiData((prevState) => ({
+        ? setBoardGame((prevState) => ({ ...prevState, [field]: event }))
+        : setBoardGame((prevState) => ({
             ...prevState,
             [field]: event.target.value,
           }));
@@ -151,7 +123,7 @@ export const useBoardgameForm = (
   return {
     handleCloseForm,
     isSmallHeight,
-    gameApiData,
+    boardgame,
     handleOnChangeFields,
     handleNextStep,
     handleReturnPreviousStep,
@@ -160,5 +132,7 @@ export const useBoardgameForm = (
     formStatus,
     setFormStatus,
     dropdownContent,
+    modals,
+    setModals,
   };
 };

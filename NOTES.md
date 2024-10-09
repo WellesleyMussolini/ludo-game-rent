@@ -1,5 +1,17 @@
 ### Tarefas
 
+- Finalizar o update boardgame form.
+
+- Tentar usar logica para reutilizar o modal de criação de jogos e o de atualizar pois ambos terão o mesmo layout, a diferença será qual método da api será executado, se é de atualizar ou criação.
+
+- Arrumar o layout em versões mobiles com um footer de celular.
+
+- Finalizar o modal que edita Jogo.
+
+- O logout modal e o delete boardgame modal são praticamente a mesma coisa, criar um modal generico e fazer um enum que verifica se vai ser o de logout ou de deleter o jogo.
+
+- Deletar o arquivo "boardgames.api.ts" e mover a logica dos métodos HTTP para o arquivo: "boardgames.service.ts".
+
 - Verificar classes repetidas e passar para o globals.css
 
 ### BUGS
@@ -25,10 +37,6 @@
 - Ao atualizar algum codigo ou página erros aparecem no terminal.
 
 - Limpar todas as mensagens de error no console do browser e remover todos os trechos de condigo com console.log
-
-### MODIFICAÇÕES
-
-- Deletar o arquivo "boardgames.api.ts" e mover a logica dos métodos HTTP para o arquivo: "boardgames.service.ts".
 
 ### CODE
 

@@ -11,15 +11,17 @@ interface IContext {
   modals: {
     logout: boolean;
     deleteBoardGame: boolean;
+    isFormVisible: boolean;
   };
   setModals: React.Dispatch<
     React.SetStateAction<{
       logout: boolean;
       deleteBoardGame: boolean;
+      isFormVisible: boolean;
     }>
   >;
-  getBoardGameId: string;
-  setGetBoardGameId: (getBoardGameId: string) => void;
+  boardgame: BoardGame;
+  setBoardGame: React.Dispatch<React.SetStateAction<BoardGame>>;
 }
 
 const ContextProvider = React.createContext<IContext | undefined>(undefined);
@@ -33,13 +35,26 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
   });
-  const [getBoardGameId, setGetBoardGameId] = React.useState<string>("");
+  const [boardgame, setBoardGame] = React.useState<BoardGame>({
+    id: "",
+    name: "",
+    image: "",
+    price: "",
+    status: "",
+    ageToPlay: "",
+    playTime: "",
+    minimumPlayersToPlay: "",
+    maximumPlayersToPlay: "",
+    description: "",
+  });
   const [modals, setModals] = React.useState<{
+    isFormVisible: boolean;
     logout: boolean;
     deleteBoardGame: boolean;
   }>({
     logout: false,
     deleteBoardGame: false,
+    isFormVisible: false,
   });
 
   const [expandedSidebar, setExpandedSidebar] = React.useState<boolean>(false);
@@ -58,8 +73,8 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
         setExpandedSidebar,
         modals,
         setModals,
-        getBoardGameId,
-        setGetBoardGameId,
+        boardgame,
+        setBoardGame,
       }}
     >
       {children}

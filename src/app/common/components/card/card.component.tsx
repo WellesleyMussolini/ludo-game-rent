@@ -20,7 +20,7 @@ export const Card = ({ boardgame }: { boardgame: BoardGame }) => {
     pathname,
     modals,
     setModals,
-    setGetBoardGameId,
+    setBoardGame,
   } = useCard(boardgame);
   return (
     <div
@@ -101,14 +101,17 @@ export const Card = ({ boardgame }: { boardgame: BoardGame }) => {
                 styles="text-xs"
                 text={"EDITAR"}
                 type={PrimaryButtonTypes.ALERT}
-                onClick={() => {}}
+                onClick={() => {
+                  setBoardGame(boardgame);
+                  setModals({ ...modals, isFormVisible: true });
+                }}
               />
               <PrimaryButton
                 styles="text-xs"
                 text={"DELETAR"}
                 type={PrimaryButtonTypes.DELETE}
                 onClick={() => {
-                  setGetBoardGameId(boardgame.id);
+                  setBoardGame(boardgame);
                   setModals({ ...modals, deleteBoardGame: true });
                 }}
               />

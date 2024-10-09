@@ -55,6 +55,41 @@ class BoardGames {
     return boardgameFound.map(boardGameMapper.toDomain);
   }
 
+  async create({
+    id,
+    name,
+    image,
+    price,
+    status,
+    ageToPlay,
+    playTime,
+    minimumPlayersToPlay,
+    maximumPlayersToPlay,
+    description,
+  }: BoardGame): Promise<BoardGame> {
+    const response = await httpRequest(`boardgames/`, {
+      method: "POST",
+      headers: {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        image,
+        price,
+        status,
+        ageToPlay,
+        playTime,
+        minimumPlayersToPlay,
+        maximumPlayersToPlay,
+        description,
+      }),
+    });
+
+    const createdBoardGame = await response.json();
+    return createdBoardGame; // ensure it's returned as expected
+  }
+
   async delete(id: string): Promise<BoardGame> {
     const response = await httpRequest(`boardgames/${id}`, {
       method: "DELETE",

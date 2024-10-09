@@ -8,9 +8,10 @@ import { Pathnames } from "@/app/common/types/pathnames.enum";
 import { DeleteBoardGame } from "../../admin/components/modal/delete-boardgame.component";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UpdateBoardGame } from "@/app/common/components/form/update-boardgame.component";
 
 export const LayoutWrapper = () => {
-  const { expandedSidebar, setExpandedSidebar } = useContext();
+  const { expandedSidebar, setExpandedSidebar, boardgame } = useContext();
   const pathname = usePathname();
   return (
     <>
@@ -39,6 +40,7 @@ export const LayoutWrapper = () => {
         className="z-50"
       />
       <DeleteBoardGame />
+      <UpdateBoardGame boardgame={boardgame} />
       <Sidebar />
     </>
   );

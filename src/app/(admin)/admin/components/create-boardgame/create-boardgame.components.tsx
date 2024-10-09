@@ -6,20 +6,17 @@ import {
   PrimaryButton,
   PrimaryButtonTypes,
 } from "@/app/common/components/buttons";
+import { useContext } from "@/app/common/context/context";
 
 export const CreateBoardgame = () => {
-  const [isOpenBoardgameStepForms, setIsOpenBoardgameStepForms] =
-    React.useState<boolean>(false);
+  const { modals, setModals } = useContext();
   return (
     <div className="flex items-center justify-center w-full sm:px-6">
-      <BoardGameForm
-        visibility={isOpenBoardgameStepForms}
-        handleVisibility={setIsOpenBoardgameStepForms}
-      />
-      <div className="flex w-52 sm:w-96 justify-center items-center">
+      <BoardGameForm />
+      <div className="flex w-52 sm:w-96 justify-center items-center duration-300">
         <PrimaryButton
           text="abrir formulário"
-          onClick={() => setIsOpenBoardgameStepForms(true)}
+          onClick={() => setModals({ ...modals, isFormVisible: true })}
           type={PrimaryButtonTypes.PRIMARY}
         />
       </div>

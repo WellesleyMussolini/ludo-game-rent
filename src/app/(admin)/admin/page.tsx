@@ -1,5 +1,3 @@
-"use server";
-
 import React from "react";
 import { CreateBoardgame } from "./components/create-boardgame/create-boardgame.components";
 import { BoardGameCatalogue } from "@/app/common/components/boardgame-catalogue/boardgame-catalogue.component";
