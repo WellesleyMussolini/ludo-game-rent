@@ -1,8 +1,13 @@
+"use client";
+
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { LogoutModal } from "@/app/common/components/modal/logout/logout-modal.component";
 import React from "react";
 import { Header } from "../header/header.layout";
+import {
+  ActionModal,
+  ModalActionType,
+} from "@/app/common/components/modal/action-modal.component";
 
 export const LayoutWrapper = () => (
   <>
@@ -20,7 +25,7 @@ export const LayoutWrapper = () => (
       transition={Bounce}
       className="z-50"
     />
-    <LogoutModal />
+    <ActionModal type={ModalActionType.LOGOUT} />
     <Header />
   </>
 );

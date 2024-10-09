@@ -10,7 +10,7 @@ import { formatStringForUrl } from "@/app/common/utils/format-string";
 export const useCard = (boardgame: BoardGame) => {
   const router = useRouter();
   const pathname = usePathname();
-  const { modals, setModals, setBoardGame } = useContext();
+  const { isVisible, setIsVisible, setBoardGame } = useContext();
 
   const boardgamePrice = formatCurrency(boardgame.price);
 
@@ -23,8 +23,8 @@ export const useCard = (boardgame: BoardGame) => {
     redirectToBoardgameAbout,
     boardgamePrice,
     pathname,
-    modals,
-    setModals,
+    isVisible,
+    setIsVisible,
     setBoardGame,
   };
 };

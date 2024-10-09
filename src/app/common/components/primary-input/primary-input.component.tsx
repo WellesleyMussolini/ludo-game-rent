@@ -4,7 +4,8 @@ import { IoSearchSharp } from "react-icons/io5";
 import { IPrimaryInput, PrimaryInputTypes } from "./primary-input.types";
 import { preventStringOnInputNumber } from "./utils/prevent-string-on-input-number";
 import { sizeIcons } from "../../constants/size-icons";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Pathnames } from "../../types/pathnames.enum";
 
 export const PrimaryInput = ({
   text,
@@ -14,6 +15,7 @@ export const PrimaryInput = ({
   handleOnSearch,
 }: IPrimaryInput) => {
   const router = useRouter();
+  const pathname = usePathname();
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (type === PrimaryInputTypes.NUMBER)
       return preventStringOnInputNumber(event);
@@ -24,7 +26,9 @@ export const PrimaryInput = ({
 
     if (value === "") {
       handleOnChange("");
-      router.push("/");
+      return pathname === Pathnames.HOME
+        ? router.push("/")
+        : router.push("/admin");
     }
 
     handleOnChange(value);

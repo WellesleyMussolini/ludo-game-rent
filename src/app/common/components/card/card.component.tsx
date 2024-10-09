@@ -18,8 +18,8 @@ export const Card = ({ boardgame }: { boardgame: BoardGame }) => {
     redirectToBoardgameAbout,
     boardgamePrice,
     pathname,
-    modals,
-    setModals,
+    isVisible,
+    setIsVisible,
     setBoardGame,
   } = useCard(boardgame);
   return (
@@ -103,7 +103,7 @@ export const Card = ({ boardgame }: { boardgame: BoardGame }) => {
                 type={PrimaryButtonTypes.ALERT}
                 onClick={() => {
                   setBoardGame(boardgame);
-                  setModals({ ...modals, isFormVisible: true });
+                  setIsVisible({ ...isVisible, updateBoardGame: true });
                 }}
               />
               <PrimaryButton
@@ -112,7 +112,7 @@ export const Card = ({ boardgame }: { boardgame: BoardGame }) => {
                 type={PrimaryButtonTypes.DELETE}
                 onClick={() => {
                   setBoardGame(boardgame);
-                  setModals({ ...modals, deleteBoardGame: true });
+                  setIsVisible({ ...isVisible, deleteBoardGame: true });
                 }}
               />
             </>

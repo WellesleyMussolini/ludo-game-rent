@@ -1,6 +1,7 @@
 import { httpRequest } from "@/app/common/utils/http-request";
 import boardGameMapper, { ResponseBoardGame } from "./mapper/boardgame.mapper";
 import { BoardGame } from "@/app/common/types/boardgame.types";
+import boardgameMapper from "./mapper/boardgame.mapper";
 
 class BoardGames {
   async get(): Promise<BoardGame[]> {
@@ -10,6 +11,8 @@ class BoardGames {
         "Cache-Control": "no-cache",
       },
     });
+
+    if (!response) return [];
 
     const findAllBoardGames: ResponseBoardGame[] = await response.json();
 
@@ -26,9 +29,9 @@ class BoardGames {
       },
     });
 
-    const findBoardgame: ResponseBoardGame = await response.json();
+    if (!response) return null;
 
-    if (!findBoardgame) return null;
+    const findBoardgame: ResponseBoardGame = await response.json();
 
     return boardGameMapper.toDomain(findBoardgame);
   }
@@ -44,19 +47,53 @@ class BoardGames {
       }
     );
 
+    if (!response) return []; // Return an empty array if the response is null (404)
+
     const findBoardGame: ResponseBoardGame[] = await response.json();
 
-    if (!findBoardGame) {
-      throw new Error(`BoardGame '${name}' not found`);
+    return findBoardGame.map(boardGameMapper.toDomain);
+  }
+
+  async update({
+    id,
+    name,
+    image,
+    price,
+    status,
+    ageToPlay,
+    playTime,
+    minimumPlayersToPlay,
+    maximumPlayersToPlay,
+    description,
+  }: BoardGame): Promise<BoardGame> {
+    const response = await httpRequest(`boardgames/${id}`, {
+      method: "PUT",
+      headers: {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        image,
+        price,
+        status,
+        ageToPlay,
+        playTime,
+        minimumPlayersToPlay,
+        maximumPlayersToPlay,
+        description,
+      }),
+    });
+
+    if (!response) {
+      throw new Error("Failed to update BoardGame"); // Handle null response
     }
 
-    const boardgameFound = Array.isArray(findBoardGame) ? findBoardGame : [];
-
-    return boardgameFound.map(boardGameMapper.toDomain);
+    const updateBoardGame = await response.json();
+    return boardgameMapper.toDomain(updateBoardGame);
   }
 
   async create({
-    id,
     name,
     image,
     price,
@@ -86,8 +123,12 @@ class BoardGames {
       }),
     });
 
+    if (!response) {
+      throw new Error("Failed to create BoardGame"); // Handle null response
+    }
+
     const createdBoardGame = await response.json();
-    return createdBoardGame; // ensure it's returned as expected
+    return boardgameMapper.toDomain(createdBoardGame);
   }
 
   async delete(id: string): Promise<BoardGame> {
@@ -97,6 +138,10 @@ class BoardGames {
         "Cache-Control": "no-cache",
       },
     });
+
+    if (!response) {
+      throw new Error("Failed to delete BoardGame"); // Handle null response
+    }
 
     const result = await response.text();
     return result && JSON.parse(result);

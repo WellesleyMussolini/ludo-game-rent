@@ -5,13 +5,20 @@ import Sidebar from "../sidebar/sidebar.layout";
 import { Squash as Hamburger } from "hamburger-react";
 import { usePathname } from "next/navigation";
 import { Pathnames } from "@/app/common/types/pathnames.enum";
-import { DeleteBoardGame } from "../../admin/components/modal/delete-boardgame.component";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UpdateBoardGame } from "@/app/common/components/form/update-boardgame.component";
+import {
+  ActionModal,
+  ModalActionType,
+} from "@/app/common/components/modal/action-modal.component";
+import {
+  BoardGameForm,
+  BoardGameFormType,
+} from "@/app/common/components/form/boardgame-form/boardgame-form.component";
 
 export const LayoutWrapper = () => {
-  const { expandedSidebar, setExpandedSidebar, boardgame } = useContext();
+  const { expandedSidebar, setExpandedSidebar } = useContext();
   const pathname = usePathname();
   return (
     <>
@@ -39,8 +46,8 @@ export const LayoutWrapper = () => {
         transition={Bounce}
         className="z-50"
       />
-      <DeleteBoardGame />
-      <UpdateBoardGame boardgame={boardgame} />
+      <ActionModal type={ModalActionType.DELETE_BOARDGAME} />
+      <BoardGameForm type={BoardGameFormType.UPDATE} />
       <Sidebar />
     </>
   );

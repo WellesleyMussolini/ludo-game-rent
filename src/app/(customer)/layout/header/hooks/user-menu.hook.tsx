@@ -5,7 +5,7 @@ import { useContext } from "@/app/common/context/context";
 
 export const useUserMenu = () => {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState<boolean>(false);
-  const { modals, setModals } = useContext();
+  const { isVisible, setIsVisible } = useContext();
   const { session } = useUserSession();
   const menuRef = React.useRef<HTMLDivElement>(null);
 
@@ -39,7 +39,7 @@ export const useUserMenu = () => {
     },
     {
       label: "Sair",
-      onClick: () => setModals({ ...modals, logout: true }),
+      onClick: () => setIsVisible({ ...isVisible, logout: true }),
     },
   ];
 

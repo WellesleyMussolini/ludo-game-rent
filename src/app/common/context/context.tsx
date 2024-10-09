@@ -1,23 +1,26 @@
 "use client";
 
-import { BoardGame } from "@/app/common/types/boardgame.types";
 import React from "react";
+import { BoardGame } from "@/app/common/types/boardgame.types";
+import { CardStatus } from "../components/card/types/card.types";
 
 interface IContext {
   cart: Array<BoardGame>;
   setCart: React.Dispatch<React.SetStateAction<Array<BoardGame>>>;
   expandedSidebar: boolean;
   setExpandedSidebar: (expandedSidebar: boolean) => void;
-  modals: {
+  isVisible: {
     logout: boolean;
     deleteBoardGame: boolean;
-    isFormVisible: boolean;
+    createBoardGame: boolean;
+    updateBoardGame: boolean;
   };
-  setModals: React.Dispatch<
+  setIsVisible: React.Dispatch<
     React.SetStateAction<{
       logout: boolean;
       deleteBoardGame: boolean;
-      isFormVisible: boolean;
+      createBoardGame: boolean;
+      updateBoardGame: boolean;
     }>
   >;
   boardgame: BoardGame;
@@ -40,21 +43,24 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
     name: "",
     image: "",
     price: "",
-    status: "",
+    status: CardStatus.AVAILABLE,
     ageToPlay: "",
     playTime: "",
     minimumPlayersToPlay: "",
     maximumPlayersToPlay: "",
     description: "",
   });
-  const [modals, setModals] = React.useState<{
-    isFormVisible: boolean;
+
+  const [isVisible, setIsVisible] = React.useState<{
     logout: boolean;
     deleteBoardGame: boolean;
+    createBoardGame: boolean;
+    updateBoardGame: boolean;
   }>({
     logout: false,
     deleteBoardGame: false,
-    isFormVisible: false,
+    createBoardGame: false,
+    updateBoardGame: false,
   });
 
   const [expandedSidebar, setExpandedSidebar] = React.useState<boolean>(false);
@@ -71,10 +77,10 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
         expandedSidebar,
         setCart,
         setExpandedSidebar,
-        modals,
-        setModals,
         boardgame,
         setBoardGame,
+        isVisible,
+        setIsVisible,
       }}
     >
       {children}
