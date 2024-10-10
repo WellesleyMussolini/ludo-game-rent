@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 import { Pathnames } from "@/app/common/types/pathnames.enum";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { UpdateBoardGame } from "@/app/common/components/form/update-boardgame.component";
 import {
   ActionModal,
   ModalActionType,
@@ -18,7 +17,7 @@ import {
 } from "@/app/common/components/form/boardgame-form/boardgame-form.component";
 
 export const LayoutWrapper = () => {
-  const { expandedSidebar, setExpandedSidebar } = useContext();
+  const { isVisible, setIsVisible } = useContext();
   const pathname = usePathname();
   return (
     <>
@@ -28,8 +27,10 @@ export const LayoutWrapper = () => {
         } text-gray-600`}
       >
         <Hamburger
-          toggled={expandedSidebar}
-          onToggle={() => setExpandedSidebar(!expandedSidebar)}
+          toggled={isVisible.sidebar}
+          onToggle={() =>
+            setIsVisible({ ...isVisible, sidebar: !isVisible.sidebar })
+          }
         />
       </div>
       <ToastContainer

@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { sizeIcons } from "@/app/common/constants/size-icons";
 import { GoAlertFill } from "react-icons/go";
 import {
@@ -12,6 +13,8 @@ import { OverlayBackground } from "../overlay-background/overlay-background.comp
 import { useIsLoading } from "../../hooks/is-loading.hook";
 import { boardGamesService } from "../../services/boardgames.service";
 import { CardStatus } from "../card/types/card.types";
+import { handleAnimationClose } from "../../utils/handle-animation-close";
+import { Animations } from "../../types/animations.enum";
 
 export enum ModalActionType {
   LOGOUT = "logout",
@@ -19,6 +22,9 @@ export enum ModalActionType {
 }
 
 export const ActionModal = ({ type }: { type: ModalActionType }) => {
+  const [animation, setAnimation] = React.useState<string>(
+    Animations.ANIMATION_JUMP_IN
+  );
   const { boardgame, setBoardGame, isVisible, setIsVisible } = useContext();
   const { isLoading, setIsLoading } = useIsLoading();
 
@@ -39,16 +45,9 @@ export const ActionModal = ({ type }: { type: ModalActionType }) => {
       maximumPlayersToPlay: "",
       description: "",
     });
-    closeModal();
+    handleAnimationClose({ isVisible, setIsVisible, setAnimation });
     setIsLoading(false);
   };
-
-  const closeModal = () =>
-    setIsVisible({
-      ...isVisible,
-      logout: false,
-      deleteBoardGame: false,
-    });
 
   const modalMessage =
     type === ModalActionType.LOGOUT
@@ -71,9 +70,13 @@ export const ActionModal = ({ type }: { type: ModalActionType }) => {
         ? isVisible.logout
         : isVisible.deleteBoardGame) && (
         <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50">
-          <OverlayBackground onClose={closeModal} />
+          <OverlayBackground
+            onClose={() =>
+              handleAnimationClose({ isVisible, setIsVisible, setAnimation })
+            }
+          />
           <div
-            className="relative max-[400px]:w-[80%] z-[60] bg-white gap-2 flex flex-col rounded-2xl border border-blue-100 bg-contrastBackground p-4 shadow-lg sm:p-6 lg:p-8 animate-jump-in animate-delay-[1ms]"
+            className={`relative max-[400px]:w-[80%] z-[60] bg-white gap-2 flex flex-col rounded-2xl border border-blue-100 bg-contrastBackground p-4 shadow-lg sm:p-6 lg:p-8 ${animation} animate-delay-[1ms]`}
             role="alert"
           >
             <div className="w-full flex items-center justify-center">
@@ -89,7 +92,13 @@ export const ActionModal = ({ type }: { type: ModalActionType }) => {
               />
               <PrimaryButton
                 text="Cancelar"
-                onClick={closeModal}
+                onClick={() =>
+                  handleAnimationClose({
+                    isVisible,
+                    setIsVisible,
+                    setAnimation,
+                  })
+                }
                 type={PrimaryButtonTypes.SECONDARY}
               />
             </div>

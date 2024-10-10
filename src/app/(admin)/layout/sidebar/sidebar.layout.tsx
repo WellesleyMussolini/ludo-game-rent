@@ -14,12 +14,14 @@ import { OverlayBackground } from "@/app/common/components/overlay-background/ov
 
 export default function Sidebar() {
   const { isMobile, animation, toggleSidebarVisibility } = useSidebar();
-  const { expandedSidebar, setExpandedSidebar } = useContext();
+  const { isVisible, setIsVisible } = useContext();
   const pathname = usePathname();
   return (
     <div className={`${pathname === Pathnames.ADMIN_AUTH && "hidden"}`}>
-      {expandedSidebar && (
-        <OverlayBackground onClose={() => setExpandedSidebar(false)} />
+      {isVisible.sidebar && (
+        <OverlayBackground
+          onClose={() => setIsVisible({ ...isVisible, sidebar: false })}
+        />
       )}
       <nav
         className={`
@@ -40,7 +42,7 @@ export default function Sidebar() {
       >
         <div
           className={`bg-white flex items-center py-4 ${
-            expandedSidebar ? "px-2 justify-between" : "justify-center"
+            isVisible.sidebar ? "px-2 justify-between" : "justify-center"
           }`}
         >
           <Image
@@ -48,7 +50,7 @@ export default function Sidebar() {
             width={0}
             height={0}
             className={`overflow-hidden transition-all ${
-              expandedSidebar ? "ml-[18px] w-24" : "w-0"
+              isVisible.sidebar ? "ml-[18px] w-24" : "w-0"
             }`}
             alt="LudoCafé"
             draggable={false}
@@ -58,7 +60,7 @@ export default function Sidebar() {
             onClick={toggleSidebarVisibility}
             className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 cursor-pointer"
           >
-            {expandedSidebar ? <ChevronFirst /> : <ChevronLast />}
+            {isVisible.sidebar ? <ChevronFirst /> : <ChevronLast />}
           </div>
         </div>
         <SidebarContent />

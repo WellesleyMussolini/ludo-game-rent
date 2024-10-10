@@ -8,7 +8,7 @@ import { useSidebarNavigation } from "../hooks/sidebar-navigation.hook";
 export const SidebarContent = () => {
   const { handleSwitchRoute } = useSidebar();
   const { sidebarContent } = useSidebarNavigation();
-  const { expandedSidebar } = useContext();
+  const { isVisible } = useContext();
   return (
     <ul className="flex flex-col h-full px-3 py-2">
       {sidebarContent.map((sidebarItem, index) => (
@@ -34,7 +34,7 @@ export const SidebarContent = () => {
                                 : "hover:bg-green-50 text-gray-600"
                             }
                             ${
-                              !expandedSidebar &&
+                              !isVisible.sidebar &&
                               "group-hover:bg-green-50 group-hover:text-gray-600"
                             }
                         `}
@@ -44,7 +44,7 @@ export const SidebarContent = () => {
           <span
             className={`
                                 ${
-                                  expandedSidebar
+                                  isVisible.sidebar
                                     ? "max-sm:w-36 w-52 ml-3"
                                     : "w-0"
                                 }
@@ -66,11 +66,11 @@ export const SidebarContent = () => {
                             h-2 
                             rounded 
                             bg-green-400 
-                            ${!expandedSidebar && "top-2"}
+                            ${!isVisible.sidebar && "top-2"}
                             `}
             />
           )}
-          {!expandedSidebar && (
+          {!isVisible.sidebar && (
             <div
               className={`
                             absolute left-full rounded-md px-2 py-1 ml-6

@@ -1,12 +1,8 @@
 ### Tarefas
 
-- remover o estado expanded sidebar e mover para o estado: isVisible, pos ele ira contrar a visibilidade dos components da aplicação.
-
 - Arrumar o layout em versões mobiles com um footer de celular.
 
 - Verificar classes repetidas e passar para o globals.css
-
-- Refatorar o boardgame form pois tem estilo e tag html repetidas tanto para o update quanto para o create boardgame.
 
 ### BUGS
 
@@ -33,30 +29,3 @@
 - Limpar todas as mensagens de error no console do browser e remover todos os trechos de condigo com console.log
 
 ### CODE
-
-- Substituir esse trecho de código:
-
-```javascript
-const foundGame = await ludoApi.boardgames.findByName(
-  formatStringForApi(param)
-);
-if (!foundGame || foundGame.statusCode === 404) {
-  return (
-    <ErrorMessage title={foundGame.statusCode} message={foundGame.message} />
-  );
-}
-
-const boardgame = foundGame[0];
-```
-
-- Por esse:
-
-```javascript
-const foundGame = await boardGamesService.getByName(formatStringForApi(param));
-
-const boardgame = foundGame;
-```
-
-- A alteração acima so poderá ser feita quando o find all for substituido do prisma pelo find all da api no arquivo boardgame.service.tsx.
-
-- Rota da substituição da lógica: "src/app/common/components/boardgame/boardgame.component.tsx"

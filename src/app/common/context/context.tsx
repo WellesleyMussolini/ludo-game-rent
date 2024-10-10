@@ -7,13 +7,13 @@ import { CardStatus } from "../components/card/types/card.types";
 interface IContext {
   cart: Array<BoardGame>;
   setCart: React.Dispatch<React.SetStateAction<Array<BoardGame>>>;
-  expandedSidebar: boolean;
-  setExpandedSidebar: (expandedSidebar: boolean) => void;
   isVisible: {
     logout: boolean;
     deleteBoardGame: boolean;
     createBoardGame: boolean;
     updateBoardGame: boolean;
+    sidebar: boolean;
+    dropdown: boolean;
   };
   setIsVisible: React.Dispatch<
     React.SetStateAction<{
@@ -21,6 +21,8 @@ interface IContext {
       deleteBoardGame: boolean;
       createBoardGame: boolean;
       updateBoardGame: boolean;
+      sidebar: boolean;
+      dropdown: boolean;
     }>
   >;
   boardgame: BoardGame;
@@ -56,14 +58,16 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
     deleteBoardGame: boolean;
     createBoardGame: boolean;
     updateBoardGame: boolean;
+    sidebar: boolean;
+    dropdown: boolean;
   }>({
     logout: false,
     deleteBoardGame: false,
     createBoardGame: false,
     updateBoardGame: false,
+    sidebar: false,
+    dropdown: false,
   });
-
-  const [expandedSidebar, setExpandedSidebar] = React.useState<boolean>(false);
 
   // Update local storage whenever the cart changes
   React.useEffect(() => {
@@ -74,9 +78,7 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
     <ContextProvider.Provider
       value={{
         cart,
-        expandedSidebar,
         setCart,
-        setExpandedSidebar,
         boardgame,
         setBoardGame,
         isVisible,
