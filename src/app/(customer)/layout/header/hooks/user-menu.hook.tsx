@@ -4,16 +4,17 @@ import { useUserSession } from "@/app/common/hooks/session.hook";
 import { useContext } from "@/app/common/context/context";
 
 export const useUserMenu = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = React.useState<boolean>(false);
   const { isVisible, setIsVisible } = useContext();
   const { session } = useUserSession();
   const menuRef = React.useRef<HTMLDivElement>(null);
 
   const router = useRouter();
 
-  const handleDropdownVisibility = () => setIsDropdownOpen((prev) => !prev);
+  const handleDropdownVisibility = () =>
+    setIsVisible({ ...isVisible, dropdown: !isVisible.dropdown });
 
-  const handleCloseDropdown = () => setIsDropdownOpen(false);
+  const handleCloseDropdown = () =>
+    setIsVisible({ ...isVisible, dropdown: false });
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -35,7 +36,17 @@ export const useUserMenu = () => {
   const menuOptions = [
     {
       label: "Perfil",
-      onClick: () => router.push("user"),
+      onClick: () => {
+        router.push("user");
+        handleCloseDropdown();
+      },
+    },
+    {
+      label: "Carrinho",
+      onClick: () => {
+        router.push("cart");
+        handleCloseDropdown();
+      },
     },
     {
       label: "Sair",
@@ -44,7 +55,7 @@ export const useUserMenu = () => {
   ];
 
   return {
-    isDropdownOpen,
+    isVisible,
     menuOptions,
     handleDropdownVisibility,
     handleCloseDropdown,

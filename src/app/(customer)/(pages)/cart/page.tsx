@@ -1,5 +1,3 @@
-"use server";
-
 import { CartSummary } from "./components/cart-summary/cart-summary.component";
 
 export default async function Cart() {
