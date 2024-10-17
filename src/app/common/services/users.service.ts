@@ -11,6 +11,8 @@ class Users {
       },
     });
 
+    if (!response) return [];
+
     const findAllUsers: ResponseUser[] = await response.json();
 
     return findAllUsers.map((user: ResponseUser) => userMapper.toDomain(user));
@@ -24,6 +26,8 @@ class Users {
       },
     });
 
+    if (!response) return null;
+
     const findUser: ResponseUser = await response.json();
 
     if (!findUser) return null;
@@ -31,7 +35,7 @@ class Users {
     return userMapper.toDomain(findUser);
   }
 
-  async update(id: string, role: string): Promise<IUser> {
+  async update(id: string | undefined, role?: string): Promise<IUser> {
     const response = await httpRequest(`users/${id}`, {
       method: "PUT",
       headers: {
@@ -40,6 +44,10 @@ class Users {
       },
       body: JSON.stringify({ role: role }),
     });
+
+    if (!response) {
+      throw new Error("Failed to update User");
+    }
 
     const update = await response.json();
 

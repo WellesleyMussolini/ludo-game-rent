@@ -6,7 +6,6 @@ import { PrimaryInput, PrimaryInputTypes } from "../../primary-input";
 import { PrimaryButton, PrimaryButtonTypes } from "../../buttons";
 import { Dropdown } from "../../dropdown/dropdown.component";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
-import { CardStatus } from "../../card/types/card.types";
 import { useBoardGameForm } from "./hooks/boardgame-form.hook";
 
 export enum BoardGameFormType {
@@ -18,16 +17,6 @@ export enum BoardGameFormSteps {
   SEARCH_ID_STEP = "searchId",
   SAVE_GAME_FORM_STEP = "saveGameForm",
 }
-
-const boardgameStatus = [
-  CardStatus.FIXED_COPY,
-  CardStatus.RESERVED,
-  CardStatus.QUARANTINE,
-  CardStatus.UNAVAILABLE,
-  CardStatus.MAINTENANCE,
-  CardStatus.RENT,
-  CardStatus.AVAILABLE,
-];
 
 const BoardGameFormSubmit = ({
   type,
@@ -92,7 +81,19 @@ const BoardGameFormSubmit = ({
         <PrimaryInput
           handleOnChange={(event) => handleOnChangeFields("price", event)}
           text={boardgame.price}
-          placeholder="Digite o preço do jogo"
+          placeholder="Digite os dias do aluguel"
+          type={PrimaryInputTypes.NUMBER}
+        />
+      </div>
+
+      {/* Rental Days Duration Input */}
+      <div className="w-full mb-4">
+        <PrimaryInput
+          handleOnChange={(event) =>
+            handleOnChangeFields("rentalDurationDays", event)
+          }
+          text={boardgame.rentalDurationDays}
+          placeholder="Digite os dias restantes até a devolução"
           type={PrimaryInputTypes.NUMBER}
         />
       </div>

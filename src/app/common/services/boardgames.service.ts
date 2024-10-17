@@ -65,6 +65,7 @@ class BoardGames {
     minimumPlayersToPlay,
     maximumPlayersToPlay,
     description,
+    rentalDurationDays,
   }: BoardGame): Promise<BoardGame> {
     const response = await httpRequest(`boardgames/${id}`, {
       method: "PUT",
@@ -82,6 +83,7 @@ class BoardGames {
         minimumPlayersToPlay,
         maximumPlayersToPlay,
         description,
+        rentalDurationDays,
       }),
     });
 
@@ -103,6 +105,7 @@ class BoardGames {
     minimumPlayersToPlay,
     maximumPlayersToPlay,
     description,
+    rentalDurationDays,
   }: BoardGame): Promise<BoardGame> {
     const response = await httpRequest(`boardgames/`, {
       method: "POST",
@@ -120,6 +123,7 @@ class BoardGames {
         minimumPlayersToPlay,
         maximumPlayersToPlay,
         description,
+        rentalDurationDays,
       }),
     });
 

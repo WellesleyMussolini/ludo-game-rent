@@ -12,9 +12,10 @@ import { FaTrashAlt } from "react-icons/fa";
 import { removeCartItem } from "../../utils/remove-cart-item";
 import Image from "next/image";
 import { BoardGame } from "@/app/common/types/boardgame.types";
+import { useCart } from "../../hooks/cart.hook";
 
 export const CartSummary = () => {
-  const { cart, setCart } = useContext();
+  const { handleRentGame, cart, setCart, isLoading, isRented } = useCart();
   return (
     <>
       {cart.length !== 0 ? (
@@ -103,7 +104,8 @@ export const CartSummary = () => {
               <PrimaryButton
                 styles="min-[220px]:mt-4 sm:mt-4 text-[10px] xs:text-sm"
                 text="Finalizar"
-                onClick={() => {}}
+                isLoading={isLoading}
+                onClick={handleRentGame}
                 type={PrimaryButtonTypes.PRIMARY}
               />
             </div>
@@ -111,8 +113,16 @@ export const CartSummary = () => {
         </div>
       ) : (
         <ErrorMessage
-          title="OPS... O CARRINHO ESTÁ VAZIO"
-          message="Adicione produtos ao seu carrinho"
+          title={
+            isRented
+              ? "COMPRA REALIZADA COM SUCESSO!"
+              : "OPS... O CARRINHO ESTÁ VAZIO"
+          }
+          message={
+            isRented
+              ? "Entre em contato com o estabelecimento para retirar os jogos"
+              : "Adicione produtos ao seu carrinho"
+          }
         />
       )}
     </>

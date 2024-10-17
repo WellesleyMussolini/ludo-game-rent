@@ -51,6 +51,7 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
     minimumPlayersToPlay: "",
     maximumPlayersToPlay: "",
     description: "",
+    rentalDurationDays: "",
   });
 
   const [isVisible, setIsVisible] = React.useState<{

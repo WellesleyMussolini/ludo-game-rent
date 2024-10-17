@@ -17,6 +17,7 @@ class BoardGameMapper {
       minimumPlayersToPlay: persistence.minimumPlayersToPlay,
       maximumPlayersToPlay: persistence.maximumPlayersToPlay,
       description: persistence.description,
+      rentalDurationDays: persistence.rentalDurationDays,
     };
   }
 }

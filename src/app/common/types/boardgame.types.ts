@@ -11,4 +11,5 @@ export type BoardGame = {
   minimumPlayersToPlay: string;
   maximumPlayersToPlay: string;
   description: string;
+  rentalDurationDays: string;
 };

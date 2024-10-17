@@ -15,6 +15,7 @@ type Token = {
   picture: string;
   sub: string;
   role: UserRoles;
+  id: string;
   iat: number;
   exp: number;
   jti: string;
@@ -23,6 +24,7 @@ type Token = {
 type Session = {
   session: {
     user: {
+      id: string;
       name: string;
       email: string;
       image: string;
@@ -48,12 +50,14 @@ export const authOptions = {
     async jwt({ token, user }: JWT) {
       if (user) {
         token.role = user.role;
+        token.id = user.id;
       }
       return token;
     },
     async session({ session, token }: Session) {
       // if token has a role then adds it to the session.
       session.user.role = token.role;
+      session.user.id = token.id;
       return {
         user: {
           ...session.user,
