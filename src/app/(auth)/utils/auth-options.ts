@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "../../common/utils/lib/database/prisma";
 import { UserRoles } from "@/app/common/types/user-roles.enum";
 import { IUser } from "@/app/common/types/user.interface";
+import { usersService } from "@/app/common/services/users.service";
 
 type JWT = {
   token: Token;
@@ -54,9 +55,14 @@ export const authOptions = {
       }
       return token;
     },
+
     async session({ session, token }: Session) {
-      // if token has a role then adds it to the session.
-      session.user.role = token.role;
+      const user = await usersService.getById(token.id);
+
+      const role = user?.role ?? UserRoles.USER;
+
+      token.role = role;
+      session.user.role = role;
       session.user.id = token.id;
       return {
         user: {

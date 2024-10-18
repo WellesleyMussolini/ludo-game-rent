@@ -13,8 +13,10 @@ export const useUserMenu = () => {
   const handleDropdownVisibility = () =>
     setIsVisible({ ...isVisible, dropdown: !isVisible.dropdown });
 
-  const handleCloseDropdown = () =>
-    setIsVisible({ ...isVisible, dropdown: false });
+  const handleCloseDropdown = React.useCallback(
+    () => setIsVisible({ ...isVisible, dropdown: false }),
+    [isVisible, setIsVisible]
+  );
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -26,7 +28,7 @@ export const useUserMenu = () => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [handleCloseDropdown, menuRef]);
 
   const userInfo = {
     userImage: session?.user.image ?? "",
@@ -50,7 +52,8 @@ export const useUserMenu = () => {
     },
     {
       label: "Sair",
-      onClick: () => setIsVisible({ ...isVisible, logout: true }),
+      onClick: () =>
+        setIsVisible({ ...isVisible, logout: true, dropdown: false }),
     },
   ];
 
