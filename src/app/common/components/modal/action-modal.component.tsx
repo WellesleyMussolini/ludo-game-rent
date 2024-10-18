@@ -15,6 +15,7 @@ import { boardGamesService } from "../../services/boardgames.service";
 import { CardStatus } from "../card/types/card.types";
 import { handleAnimationClose } from "../../utils/handle-animation-close";
 import { Animations } from "../../types/animations.enum";
+import { useRefetchQuery } from "../../hooks/refetch-query.hook";
 
 export enum ModalActionType {
   LOGOUT = "logout",
@@ -27,12 +28,14 @@ export const ActionModal = ({ type }: { type: ModalActionType }) => {
   );
   const { boardgame, setBoardGame, isVisible, setIsVisible } = useContext();
   const { isLoading, setIsLoading } = useIsLoading();
+  const { handleResetQuery } = useRefetchQuery();
 
   const handleExecuteAction = async () => {
     if (type === ModalActionType.LOGOUT) return signOut();
 
     setIsLoading(true);
     await boardGamesService.delete(boardgame.id);
+    handleResetQuery("boardgames");
     setBoardGame({
       id: "",
       name: "",
@@ -44,6 +47,7 @@ export const ActionModal = ({ type }: { type: ModalActionType }) => {
       minimumPlayersToPlay: "",
       maximumPlayersToPlay: "",
       description: "",
+      rentalDurationDays: "",
     });
     handleAnimationClose({ isVisible, setIsVisible, setAnimation });
     setIsLoading(false);

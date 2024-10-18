@@ -7,6 +7,23 @@ class Rentals {
     const response = await httpRequest("rentals", {
       method: "GET",
       headers: {
+        "cache-control": "no-cache",
+      },
+    });
+
+    if (!response) return [];
+
+    const findAllRentals: ResponseRental[] = await response.json();
+
+    return findAllRentals.map((rental: ResponseRental) =>
+      rentalMapper.toDomain(rental)
+    );
+  }
+
+  async getRentalById(id: string): Promise<Rental[]> {
+    const response = await httpRequest(`rentals/get-rentals-by-id/${id}`, {
+      method: "GET",
+      headers: {
         "Cache-Control": "no-cache",
       },
     });
@@ -20,38 +37,21 @@ class Rentals {
     );
   }
 
-  async update({
-    id,
-    boardgameId,
-    boardgameName,
-    boardgameImage,
-    price,
-    rentalDurationDays,
-    rentalStatus,
-  }: Rental): Promise<Rental> {
-    const response = await httpRequest(`users/${id}`, {
-      method: "PUT",
+  async getUserRentalsById(id: string): Promise<Rental[]> {
+    const response = await httpRequest(`rentals/get-rentals-by-user/${id}`, {
+      method: "GET",
       headers: {
         "Cache-Control": "no-cache",
-        "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        boardgameId,
-        boardgameName,
-        boardgameImage,
-        price,
-        rentalDurationDays,
-        rentalStatus,
-      }),
     });
 
-    if (!response) {
-      throw new Error("Failed to update Rental");
-    }
+    if (!response) return [];
 
-    const update = await response.json();
+    const findAllRentals: ResponseRental[] = await response.json();
 
-    return rentalMapper.toDomain(update);
+    return findAllRentals.map((rental: ResponseRental) =>
+      rentalMapper.toDomain(rental)
+    );
   }
 
   async create({
@@ -94,5 +94,3 @@ class Rentals {
 }
 
 export const rentalsService = new Rentals();
-
-export const findAllRentals = await rentalsService.get();

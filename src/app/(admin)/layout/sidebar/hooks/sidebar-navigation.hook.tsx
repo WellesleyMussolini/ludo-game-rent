@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import * as Fa from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
 import { IoMdCart } from "react-icons/io";
-import { EnumSidebarPathnames } from "../types/sidebar.enum";
+import { Pathnames } from "@/app/common/types/pathnames.enum";
 
 export const useSidebarNavigation = () => {
   const pathName = usePathname();
@@ -15,22 +15,22 @@ export const useSidebarNavigation = () => {
       icon: <Fa.FaDice size={sizeIcons.small} />,
       label: "Catálogo",
       alert: false,
-      active: pathName === EnumSidebarPathnames.ADMIN,
-      route: EnumSidebarPathnames.ADMIN,
+      active: pathName === Pathnames.ADMIN,
+      route: Pathnames.ADMIN,
     },
     {
       icon: <IoMdCart size={sizeIcons.small} />,
-      label: "Pedidos",
+      label: "Aluguéis",
       alert: false,
-      active: pathName === EnumSidebarPathnames.ADMIN_ORDERS,
-      route: EnumSidebarPathnames.ADMIN_ORDERS,
+      active: pathName === Pathnames.ADMIN_RENTALS,
+      route: Pathnames.ADMIN_RENTALS,
     },
     {
       icon: <FaUser size={sizeIcons.small} />,
       label: "Usuários",
       alert: false,
-      active: pathName === EnumSidebarPathnames.ADMIN_USERS,
-      route: EnumSidebarPathnames.ADMIN_USERS,
+      active: pathName === Pathnames.ADMIN_USERS,
+      route: Pathnames.ADMIN_USERS,
     },
   ];
 

@@ -6,7 +6,9 @@ export const httpRequest = async (
     ...options, // Spread operator for flexibility (method, headers, body, etc.)
   });
 
-  if (response.status === 404) return null; // Return null for 404 status instead of throwing an error
+  if (response.status === 404) return null;
+
+  if (response.status === 400) throw new Error("Bad Request");
 
   if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
