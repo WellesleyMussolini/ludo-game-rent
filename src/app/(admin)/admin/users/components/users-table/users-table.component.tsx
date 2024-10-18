@@ -4,7 +4,9 @@ import React from "react";
 import { IUser } from "@/app/common/types/user.interface";
 import { userRoles } from "@/app/common/constants/user-roles";
 import Image from "next/image";
-import { useUserTable } from "../../hooks/user-table.hook";
+import { useUserTable } from "./hooks/user-table.hook";
+import Link from "next/link";
+import { Pathnames } from "@/app/common/types/pathnames.enum";
 
 export const UsersTable = ({ allUsers }: { allUsers: Array<IUser> }) => {
   const { selectedRoles, handleRoleChange } = useUserTable(allUsers);
@@ -23,19 +25,29 @@ export const UsersTable = ({ allUsers }: { allUsers: Array<IUser> }) => {
           key={user.id}
           className="flex items-center px-4 py-2 border-b border-gray-200 hover:bg-gray-100 group"
         >
-          <div className="flex-shrink-0 mr-3">
-            <Image
-              src={user.image}
-              alt={user.name}
-              height={45}
-              width={45}
-              className="rounded-full"
-            />
-          </div>
+          <Link
+            className="cursor-pointer"
+            href={`${Pathnames.ADMIN_USERS}?id=${user.id}`}
+          >
+            <div className="flex-shrink-0 mr-3">
+              <Image
+                src={user.image}
+                alt={user.name}
+                height={45}
+                width={45}
+                className="rounded-full"
+              />
+            </div>
+          </Link>
           <div className="flex-grow md:flex md:justify-between md:items-center overflow-hidden overflow-ellipsis whitespace-nowrap">
-            <p className="text-xs xs:text-sm font-medium text-gray-900">
-              {user.name}
-            </p>
+            <Link
+              className="cursor-pointer"
+              href={`${Pathnames.ADMIN_USERS}?id=${user.id}`}
+            >
+              <p className="text-xs xs:text-sm font-medium text-gray-900">
+                {user.name}
+              </p>
+            </Link>
             <p className="text-xs xs:text-sm text-gray-600 md:text-center">
               {user.email}
             </p>

@@ -9,6 +9,8 @@ import { handleAnimationClose } from "@/app/common/utils/handle-animation-close"
 import { Animations } from "@/app/common/types/animations.enum";
 import { generatePreviewBoardgame } from "@/app/(admin)/admin/services/generate-preview-boardgame";
 import { BoardGameFormSteps } from "../boardgame-form.component";
+import { useRefetchQuery } from "@/app/common/hooks/refetch-query.hook";
+import { useMutation } from "@tanstack/react-query";
 
 export const useBoardGameForm = ({
   handleCloseForm,
@@ -16,6 +18,7 @@ export const useBoardGameForm = ({
   handleCloseForm?: () => void;
 }) => {
   const { boardgame, setBoardGame, isVisible, setIsVisible } = useContext();
+  const { handleResetQuery } = useRefetchQuery();
   const [animation, setAnimation] = React.useState<string>(
     Animations.ANIMATION_JUMP_IN
   );
@@ -94,51 +97,58 @@ export const useBoardGameForm = ({
 
   const isSmallHeight = useMediaQuery("only screen and (max-height: 550px)");
 
-  const handleSaveGame = async () => {
-    setIsLoading(true);
-    try {
-      if (!boardgame.name || !boardgame.price) {
-        toast.warn("Não é possível salvar as informações com campos vazios!");
-        setIsLoading(false);
-        return;
-      } else {
-        await boardGamesService.create({
-          ...boardgame,
-        });
-        handleCloseForm && handleCloseForm();
-        toast.success("O JOGO FOI SALVO COM SUCESSO!");
-        setIsLoading(false);
-        return;
+  const { mutate: handleSaveGame } = useMutation({
+    mutationKey: ["boardgames"],
+    mutationFn: async () => {
+      setIsLoading(true);
+      try {
+        if (!boardgame.name || !boardgame.price) {
+          toast.warn("Não é possível salvar as informações com campos vazios!");
+          setIsLoading(false);
+          return;
+        } else {
+          await boardGamesService.create({
+            ...boardgame,
+          });
+          handleCloseForm && handleCloseForm();
+          toast.success("O JOGO FOI SALVO COM SUCESSO!");
+          handleResetQuery("boardgames");
+          setIsLoading(false);
+          return;
+        }
+      } catch {
+        toast.error("NÃO FOI POSSÍVEL SALVAR O JOGO");
       }
-    } catch {
-      toast.error("NÃO FOI POSSÍVEL SALVAR O JOGO");
-    }
-    setIsLoading(false);
-    return;
-  };
+      setIsLoading(false);
+    },
+  });
 
-  const handleUpdateGame = async () => {
-    setIsLoading(true);
-    try {
-      if (!boardgame.name || !boardgame.price) {
-        toast.warn("Não é possível salvar as informações com campos vazios!");
-        setIsLoading(false);
-        return;
-      } else {
-        await boardGamesService.update({
-          ...boardgame,
-        });
-        handleCloseForm && handleCloseForm();
-        toast.success("O JOGO FOI ATUALIZADO COM SUCESSO!");
-        setIsLoading(false);
-        return;
+  const { mutate: handleUpdateGame } = useMutation({
+    mutationKey: ["boardgames"],
+    mutationFn: async () => {
+      setIsLoading(true);
+      try {
+        if (!boardgame.name || !boardgame.price) {
+          toast.warn("Não é possível salvar as informações com campos vazios!");
+          setIsLoading(false);
+          return;
+        } else {
+          await boardGamesService.update({
+            ...boardgame,
+          });
+          handleCloseForm && handleCloseForm();
+          toast.success("O JOGO FOI ATUALIZADO COM SUCESSO!");
+          handleResetQuery("boardgames");
+          setIsLoading(false);
+          return;
+        }
+      } catch {
+        toast.error("NÃO FOI POSSÍVEL SALVAR O JOGO");
       }
-    } catch {
-      toast.error("NÃO FOI POSSÍVEL SALVAR O JOGO");
-    }
-    setIsLoading(false);
-    return;
-  };
+      setIsLoading(false);
+      return;
+    },
+  });
 
   return {
     boardgame,
