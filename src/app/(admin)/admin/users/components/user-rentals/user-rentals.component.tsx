@@ -17,7 +17,7 @@ export const UserRentals = async () => {
     isPending: isLoading,
     isError,
   } = useQuery({
-    queryKey: ["user-rentals", userIdParam],
+    queryKey: ["session-rentals", userIdParam],
     queryFn: async () => {
       const rental = {
         user: async (): Promise<IUser | null> =>
