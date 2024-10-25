@@ -34,31 +34,27 @@ export const BoardGameCatalogue = () => {
         />
       </div>
 
-      <div className="flex justify-center w-full max-w-[1160px] h-[40em]">
-        {boardgames && boardgames.length === 0 ? (
-          <div className="w-full">
-            <ErrorMessage
-              title="NÃO ENCONTRADO"
-              message="Oops! parece que o jogo inserido não existe"
-            />
-          </div>
-        ) : (
-          <div
-            className={`grid grid-cols-1 gap-10 w-full  
-              md:grid md:grid-cols-2
-              xl:grid xl:grid-cols-3
-              2xl:grid 2xl:grid-cols-4`}
-          >
-            {isLoading
-              ? Array.from({ length: 4 }).map((_, index) => (
-                  <CardSkeleton key={index} />
-                ))
-              : boardgames?.map((boardgame: BoardGame, index: number) => (
-                  <Card key={index} boardgame={boardgame} />
-                ))}
-          </div>
-        )}
-      </div>
+      {boardgames && boardgames.length === 0 ? (
+        <div className="w-full h-[40em]">
+          <ErrorMessage
+            title="NÃO ENCONTRADO"
+            message="Oops! parece que o jogo inserido não existe"
+          />
+        </div>
+      ) : (
+        <div
+          className={`grid grid-cols-1 gap-10 justify-items-center px-5
+          md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 h-[40em]`}
+        >
+          {isLoading
+            ? Array.from({ length: 4 }).map((_, index) => (
+                <CardSkeleton key={index} />
+              ))
+            : boardgames?.map((boardgame: BoardGame, index: number) => (
+                <Card key={index} boardgame={boardgame} />
+              ))}
+        </div>
+      )}
     </div>
   );
 };

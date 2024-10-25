@@ -9,6 +9,8 @@ import { formatDate } from "./utils/format-date";
 import { RentalStatus } from "./components/rental-status.component";
 import { usePathname } from "next/navigation";
 import { Pathnames } from "../../types/pathnames.enum";
+import { useUserSession } from "../../hooks/session.hook";
+import { UserRoles } from "../../types/user-roles.enum";
 
 export const RentalHistory = ({
   rentals,
@@ -21,6 +23,7 @@ export const RentalHistory = ({
   }) => void;
 }) => {
   const pathname = usePathname();
+  const { session } = useUserSession();
   return (
     <table className="table-fixed w-full">
       <thead className="flex items-center w-full bg-gray-100 border-b">
@@ -115,6 +118,7 @@ export const RentalHistory = ({
             </td>
             <td className="w-1/4 px-4 py-4 text-center">
               <RentalStatus
+                role={session?.user.role ?? UserRoles.USER}
                 status={game.rentalStatus as RentalStatusType}
                 handleUpdateStatus={() =>
                   handleUpdateStatus({ id: game.id, rental: game })

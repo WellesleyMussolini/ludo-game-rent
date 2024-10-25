@@ -24,7 +24,7 @@ export const PrimaryInput = ({
         onKeyDown={handleKeyDown}
       />
       <div
-        className={`flex justify-center items-center ${
+        className={`cursor-pointer flex justify-center items-center ${
           type !== PrimaryInputTypes.SEARCH && "hidden"
         } w-16 text-gray-500 bg-white`}
         onClick={handleOnSearch}

@@ -1,11 +1,14 @@
 import { RentalStatus as RentalStatusType } from "@/app/common/types/rental.types";
 import { translateStatus } from "../utils/translate-status";
 import { FaPen } from "react-icons/fa";
+import { UserRoles } from "@/app/common/types/user-roles.enum";
 
 export const RentalStatus = ({
+  role,
   status,
   handleUpdateStatus,
 }: {
+  role: UserRoles;
   status: RentalStatusType;
   handleUpdateStatus: () => void;
 }) => {
@@ -43,13 +46,14 @@ export const RentalStatus = ({
       >
         {translateStatus(status)}
       </p>
-      {(status === RentalStatusType.OVERDUE ||
-        status === RentalStatusType.ACTIVE) && (
-        <FaPen
-          onClick={handleUpdateStatus}
-          className="max-[300px]:text-[8px] max-xs:text-xs xs:text-sm sm:text-base text-gray-500 cursor-pointer transform scale-125 duration-300"
-        />
-      )}
+      {role === UserRoles.ADMIN &&
+        (status === RentalStatusType.OVERDUE ||
+          status === RentalStatusType.ACTIVE) && (
+          <FaPen
+            onClick={handleUpdateStatus}
+            className="max-[300px]:text-[8px] max-xs:text-xs xs:text-sm sm:text-base text-gray-500 cursor-pointer transform scale-125 duration-300"
+          />
+        )}
     </p>
   );
 };

@@ -5,7 +5,6 @@ import { Pathnames } from "@/app/common/types/pathnames.enum";
 import { useContext } from "@/app/common/context/context";
 import { formatCurrency } from "@/app/common/utils/format-currency";
 import { usePathname, useRouter } from "next/navigation";
-import { formatStringForUrl } from "@/app/common/utils/format-string";
 
 export const useCard = (boardgame: BoardGame) => {
   const router = useRouter();
@@ -16,7 +15,7 @@ export const useCard = (boardgame: BoardGame) => {
 
   const redirectToBoardgameAbout = () => {
     pathname === Pathnames.HOME &&
-      router.push(`search?boardgame=${formatStringForUrl(boardgame.name)}`);
+      router.push(`search?boardgame=${boardgame.id}`);
   };
 
   return {
