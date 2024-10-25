@@ -3,13 +3,9 @@ export const httpRequest = async (
   options: RequestInit = {}
 ): Promise<Response | null> => {
   try {
-    // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}`, {
-    const response = await fetch(
-      `https://ludo-game-rent-api.onrender.com/${path}`,
-      {
-        ...options, // Spread operator for flexibility (method, headers, body, etc.)
-      }
-    );
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}`, {
+      ...options, // Spread operator for flexibility (method, headers, body, etc.)
+    });
 
     if (response.status === 404) return null;
 
