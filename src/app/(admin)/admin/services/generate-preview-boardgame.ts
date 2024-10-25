@@ -1,10 +1,11 @@
+import { CardStatus } from "@/app/common/components/card/boardgames/types/card.types";
+import { BoardGame } from "@/app/common/types/boardgame.types";
 import React from "react";
 import xmlJs from "xml-js";
-import { iGameApiData } from "../interfaces/game-api-data.interface";
 
 export const generatePreviewBoardgame = async (
   id: string,
-  handleGameApiData: React.Dispatch<React.SetStateAction<iGameApiData>>
+  handleGameApiData: React.Dispatch<React.SetStateAction<BoardGame>>
 ) => {
   const response = await fetch(
     `https://thingproxy.freeboard.io/fetch/https://boardgamegeek.com/xmlapi/boardgame/${id}`
@@ -25,11 +26,12 @@ export const generatePreviewBoardgame = async (
     image: apiObjectAccess("image"),
     name: apiObjectAccess("name"),
     price: "40",
-    status: "Disponível",
+    status: CardStatus.AVAILABLE,
     ageToPlay: apiObjectAccess("age"),
     playTime: apiObjectAccess("playingtime"),
     minimumPlayersToPlay: apiObjectAccess("minplayers"),
     maximumPlayersToPlay: apiObjectAccess("maxplayers"),
     description: apiObjectAccess("description"),
+    rentalDurationDays: "",
   });
 };
