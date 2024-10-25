@@ -10,7 +10,7 @@ export async function POST(request: any) {
     client.messages.create({
       body: message,
       from: "whatsapp:+14155238886",
-      to: "whatsapp:+553184140779",
+      to: "whatsapp:+553192713920",
     });
 
     return NextResponse.json({ message: "Success" }, { status: 200 });
