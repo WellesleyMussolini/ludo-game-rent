@@ -12,14 +12,19 @@ export const useHandleRentGame = (boardgame: BoardGame | null) => {
 
     if (!boardgame) return;
 
-    const isGameInCart = cart.some((item) => item.id === boardgame.id);
+    const isGameInCart = cart.boardgames.some(
+      (item) => item.id === boardgame.id
+    );
 
     if (isGameInCart) {
       toast.warn(` ${boardgame.name} is already in your cart`);
       return;
     }
 
-    setCart([...cart, boardgame]);
+    setCart({
+      ...cart,
+      boardgames: [...cart.boardgames, boardgame],
+    });
     toast.success(`${boardgame.name} added to your cart`);
   };
 

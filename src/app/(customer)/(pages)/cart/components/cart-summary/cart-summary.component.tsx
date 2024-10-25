@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useContext } from "@/app/common/context/context";
 import { ErrorMessage } from "@/app/common/components/error-message/error-message.component";
 import { calculateCartAmount } from "../../utils/calculate-cart-amount";
 import {
@@ -13,12 +12,14 @@ import { removeCartItem } from "../../utils/remove-cart-item";
 import Image from "next/image";
 import { BoardGame } from "@/app/common/types/boardgame.types";
 import { useCart } from "../../hooks/cart.hook";
+import { LoadingSpinner } from "@/app/common/components/loading/loading-spinner/loading-spinner.component";
 
 export const CartSummary = () => {
   const { handleRentGame, cart, setCart, isLoading, isRented } = useCart();
+  if (cart.isLoading) return <LoadingSpinner size={150} />;
   return (
     <>
-      {cart.length !== 0 ? (
+      {cart.boardgames && cart.boardgames.length > 0 ? (
         <div className="p-10 flex justify-center items-start md:mt-0 break-words w-full">
           <div
             className="
@@ -36,7 +37,7 @@ export const CartSummary = () => {
             </h1>
             {/* cart list */}
             <div className="overflow-y-auto h-36 max-[400px]:h-28 sm:h-auto max overflow-x-hidden">
-              {cart.map((item: BoardGame, index: number) => {
+              {cart.boardgames.map((item: BoardGame, index: number) => {
                 return (
                   <div
                     key={index}
@@ -98,7 +99,7 @@ export const CartSummary = () => {
                   Total
                 </span>
                 <span className="text-primary text-sm min-[280px]:text-base sm:text-xl font-bold">
-                  R$ {calculateCartAmount(cart)}
+                  R$ {calculateCartAmount(cart.boardgames)}
                 </span>
               </div>
               <PrimaryButton

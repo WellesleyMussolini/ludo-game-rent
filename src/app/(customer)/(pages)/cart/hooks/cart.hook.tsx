@@ -27,7 +27,9 @@ export const useCart = () => {
   const handleRentGame = async () => {
     setIsLoading(true);
 
-    const boardgameNames = cart.map((boardgame: BoardGame) => boardgame.name);
+    const boardgameNames = cart.boardgames.map(
+      (boardgame: BoardGame) => boardgame.name
+    );
 
     try {
       await rentGames();
@@ -35,7 +37,7 @@ export const useCart = () => {
         fullSession,
         boardgameNames
       );
-      setCart([]);
+      setCart({ ...cart, boardgames: [] });
       toast.success("COMPRA REALIZADA COM SUCESSO");
       setIsRented(true);
     } catch (error) {
@@ -46,7 +48,7 @@ export const useCart = () => {
   };
 
   const rentGames = async () => {
-    for (const boardgame of cart) {
+    for (const boardgame of cart.boardgames) {
       await rentalsService.create({
         userId: session?.user.id ?? "",
         userName: session?.user.name ?? "",

@@ -5,8 +5,16 @@ import { BoardGame } from "@/app/common/types/boardgame.types";
 import { CardStatus } from "../components/card/boardgames/types/card.types";
 
 interface IContext {
-  cart: Array<BoardGame>;
-  setCart: React.Dispatch<React.SetStateAction<Array<BoardGame>>>;
+  cart: {
+    boardgames: Array<BoardGame>;
+    isLoading: boolean;
+  };
+  setCart: React.Dispatch<
+    React.SetStateAction<{
+      boardgames: Array<BoardGame>;
+      isLoading: boolean;
+    }>
+  >;
   isVisible: {
     logout: boolean;
     deleteBoardGame: boolean;
@@ -36,10 +44,36 @@ interface IProviderProps {
 }
 
 export const ThemeProvider = ({ children }: IProviderProps) => {
-  const [cart, setCart] = React.useState<Array<BoardGame>>(() => {
+  const [cart, setCart] = React.useState<{
+    boardgames: Array<BoardGame>;
+    isLoading: boolean;
+  }>({ boardgames: [], isLoading: true });
+
+  React.useEffect(() => {
     const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
+    if (savedCart) {
+      // If data exists in localStorage, load it
+      setCart({
+        boardgames: JSON.parse(savedCart).boardgames,
+        isLoading: false,
+      });
+    } else {
+      // If no data, set loading to false and save initial state to localStorage
+      setCart({ boardgames: [], isLoading: false });
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({ boardgames: [], isLoading: false })
+      );
+    }
+  }, []);
+
+  // Update localStorage whenever boardgames array in cart changes
+  React.useEffect(() => {
+    if (!cart.isLoading) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [cart.boardgames, cart]);
+
   const [boardgame, setBoardGame] = React.useState<BoardGame>({
     id: "",
     name: "",
@@ -69,11 +103,6 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
     sidebar: false,
     dropdown: false,
   });
-
-  // Update local storage whenever the cart changes
-  React.useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
 
   return (
     <ContextProvider.Provider
