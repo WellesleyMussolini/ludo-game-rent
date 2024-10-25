@@ -1,15 +1,19 @@
+import { UserProfileCard } from "@/app/common/components/card/user-profile/card.component";
 import { ErrorMessage } from "@/app/common/components/error-message/error-message.component";
+import { LoadingSpinner } from "@/app/common/components/loading/loading-spinner/loading-spinner.component";
+import { RentalHistory } from "@/app/common/components/rental-history/rental-history.component";
+import { useRefetchQuery } from "@/app/common/hooks/refetch-query.hook";
 import { rentalsService } from "@/app/common/services/rentals.service";
 import { usersService } from "@/app/common/services/users.service";
 import { Pathnames } from "@/app/common/types/pathnames.enum";
-import { Rental } from "@/app/common/types/rental.types";
+import { Rental, RentalStatus } from "@/app/common/types/rental.types";
 import { IUser } from "@/app/common/types/user.interface";
 import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 export const UserRentals = async () => {
+  const { handleResetQuery } = useRefetchQuery();
   const searchParams = useSearchParams()!;
   const userIdParam = searchParams.get("id")!;
   const {
@@ -17,7 +21,7 @@ export const UserRentals = async () => {
     isPending: isLoading,
     isError,
   } = useQuery({
-    queryKey: ["session-rentals", userIdParam],
+    queryKey: ["user-rentals", userIdParam],
     queryFn: async () => {
       const rental = {
         user: async (): Promise<IUser | null> =>
@@ -28,6 +32,7 @@ export const UserRentals = async () => {
       return { rental };
     },
     refetchInterval: 60000,
+    enabled: !!userIdParam,
   });
 
   if (isError) {
@@ -51,35 +56,47 @@ export const UserRentals = async () => {
   if (!rentals || !foundUser) {
     return <ErrorMessage title="404" message="User was not found" />;
   }
+
+  // DO COMPONENTE ORIGINAL
+
+  if (isLoading) return <LoadingSpinner size={150} />;
+
+  const updateStatus = async ({
+    id,
+    rental,
+  }: {
+    id: string | undefined;
+    rental: Rental;
+  }) => {
+    if (confirm("Tem certeza que o jogo foi entregue ?")) {
+      await rentalsService.update({
+        ...rental,
+        id: id,
+        rentalStatus: RentalStatus.RETURNED,
+      });
+      handleResetQuery("user-rentals");
+    }
+    return;
+  };
   return (
-    <div className="flex flex-col">
+    <div className="flex justify-center items-center flex-col gap-8 w-full sm:px-10">
       <Link className="cursor-pointer" href={Pathnames.ADMIN_USERS}>
-        MOVE BACK
+        RETORNAR
       </Link>
-      <Image
-        src={foundUser.image}
-        alt={foundUser.name}
-        height={60}
-        width={60}
+
+      <UserProfileCard
+        name={foundUser.name}
+        email={foundUser.email}
+        image={foundUser.image}
       />
-      <p>{foundUser.name}</p>
-      <p>{foundUser.email}</p>
-      {rentals.length === 0 && <p>NENHUM JOGO ALUGADO</p>}
-      {rentals.map((rental: Rental, index: number) => (
-        <div className="flex items-center gap-9 flex-row" key={index}>
-          <Image
-            src={rental.boardgameImage}
-            alt={rental.boardgameName}
-            height={40}
-            width={40}
-          />
-          <p>{rental.boardgameName}</p>
-          <p>{rental.rentalDurationDays}</p>
-          <p>{rental.rentalStartDate}</p>
-          <p>{rental.rentalEndDate}</p>
-          <p>{rental.rentalStatus}</p>
-        </div>
-      ))}
+      {rentals.length === 0 ? (
+        <ErrorMessage
+          title="Rental history is Empty"
+          message="You don't have any boardgame rented"
+        />
+      ) : (
+        <RentalHistory rentals={rentals} handleUpdateStatus={updateStatus} />
+      )}
     </div>
   );
 };

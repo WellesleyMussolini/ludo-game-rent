@@ -4,6 +4,6 @@ export enum EnumSidebarMobileVisibility {
 }
 
 export enum EnumSidebarResponsive {
-  MOBILE = "w-72 max-[400px]:w-full sm:hidden transition-transform flex flex-col",
-  DESKTOP = "hidden sm:flex sm:flex-col",
+  MOBILE = "w-72 max-[400px]:w-full md:hidden transition-transform flex flex-col",
+  DESKTOP = "hidden md:flex sm:flex-col",
 }

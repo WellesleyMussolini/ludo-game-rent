@@ -3,7 +3,7 @@ import { useContext } from "@/app/common/context/context";
 import { useIsLoading } from "@/app/common/hooks/is-loading.hook";
 import { toast } from "react-toastify";
 import { boardGamesService } from "@/app/common/services/boardgames.service";
-import { CardStatus } from "../../../card/types/card.types";
+import { CardStatus } from "../../../card/boardgames/types/card.types";
 import { useMediaQuery } from "@react-hook/media-query";
 import { handleAnimationClose } from "@/app/common/utils/handle-animation-close";
 import { Animations } from "@/app/common/types/animations.enum";

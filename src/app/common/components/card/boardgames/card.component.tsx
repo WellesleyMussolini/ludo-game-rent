@@ -1,17 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { BoardGame } from "../../types/boardgame.types";
+import { BoardGame } from "../../../types/boardgame.types";
 import { CardStatus } from "./types/card.types";
-import { Pathnames } from "../../types/pathnames.enum";
+import { Pathnames } from "../../../types/pathnames.enum";
 import {
   PrimaryButton,
   PrimaryButtonTypes,
   ButtonRentGame,
 } from "@/app/common/components/buttons";
-import { useCard } from "./hooks/card.hook";
 import { BsHourglassSplit } from "react-icons/bs";
 import { MdGroup } from "react-icons/md";
+import { useCard } from "./hooks/card.hook";
 
 export const Card = ({ boardgame }: { boardgame: BoardGame }) => {
   const {

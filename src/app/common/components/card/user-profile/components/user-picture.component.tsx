@@ -1,11 +1,20 @@
 "use client";
 
 import { FaCircleUser } from "react-icons/fa6";
-import { useUserProfilePicture } from "./hooks/use-user-profile-picture.hooks";
+import { useUserProfilePicture } from "../hooks/use-user-profile-picture.hooks";
 import Image from "next/image";
 
-export const UserProfilePicture = ({ size = "80" }: { size?: string }) => {
-  const { authenticated, isLoading, session } = useUserProfilePicture();
+export const UserPicture = ({
+  userImage,
+  userName,
+  size = "80",
+}: {
+  userImage: string | undefined;
+  userName: string | undefined;
+  size?: string;
+}) => {
+  const { authenticated, isLoading } = useUserProfilePicture();
+
   return (
     <>
       {isLoading || !authenticated ? (
@@ -13,8 +22,8 @@ export const UserProfilePicture = ({ size = "80" }: { size?: string }) => {
       ) : (
         <div className="flex flex-col justify-center items-center cursor-pointer">
           <Image
-            src={session?.user?.image ?? ""}
-            alt={session?.user?.name ?? ""}
+            src={userImage ?? ""}
+            alt={userName ?? ""}
             className="rounded-full"
             height={80}
             width={80}

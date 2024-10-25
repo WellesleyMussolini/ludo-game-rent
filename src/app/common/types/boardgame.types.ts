@@ -1,4 +1,4 @@
-import { CardStatus } from "../components/card/types/card.types";
+import { CardStatus } from "../components/card/boardgames/types/card.types";
 
 export type BoardGame = {
   id: string;

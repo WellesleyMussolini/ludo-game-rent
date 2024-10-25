@@ -1,8 +1,8 @@
 "use server";
 
 import React from "react";
-import { RentalHistory } from "./components/rental-history.component";
+import { AllUsersRentals } from "./components/all-users-rentals.component";
 
 export default async function Rentals() {
-  return <RentalHistory />;
+  return <AllUsersRentals />;
 }

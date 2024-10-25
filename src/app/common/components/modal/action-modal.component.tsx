@@ -12,7 +12,7 @@ import { signOut } from "next-auth/react";
 import { OverlayBackground } from "../overlay-background/overlay-background.component";
 import { useIsLoading } from "../../hooks/is-loading.hook";
 import { boardGamesService } from "../../services/boardgames.service";
-import { CardStatus } from "../card/types/card.types";
+import { CardStatus } from "../card/boardgames/types/card.types";
 import { handleAnimationClose } from "../../utils/handle-animation-close";
 import { Animations } from "../../types/animations.enum";
 import { useRefetchQuery } from "../../hooks/refetch-query.hook";

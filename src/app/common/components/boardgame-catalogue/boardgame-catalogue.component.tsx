@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Card } from "../card/card.component";
+import { Card } from "../card/boardgames/card.component";
 import { BoardGame } from "@/app/common/types/boardgame.types";
 import { ErrorMessage } from "../error-message/error-message.component";
 import { PrimaryInput, PrimaryInputTypes } from "../primary-input";

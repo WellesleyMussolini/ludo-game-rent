@@ -2,7 +2,7 @@
 
 import React from "react";
 import { BoardGame } from "@/app/common/types/boardgame.types";
-import { CardStatus } from "../components/card/types/card.types";
+import { CardStatus } from "../components/card/boardgames/types/card.types";
 
 interface IContext {
   cart: Array<BoardGame>;

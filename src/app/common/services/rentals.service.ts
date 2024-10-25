@@ -54,6 +54,47 @@ class Rentals {
     );
   }
 
+  async update({
+    id,
+    userId,
+    userName,
+    userImage,
+    userEmail,
+    boardgameId,
+    boardgameImage,
+    boardgameName,
+    price,
+    rentalDurationDays,
+    rentalStatus,
+  }: Rental): Promise<Rental> {
+    const response = await httpRequest(`rentals/${id}`, {
+      method: "PUT",
+      headers: {
+        "Cache-Control": "no-cache",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        userName,
+        userImage,
+        userEmail,
+        boardgameId,
+        boardgameImage,
+        boardgameName,
+        price,
+        rentalDurationDays,
+        rentalStatus,
+      }),
+    });
+
+    if (!response) {
+      throw new Error("Failed to update Rental"); // Handle null response
+    }
+
+    const updateRental = await response.json();
+    return rentalMapper.toDomain(updateRental);
+  }
+
   async create({
     userId,
     userName,
