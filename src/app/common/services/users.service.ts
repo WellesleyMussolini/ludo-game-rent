@@ -2,9 +2,11 @@ import { IUser } from "../types/user.interface";
 import { httpRequest } from "../utils/http-request";
 import userMapper, { ResponseUser } from "./mapper/user.mapper";
 
+const url = process.env.NEXT_PUBLIC_API_URL;
+
 class Users {
   async get(): Promise<IUser[]> {
-    const response = await httpRequest("users", {
+    const response = await httpRequest(url, "users", {
       method: "GET",
       headers: {
         "Cache-Control": "no-cache",
@@ -19,7 +21,7 @@ class Users {
   }
 
   async getById(id: string): Promise<IUser | null> {
-    const response = await httpRequest(`users/get-by-id/${id}`, {
+    const response = await httpRequest(url, `users/get-by-id/${id}`, {
       method: "GET",
       headers: {
         "Cache-Control": "no-cache",
@@ -36,7 +38,7 @@ class Users {
   }
 
   async update(id: string | undefined, role?: string): Promise<IUser> {
-    const response = await httpRequest(`users/${id}`, {
+    const response = await httpRequest(url, `users/${id}`, {
       method: "PUT",
       headers: {
         "Cache-Control": "no-cache",
