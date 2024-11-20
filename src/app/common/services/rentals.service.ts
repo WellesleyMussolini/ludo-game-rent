@@ -2,9 +2,11 @@ import { Rental, RentalStatus } from "../types/rental.types";
 import { httpRequest } from "../utils/http-request";
 import rentalMapper, { ResponseRental } from "./mapper/rental.mapper";
 
+const url = process.env.NEXT_PUBLIC_API_URL;
+
 class Rentals {
   async get(): Promise<Rental[]> {
-    const response = await httpRequest("rentals", {
+    const response = await httpRequest(url, "rentals", {
       method: "GET",
       headers: {
         "cache-control": "no-cache",
@@ -21,7 +23,7 @@ class Rentals {
   }
 
   async getRentalById(id: string): Promise<Rental[]> {
-    const response = await httpRequest(`rentals/get-rentals-by-id/${id}`, {
+    const response = await httpRequest(url, `rentals/get-rentals-by-id/${id}`, {
       method: "GET",
       headers: {
         "Cache-Control": "no-cache",
@@ -38,12 +40,16 @@ class Rentals {
   }
 
   async getUserRentalsById(id: string): Promise<Rental[]> {
-    const response = await httpRequest(`rentals/get-rentals-by-user/${id}`, {
-      method: "GET",
-      headers: {
-        "Cache-Control": "no-cache",
-      },
-    });
+    const response = await httpRequest(
+      url,
+      `rentals/get-rentals-by-user/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Cache-Control": "no-cache",
+        },
+      }
+    );
 
     if (!response) return [];
 
@@ -67,7 +73,7 @@ class Rentals {
     rentalDurationDays,
     rentalStatus,
   }: Rental): Promise<Rental> {
-    const response = await httpRequest(`rentals/${id}`, {
+    const response = await httpRequest(url, `rentals/${id}`, {
       method: "PUT",
       headers: {
         "Cache-Control": "no-cache",
@@ -106,7 +112,7 @@ class Rentals {
     price,
     rentalDurationDays,
   }: Rental): Promise<Rental> {
-    const response = await httpRequest(`rentals/`, {
+    const response = await httpRequest(url, `rentals/`, {
       method: "POST",
       headers: {
         "Cache-Control": "no-cache",

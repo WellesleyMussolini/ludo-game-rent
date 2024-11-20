@@ -3,9 +3,11 @@ import boardGameMapper, { ResponseBoardGame } from "./mapper/boardgame.mapper";
 import { BoardGame } from "@/app/common/types/boardgame.types";
 import boardgameMapper from "./mapper/boardgame.mapper";
 
+const url = process.env.NEXT_PUBLIC_API_URL;
+
 class BoardGames {
   async get(): Promise<BoardGame[]> {
-    const response = await httpRequest("boardgames", {
+    const response = await httpRequest(url, "boardgames", {
       method: "GET",
       headers: {
         "Cache-Control": "no-cache",
@@ -22,7 +24,7 @@ class BoardGames {
   }
 
   async getById(id: string): Promise<BoardGame | null> {
-    const response = await httpRequest(`boardgames/get-by-id/${id}`, {
+    const response = await httpRequest(url, `boardgames/get-by-id/${id}`, {
       method: "GET",
       headers: {
         "Cache-Control": "no-cache",
@@ -38,6 +40,7 @@ class BoardGames {
 
   async getByName(name: string): Promise<BoardGame[] | null> {
     const response = await httpRequest(
+      url,
       `boardgames/search-by-name?name=${name}`,
       {
         method: "GET",
@@ -67,7 +70,7 @@ class BoardGames {
     description,
     rentalDurationDays,
   }: BoardGame): Promise<BoardGame> {
-    const response = await httpRequest(`boardgames/${id}`, {
+    const response = await httpRequest(url, `boardgames/${id}`, {
       method: "PUT",
       headers: {
         "Cache-Control": "no-cache",
@@ -107,7 +110,7 @@ class BoardGames {
     description,
     rentalDurationDays,
   }: BoardGame): Promise<BoardGame> {
-    const response = await httpRequest(`boardgames/`, {
+    const response = await httpRequest(url, `boardgames/`, {
       method: "POST",
       headers: {
         "Cache-Control": "no-cache",
@@ -136,7 +139,7 @@ class BoardGames {
   }
 
   async delete(id: string): Promise<BoardGame> {
-    const response = await httpRequest(`boardgames/${id}`, {
+    const response = await httpRequest(url, `boardgames/${id}`, {
       method: "DELETE",
       headers: {
         "Cache-Control": "no-cache",

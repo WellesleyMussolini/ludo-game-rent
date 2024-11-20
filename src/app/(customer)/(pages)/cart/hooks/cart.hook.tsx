@@ -1,8 +1,8 @@
 import { useContext } from "@/app/common/context/context";
 import { useIsLoading } from "@/app/common/hooks/is-loading.hook";
 import { useUserSession } from "@/app/common/hooks/session.hook";
-import { notificationService } from "@/app/common/services/notification.service";
 import { rentalsService } from "@/app/common/services/rentals.service";
+import { telegramService } from "@/app/common/services/telegram-sms.service";
 import { BoardGame } from "@/app/common/types/boardgame.types";
 import { UserRoles } from "@/app/common/types/user-roles.enum";
 import { Session } from "@/app/common/types/user.interface";
@@ -33,15 +33,21 @@ export const useCart = () => {
 
     try {
       await rentGames();
-      await notificationService.sendRentalNotification(
-        fullSession,
-        boardgameNames
-      );
+
+      const message = `${fullSession.name ?? ""} acabou de alugar!
+              
+      nome: ${fullSession.name ?? ""}.
+      email: ${fullSession.email ?? ""}.
+      jogos alugados: "${boardgameNames.join(", ")}".
+      `;
+
+      await telegramService.sendMessage({ chatId: "-4562845780", message });
       setCart({ ...cart, boardgames: [] });
       toast.success("COMPRA REALIZADA COM SUCESSO");
       setIsRented(true);
     } catch (error) {
       toast.error("Failed to rent games");
+      console.log(error);
     } finally {
       setIsLoading(false);
     }

@@ -1,9 +1,10 @@
 export const httpRequest = async (
+  url: string | undefined,
   path: string,
   options: RequestInit = {}
 ): Promise<Response | null> => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${path}`, {
+    const response = await fetch(`${url}/${path}`, {
       ...options, // Spread operator for flexibility (method, headers, body, etc.)
     });
 
