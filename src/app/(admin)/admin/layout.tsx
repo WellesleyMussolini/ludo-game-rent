@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/app/common/context/context";
 import { LoadingScreen } from "@/app/common/components/loading/loading-screen/loading-screen.component";
 import { LayoutWrapper } from "../layout/wrapper/wrapper.layout";
 import { ProgressBar } from "@/app/common/components/progress-bar/progress-bar.component";
+import Head from "next/head";
 
 const font = Roboto({ weight: "500", subsets: ["latin"] });
 
@@ -26,6 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/icons/icon-192x192.png" />
+        <meta name="theme-color" content="#000000" />
+      </Head>
       <body className={`${font.className} bg-background`}>
         <Provider>
           <ProgressBar />
