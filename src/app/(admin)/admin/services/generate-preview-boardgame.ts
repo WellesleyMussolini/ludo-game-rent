@@ -33,5 +33,6 @@ export const generatePreviewBoardgame = async (
     maximumPlayersToPlay: apiObjectAccess("maxplayers"),
     description: apiObjectAccess("description"),
     rentalDurationDays: "",
+    availableCopies: "",
   });
 };

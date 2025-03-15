@@ -4,13 +4,13 @@ import { useIsLoading } from "@/app/common/hooks/is-loading.hook";
 import { toast } from "react-toastify";
 import { boardGamesService } from "@/app/common/services/boardgames.service";
 import { CardStatus } from "../../../card/boardgames/types/card.types";
-import { useMediaQuery } from "@react-hook/media-query";
 import { handleAnimationClose } from "@/app/common/utils/handle-animation-close";
 import { Animations } from "@/app/common/types/animations.enum";
 import { generatePreviewBoardgame } from "@/app/(admin)/admin/services/generate-preview-boardgame";
 import { BoardGameFormSteps } from "../boardgame-form.component";
 import { useRefetchQuery } from "@/app/common/hooks/refetch-query.hook";
 import { useMutation } from "@tanstack/react-query";
+import { PrimaryButtonTypes } from "../../../buttons";
 
 export const useBoardGameForm = ({
   handleCloseForm,
@@ -65,6 +65,14 @@ export const useBoardGameForm = ({
     BoardGameFormSteps.SEARCH_ID_STEP
   );
 
+  const isSubmitButtonDisabled =
+    !boardgame.name ||
+    !boardgame.price ||
+    !boardgame.availableCopies ||
+    !boardgame.rentalDurationDays
+      ? PrimaryButtonTypes.DISABLED
+      : PrimaryButtonTypes.OUTLINED;
+
   const handleNextStep = async () => {
     setIsLoading(true);
     try {
@@ -95,14 +103,17 @@ export const useBoardGameForm = ({
     });
   };
 
-  const isSmallHeight = useMediaQuery("only screen and (max-height: 550px)");
-
   const { mutate: handleSaveGame } = useMutation({
     mutationKey: ["boardgames"],
     mutationFn: async () => {
       setIsLoading(true);
       try {
-        if (!boardgame.name || !boardgame.price) {
+        if (
+          !boardgame.name ||
+          !boardgame.price ||
+          !boardgame.availableCopies ||
+          !boardgame.rentalDurationDays
+        ) {
           toast.warn("Não é possível salvar as informações com campos vazios!");
           setIsLoading(false);
           return;
@@ -116,8 +127,9 @@ export const useBoardGameForm = ({
           setIsLoading(false);
           return;
         }
-      } catch {
+      } catch (err) {
         toast.error("NÃO FOI POSSÍVEL SALVAR O JOGO");
+        console.log("error ao criar", err);
       }
       setIsLoading(false);
     },
@@ -128,7 +140,12 @@ export const useBoardGameForm = ({
     mutationFn: async () => {
       setIsLoading(true);
       try {
-        if (!boardgame.name || !boardgame.price) {
+        if (
+          !boardgame.name ||
+          !boardgame.price ||
+          !boardgame.availableCopies ||
+          !boardgame.rentalDurationDays
+        ) {
           toast.warn("Não é possível salvar as informações com campos vazios!");
           setIsLoading(false);
           return;
@@ -157,7 +174,7 @@ export const useBoardGameForm = ({
     step,
     isLoading,
     dropdownContent,
-    isSmallHeight,
+    isSubmitButtonDisabled,
     setAnimation,
     setIsVisible,
     handleNextStep,

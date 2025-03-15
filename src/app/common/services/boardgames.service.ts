@@ -109,6 +109,7 @@ class BoardGames {
     maximumPlayersToPlay,
     description,
     rentalDurationDays,
+    availableCopies,
   }: BoardGame): Promise<BoardGame> {
     const response = await httpRequest(url, `boardgames/`, {
       method: "POST",
@@ -127,6 +128,7 @@ class BoardGames {
         maximumPlayersToPlay,
         description,
         rentalDurationDays,
+        availableCopies,
       }),
     });
 

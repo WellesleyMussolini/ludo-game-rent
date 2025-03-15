@@ -9,27 +9,35 @@ export const PrimaryInput = ({
   type,
   placeholder,
   text,
+  label,
   handleOnChange,
   handleOnSearch,
 }: IPrimaryInput) => {
   const { handleInput, handleKeyDown } = usePrimaryInput(type, handleOnChange);
   return (
-    <div className="flex items-center bg-white w-full border-2 border-gray-300 rounded-lg focus-within:border-primary focus-within:outline-none">
-      <input
-        className="block p-4 text-gray-500 text-base w-full border-none focus:outline-none rounded-lg"
-        type={type}
-        placeholder={placeholder}
-        value={text}
-        onInput={handleInput}
-        onKeyDown={handleKeyDown}
-      />
-      <div
-        className={`cursor-pointer flex justify-center items-center ${
-          type !== PrimaryInputTypes.SEARCH && "hidden"
-        } w-16 text-gray-500 bg-white`}
-        onClick={handleOnSearch}
-      >
-        <IoSearchSharp size={sizeIcons.medium} />
+    <div className="flex flex-col w-full gap-1">
+      {label && (
+        <label className="block text-base font-medium text-gray-500">
+          {label}
+        </label>
+      )}
+      <div className="flex items-center bg-white w-full border-2 border-gray-300 rounded-lg focus-within:border-primary">
+        <input
+          className="p-4 text-gray-500 text-base w-full border-none focus:outline-none rounded-lg"
+          type={type}
+          placeholder={placeholder}
+          value={text}
+          onInput={handleInput}
+          onKeyDown={handleKeyDown}
+        />
+        {type === PrimaryInputTypes.SEARCH && (
+          <div
+            className="cursor-pointer flex justify-center items-center w-16 text-gray-500"
+            onClick={handleOnSearch}
+          >
+            <IoSearchSharp size={sizeIcons.medium} />
+          </div>
+        )}
       </div>
     </div>
   );
