@@ -1,18 +1,18 @@
-import { httpRequest } from "@/app/common/utils/http-request";
+import { handleHttpRequest } from "@/app/common/utils/handle-http-request";
 import boardGameMapper, { ResponseBoardGame } from "./mapper/boardgame.mapper";
 import { BoardGame } from "@/app/common/types/boardgame.types";
 import boardgameMapper from "./mapper/boardgame.mapper";
+import { RequestMethods } from "../types/request-methods.enum";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
 class BoardGames {
   async get(): Promise<BoardGame[]> {
-    const response = await httpRequest(url, "boardgames", {
-      method: "GET",
-      headers: {
-        "Cache-Control": "no-cache",
-      },
-    });
+    const response = await handleHttpRequest(
+      url,
+      "boardgames",
+      RequestMethods.GET
+    );
 
     if (!response) return [];
 
@@ -24,12 +24,11 @@ class BoardGames {
   }
 
   async getById(id: string): Promise<BoardGame | null> {
-    const response = await httpRequest(url, `boardgames/get-by-id/${id}`, {
-      method: "GET",
-      headers: {
-        "Cache-Control": "no-cache",
-      },
-    });
+    const response = await handleHttpRequest(
+      url,
+      `boardgames/get-by-id/${id}`,
+      RequestMethods.GET
+    );
 
     if (!response) return null;
 
@@ -39,15 +38,10 @@ class BoardGames {
   }
 
   async getByName(name: string): Promise<BoardGame[] | null> {
-    const response = await httpRequest(
+    const response = await handleHttpRequest(
       url,
       `boardgames/search-by-name?name=${name}`,
-      {
-        method: "GET",
-        headers: {
-          "Cache-Control": "no-cache",
-        },
-      }
+      RequestMethods.GET
     );
 
     if (!response) return []; // Return an empty array if the response is null (404)
@@ -70,25 +64,25 @@ class BoardGames {
     description,
     rentalDurationDays,
   }: BoardGame): Promise<BoardGame> {
-    const response = await httpRequest(url, `boardgames/${id}`, {
-      method: "PUT",
-      headers: {
-        "Cache-Control": "no-cache",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        image,
-        price,
-        status,
-        ageToPlay,
-        playTime,
-        minimumPlayersToPlay,
-        maximumPlayersToPlay,
-        description,
-        rentalDurationDays,
-      }),
-    });
+    const response = await handleHttpRequest(
+      url,
+      `boardgames/${id}`,
+      RequestMethods.PUT,
+      {
+        body: JSON.stringify({
+          name,
+          image,
+          price,
+          status,
+          ageToPlay,
+          playTime,
+          minimumPlayersToPlay,
+          maximumPlayersToPlay,
+          description,
+          rentalDurationDays,
+        }),
+      }
+    );
 
     if (!response) {
       throw new Error("Failed to update BoardGame"); // Handle null response
@@ -111,26 +105,26 @@ class BoardGames {
     rentalDurationDays,
     availableCopies,
   }: BoardGame): Promise<BoardGame> {
-    const response = await httpRequest(url, `boardgames/`, {
-      method: "POST",
-      headers: {
-        "Cache-Control": "no-cache",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        image,
-        price,
-        status,
-        ageToPlay,
-        playTime,
-        minimumPlayersToPlay,
-        maximumPlayersToPlay,
-        description,
-        rentalDurationDays,
-        availableCopies,
-      }),
-    });
+    const response = await handleHttpRequest(
+      url,
+      `boardgames/`,
+      RequestMethods.POST,
+      {
+        body: JSON.stringify({
+          name,
+          image,
+          price,
+          status,
+          ageToPlay,
+          playTime,
+          minimumPlayersToPlay,
+          maximumPlayersToPlay,
+          description,
+          rentalDurationDays,
+          availableCopies,
+        }),
+      }
+    );
 
     if (!response) {
       throw new Error("Failed to create BoardGame"); // Handle null response
@@ -141,12 +135,11 @@ class BoardGames {
   }
 
   async delete(id: string): Promise<BoardGame> {
-    const response = await httpRequest(url, `boardgames/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Cache-Control": "no-cache",
-      },
-    });
+    const response = await handleHttpRequest(
+      url,
+      `boardgames/${id}`,
+      RequestMethods.DELETE
+    );
 
     if (!response) {
       throw new Error("Failed to delete BoardGame"); // Handle null response

@@ -1,4 +1,5 @@
-import { httpRequest } from "@/app/common/utils/http-request";
+import { handleHttpRequest } from "@/app/common/utils/handle-http-request";
+import { RequestMethods } from "../types/request-methods.enum";
 
 const url = process.env.NEXT_PUBLIC_TELEGRAM_API_URL;
 
@@ -13,17 +14,17 @@ class Telegram {
     chatId: string;
     message: string;
   }> {
-    const response = await httpRequest(url, `send-message`, {
-      method: "POST",
-      headers: {
-        "Cache-Control": "no-cache",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        chatId,
-        message,
-      }),
-    });
+    const response = await handleHttpRequest(
+      url,
+      `send-message`,
+      RequestMethods.POST,
+      {
+        body: JSON.stringify({
+          chatId,
+          message,
+        }),
+      }
+    );
 
     if (!response) {
       throw new Error("Failed to send message"); // Handle null response

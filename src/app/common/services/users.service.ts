@@ -1,17 +1,13 @@
+import { RequestMethods } from "../types/request-methods.enum";
 import { IUser } from "../types/user.interface";
-import { httpRequest } from "../utils/http-request";
+import { handleHttpRequest } from "../utils/handle-http-request";
 import userMapper, { ResponseUser } from "./mapper/user.mapper";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
 class Users {
   async get(): Promise<IUser[]> {
-    const response = await httpRequest(url, "users", {
-      method: "GET",
-      headers: {
-        "Cache-Control": "no-cache",
-      },
-    });
+    const response = await handleHttpRequest(url, "users", RequestMethods.GET);
 
     if (!response) return [];
 
@@ -21,12 +17,11 @@ class Users {
   }
 
   async getById(id: string): Promise<IUser | null> {
-    const response = await httpRequest(url, `users/get-by-id/${id}`, {
-      method: "GET",
-      headers: {
-        "Cache-Control": "no-cache",
-      },
-    });
+    const response = await handleHttpRequest(
+      url,
+      `users/get-by-id/${id}`,
+      RequestMethods.GET
+    );
 
     if (!response) return null;
 
@@ -38,14 +33,14 @@ class Users {
   }
 
   async update(id: string | undefined, role?: string): Promise<IUser> {
-    const response = await httpRequest(url, `users/${id}`, {
-      method: "PUT",
-      headers: {
-        "Cache-Control": "no-cache",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ role: role }),
-    });
+    const response = await handleHttpRequest(
+      url,
+      `users/${id}`,
+      RequestMethods.PUT,
+      {
+        body: JSON.stringify({ role: role }),
+      }
+    );
 
     if (!response) {
       throw new Error("Failed to update User");

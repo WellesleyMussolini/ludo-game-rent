@@ -1,19 +1,18 @@
-import { Rental, RentalStatus } from "../types/rental.types";
-import { httpRequest } from "../utils/http-request";
+import { Rental } from "../types/rental.types";
+import { RequestMethods } from "../types/request-methods.enum";
+import { handleHttpRequest } from "../utils/handle-http-request";
 import rentalMapper, { ResponseRental } from "./mapper/rental.mapper";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
-
 class Rentals {
   async get(): Promise<Rental[]> {
-    const response = await httpRequest(url, "rentals", {
-      method: "GET",
-      headers: {
-        "cache-control": "no-cache",
-      },
-    });
+    const response = await handleHttpRequest(
+      url,
+      "rentals",
+      RequestMethods.GET
+    );
 
-    if (!response) return [];
+    if (!response) return []; // Return an empty array if the response is null (404)
 
     const findAllRentals: ResponseRental[] = await response.json();
 
@@ -23,14 +22,13 @@ class Rentals {
   }
 
   async getRentalById(id: string): Promise<Rental[]> {
-    const response = await httpRequest(url, `rentals/get-rentals-by-id/${id}`, {
-      method: "GET",
-      headers: {
-        "Cache-Control": "no-cache",
-      },
-    });
+    const response = await handleHttpRequest(
+      url,
+      `rentals/get-rentals-by-id/${id}`,
+      RequestMethods.GET
+    );
 
-    if (!response) return [];
+    if (!response) return []; // Return an empty array if the response is null (404)
 
     const findAllRentals: ResponseRental[] = await response.json();
 
@@ -40,18 +38,13 @@ class Rentals {
   }
 
   async getUserRentalsById(id: string): Promise<Rental[]> {
-    const response = await httpRequest(
+    const response = await handleHttpRequest(
       url,
       `rentals/get-rentals-by-user/${id}`,
-      {
-        method: "GET",
-        headers: {
-          "Cache-Control": "no-cache",
-        },
-      }
+      RequestMethods.GET
     );
 
-    if (!response) return [];
+    if (!response) return []; // Return an empty array if the response is null (404)
 
     const findAllRentals: ResponseRental[] = await response.json();
 
@@ -73,25 +66,25 @@ class Rentals {
     rentalDurationDays,
     rentalStatus,
   }: Rental): Promise<Rental> {
-    const response = await httpRequest(url, `rentals/${id}`, {
-      method: "PUT",
-      headers: {
-        "Cache-Control": "no-cache",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId,
-        userName,
-        userImage,
-        userEmail,
-        boardgameId,
-        boardgameImage,
-        boardgameName,
-        price,
-        rentalDurationDays,
-        rentalStatus,
-      }),
-    });
+    const response = await handleHttpRequest(
+      url,
+      `rentals/${id}`,
+      RequestMethods.PUT,
+      {
+        body: JSON.stringify({
+          userId,
+          userName,
+          userImage,
+          userEmail,
+          boardgameId,
+          boardgameImage,
+          boardgameName,
+          price,
+          rentalDurationDays,
+          rentalStatus,
+        }),
+      }
+    );
 
     if (!response) {
       throw new Error("Failed to update Rental"); // Handle null response
@@ -112,24 +105,24 @@ class Rentals {
     price,
     rentalDurationDays,
   }: Rental): Promise<Rental> {
-    const response = await httpRequest(url, `rentals/`, {
-      method: "POST",
-      headers: {
-        "Cache-Control": "no-cache",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId,
-        userName,
-        userImage,
-        userEmail,
-        boardgameId,
-        boardgameImage,
-        boardgameName,
-        price,
-        rentalDurationDays,
-      }),
-    });
+    const response = await handleHttpRequest(
+      url,
+      `rentals/`,
+      RequestMethods.POST,
+      {
+        body: JSON.stringify({
+          userId,
+          userName,
+          userImage,
+          userEmail,
+          boardgameId,
+          boardgameImage,
+          boardgameName,
+          price,
+          rentalDurationDays,
+        }),
+      }
+    );
 
     if (!response) {
       throw new Error("Failed to create Rental"); // Handle null response
