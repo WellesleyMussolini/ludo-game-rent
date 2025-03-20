@@ -20,6 +20,7 @@ interface IContext {
     deleteBoardGame: boolean;
     createBoardGame: boolean;
     updateBoardGame: boolean;
+    updateRentalStatus: boolean;
     sidebar: boolean;
     dropdown: boolean;
   };
@@ -29,6 +30,7 @@ interface IContext {
       deleteBoardGame: boolean;
       createBoardGame: boolean;
       updateBoardGame: boolean;
+      updateRentalStatus: boolean;
       sidebar: boolean;
       dropdown: boolean;
     }>
@@ -94,6 +96,7 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
     deleteBoardGame: boolean;
     createBoardGame: boolean;
     updateBoardGame: boolean;
+    updateRentalStatus: boolean;
     sidebar: boolean;
     dropdown: boolean;
   }>({
@@ -101,6 +104,7 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
     deleteBoardGame: false,
     createBoardGame: false,
     updateBoardGame: false,
+    updateRentalStatus: false,
     sidebar: false,
     dropdown: false,
   });

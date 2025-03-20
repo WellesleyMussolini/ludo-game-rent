@@ -1,8 +1,7 @@
 import { useContext } from "@/app/common/context/context";
-import { useIsLoading } from "@/app/common/hooks/is-loading.hook";
 import { useUserSession } from "@/app/common/hooks/session.hook";
 import { rentalsService } from "@/app/common/services/rentals.service";
-import { telegramService } from "@/app/common/services/telegram-sms.service";
+// import { telegramService } from "@/app/common/services/telegram-sms.service";
 import { BoardGame } from "@/app/common/types/boardgame.types";
 import { UserRoles } from "@/app/common/types/user-roles.enum";
 import { Session } from "@/app/common/types/user.interface";
@@ -12,7 +11,7 @@ import { toast } from "react-toastify";
 export const useCart = () => {
   const { cart, setCart } = useContext();
   const { session } = useUserSession();
-  const { isLoading, setIsLoading } = useIsLoading();
+  const [isLoading, setIsLoading] = React.useState(false);
   const [isRented, setIsRented] = React.useState<boolean>(false);
 
   const fullSession: Session = {
@@ -41,7 +40,8 @@ export const useCart = () => {
       jogos alugados: "${boardgameNames.join(", ")}".
       `;
 
-      await telegramService.sendMessage({ chatId: "-4562845780", message });
+      // NEEDS TO BE FIXED
+      // await telegramService.sendMessage({ chatId: "-4562845780", message });
       setCart({ ...cart, boardgames: [] });
       toast.success("COMPRA REALIZADA COM SUCESSO");
       setIsRented(true);

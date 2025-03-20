@@ -7,72 +7,39 @@ import {
   PrimaryButton,
   PrimaryButtonTypes,
 } from "@/app/common/components/buttons";
-import { useContext } from "@/app/common/context/context";
-import { signOut } from "next-auth/react";
 import { OverlayBackground } from "../overlay-background/overlay-background.component";
-import { useIsLoading } from "../../hooks/is-loading.hook";
-import { boardGamesService } from "../../services/boardgames.service";
-import { CardStatus } from "../card/boardgames/types/card.types";
 import { handleAnimationClose } from "../../utils/handle-animation-close";
-import { Animations } from "../../types/animations.enum";
-import { useRefetchQuery } from "../../hooks/refetch-query.hook";
+import { useActionModal } from "./hooks/action-modal.hook";
 
-export enum ModalActionType {
+export enum ActionModalType {
   LOGOUT = "logout",
   DELETE_BOARDGAME = "delete-boardgame",
+  UPDATE_RENTAL = "update-rental",
 }
 
-export const ActionModal = ({ type }: { type: ModalActionType }) => {
-  const [animation, setAnimation] = React.useState<string>(
-    Animations.ANIMATION_JUMP_IN
-  );
-  const { boardgame, setBoardGame, isVisible, setIsVisible } = useContext();
-  const { isLoading, setIsLoading } = useIsLoading();
-  const { handleResetQuery } = useRefetchQuery();
-
-  const handleExecuteAction = async () => {
-    if (type === ModalActionType.LOGOUT) return signOut();
-
-    setIsLoading(true);
-    await boardGamesService.delete(boardgame.id);
-    handleResetQuery("boardgames");
-    setBoardGame({
-      id: "",
-      name: "",
-      image: "",
-      price: "",
-      status: CardStatus.AVAILABLE,
-      ageToPlay: "",
-      playTime: "",
-      minimumPlayersToPlay: "",
-      maximumPlayersToPlay: "",
-      description: "",
-      rentalDurationDays: "",
-    });
-    handleAnimationClose({ isVisible, setIsVisible, setAnimation });
-    setIsLoading(false);
-  };
-
-  const modalMessage =
-    type === ModalActionType.LOGOUT
-      ? "Tem certeza de que deseja sair?"
-      : "Tem certeza? Essa ação é irreversível.";
-
-  const buttonLabel =
-    type === ModalActionType.LOGOUT ? "Desconectar" : "Deletar";
-  const buttonType =
-    type === ModalActionType.LOGOUT
-      ? PrimaryButtonTypes.ALERT
-      : PrimaryButtonTypes.DELETE;
-
-  const alertColor =
-    type === ModalActionType.LOGOUT ? "text-alert" : "text-error";
-
+export const ActionModal = ({
+  type,
+  handleExecuteAction,
+  isLoading,
+}: {
+  type: ActionModalType;
+  handleExecuteAction: () => void;
+  isLoading: boolean;
+}) => {
+  const {
+    animation,
+    isVisible,
+    alertColor,
+    buttonLabel,
+    buttonType,
+    modalMessage,
+    visibilityMap,
+    setAnimation,
+    setIsVisible,
+  } = useActionModal();
   return (
     <>
-      {(type === ModalActionType.LOGOUT
-        ? isVisible.logout
-        : isVisible.deleteBoardGame) && (
+      {isVisible[visibilityMap[type]] && (
         <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50">
           <OverlayBackground
             onClose={() =>
@@ -84,18 +51,30 @@ export const ActionModal = ({ type }: { type: ModalActionType }) => {
             role="alert"
           >
             <div className="w-full flex items-center justify-center">
-              <GoAlertFill className={alertColor} size={sizeIcons.larger} />
+              <GoAlertFill
+                className={alertColor[type]}
+                size={sizeIcons.larger}
+              />
             </div>
-            <p className="mt-4 text-gray-500 text-center">{modalMessage}</p>
+            <p className="mt-4 text-gray-500 text-center">
+              {modalMessage[type]}
+            </p>
             <div className="mt-6 flex flex-wrap gap-4 lg:grid lg:grid-cols-2 lg:gap-4">
               <PrimaryButton
                 isLoading={isLoading}
-                text={buttonLabel}
-                onClick={handleExecuteAction}
-                type={buttonType}
+                text={buttonLabel[type]}
+                onClick={() => {
+                  handleExecuteAction();
+                  handleAnimationClose({
+                    isVisible,
+                    setIsVisible,
+                    setAnimation,
+                  });
+                }}
+                type={buttonType[type]}
               />
               <PrimaryButton
-                text="Cancelar"
+                text="cancelar"
                 onClick={() =>
                   handleAnimationClose({
                     isVisible,

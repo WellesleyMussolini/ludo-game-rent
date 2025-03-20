@@ -1,6 +1,5 @@
 import React from "react";
 import { useContext } from "@/app/common/context/context";
-import { useIsLoading } from "@/app/common/hooks/is-loading.hook";
 import { toast } from "react-toastify";
 import { boardGamesService } from "@/app/common/services/boardgames.service";
 import { CardStatus } from "../../../card/boardgames/types/card.types";
@@ -22,7 +21,7 @@ export const useBoardGameForm = ({
   const [animation, setAnimation] = React.useState<string>(
     Animations.ANIMATION_JUMP_IN
   );
-  const { isLoading, setIsLoading } = useIsLoading();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleOnChangeFields = React.useCallback(
     (field: string, event: React.ChangeEvent<HTMLInputElement> | string) => {

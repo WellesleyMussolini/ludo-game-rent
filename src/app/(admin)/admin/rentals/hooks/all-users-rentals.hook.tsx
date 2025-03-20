@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useRefetchQuery } from "@/app/common/hooks/refetch-query.hook";
 import { rentalsService } from "@/app/common/services/rentals.service";
 import { Rental, RentalStatus } from "@/app/common/types/rental.types";
@@ -8,13 +9,18 @@ import { toast } from "react-toastify";
 
 export const useAllUsersRentals = () => {
   const { handleResetQuery } = useRefetchQuery();
+
+  const [selectedRental, setSelectedRental] = React.useState<Rental | null>(
+    null
+  );
+
   const { data: findAllRentals = [] } = useQuery({
     queryKey: ["rentals"],
     queryFn: async () => await rentalsService.get(),
     refetchInterval: 1000,
   });
 
-  const { mutate: handleUpdateStatus } = useMutation({
+  const { mutate: handleUpdateStatus, isPending: isLoading } = useMutation({
     mutationKey: ["rentals"],
     mutationFn: async ({
       id,
@@ -24,21 +30,31 @@ export const useAllUsersRentals = () => {
       rental: Rental;
     }) => {
       try {
-        if (confirm("Tem certeza que o jogo foi entregue?")) {
-          await rentalsService.update({
-            ...rental,
-            id: id,
-            rentalStatus: RentalStatus.RETURNED,
-          });
-        }
+        return await rentalsService.update({
+          ...rental,
+          id: id,
+          rentalStatus: RentalStatus.RETURNED,
+        });
       } catch {
         toast.error("NÃO FOI POSSÍVEL ATUALIZAR O STATUS");
       }
     },
     onSuccess: () => {
+      setSelectedRental(null);
       return handleResetQuery("rentals");
     },
   });
 
-  return { findAllRentals, handleUpdateStatus };
+  const updatedStatus = () => {
+    if (!selectedRental) return;
+    handleUpdateStatus({ id: selectedRental.id, rental: selectedRental });
+  };
+  return {
+    isLoading,
+    findAllRentals,
+    selectedRental,
+    setSelectedRental,
+    handleUpdateStatus,
+    updatedStatus,
+  };
 };
