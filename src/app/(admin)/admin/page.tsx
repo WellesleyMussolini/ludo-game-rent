@@ -1,5 +1,5 @@
 import React from "react";
-import { CreateBoardgame } from "./components/create-boardgame/create-boardgame.components";
+import { CreateBoardgame } from "./components/create-boardgame.components";
 import { BoardGameCatalogue } from "@/app/common/components/boardgame-catalogue/boardgame-catalogue.component";
 
 export default async function Admin() {

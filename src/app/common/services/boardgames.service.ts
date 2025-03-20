@@ -103,6 +103,7 @@ class BoardGames {
     maximumPlayersToPlay,
     description,
     rentalDurationDays,
+    availableCopies,
   }: BoardGame): Promise<BoardGame> {
     const response = await handleHttpRequest(
       url,
@@ -120,6 +121,7 @@ class BoardGames {
           maximumPlayersToPlay,
           description,
           rentalDurationDays,
+          availableCopies,
         }),
       }
     );

@@ -36,120 +36,141 @@ const BoardGameFormSubmit = ({
     handleOnChangeFields,
     handleSaveGame,
     handleUpdateGame,
+    isSubmitButtonDisabled,
   } = useBoardGameForm({ handleCloseForm });
   return (
-    <>
+    <div className="h-96 w-full">
       {/* Close and Back Buttons */}
-      <button
-        className={`absolute top-4 left-4 ${
-          type === BoardGameFormType.UPDATE && "hidden"
-        } text-gray-500 hover:text-gray-700`}
-        onClick={handleReturnPreviousStep}
-      >
-        <MdKeyboardDoubleArrowLeft size={25} />
-      </button>
-      <button
-        className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-        onClick={handleCloseForm}
-      >
-        <IoMdClose size={25} />
-      </button>
-
-      {/* Game Image */}
-      <div className="w-full flex justify-center items-center mb-4">
-        <Image
-          src={boardgame.image ?? ""}
-          alt={boardgame.name ?? ""}
-          height={60}
-          width={60}
-          className="rounded shadow-md"
-        />
-      </div>
-
-      {/* Game Name Input */}
-      <div className="w-full mb-4">
-        <PrimaryInput
-          placeholder="Digite o nome do jogo"
-          handleOnChange={(event) => handleOnChangeFields("name", event)}
-          text={boardgame.name}
-          type={PrimaryInputTypes.TEXT}
-        />
-      </div>
-
-      {/* Price Input */}
-      <div className="w-full mb-4">
-        <PrimaryInput
-          handleOnChange={(event) => handleOnChangeFields("price", event)}
-          text={boardgame.price}
-          placeholder="Digite os dias do aluguel"
-          type={PrimaryInputTypes.NUMBER}
-        />
-      </div>
-
-      {/* Rental Days Duration Input */}
-      <div className="w-full mb-4">
-        <PrimaryInput
-          handleOnChange={(event) =>
-            handleOnChangeFields("rentalDurationDays", event)
-          }
-          text={boardgame.rentalDurationDays}
-          placeholder="Digite os dias restantes até a devolução"
-          type={PrimaryInputTypes.NUMBER}
-        />
-      </div>
-
-      {/* Dropdown for Game Status */}
-      <div className="w-full mb-6">
-        <p className="text-gray-500 mb-2">Situação</p>
-        <div className="relative">
-          <div
-            className={`flex justify-between items-center border border-gray-300 rounded px-4 py-2 cursor-pointer ${
-              isVisible.dropdown ? "bg-gray-100" : "bg-white"
-            }`}
-            onClick={() =>
-              setIsVisible({
-                ...isVisible,
-                dropdown: !isVisible.dropdown,
-              })
-            }
-          >
-            <p className="font-medium text-gray-700">
-              {boardgame.status ?? "Selecione o status"}
-            </p>
-            <div>
-              {isVisible.dropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
-            </div>
-          </div>
-
-          {/* Dropdown Content */}
-          {isVisible.dropdown && (
-            <div className="absolute w-full bg-white border border-gray-300 rounded mt-2 shadow-lg z-10">
-              <Dropdown
-                styles="w-full"
-                visibility={isVisible.dropdown}
-                content={dropdownContent}
-              />
-            </div>
-          )}
+      <div className="flex justify-between cursor-pointer w-full">
+        <div
+          className={`absolute top-4 left-4 ${
+            type === BoardGameFormType.UPDATE && "hidden"
+          } text-gray-500 hover:text-gray-700`}
+          onClick={handleReturnPreviousStep}
+        >
+          <MdKeyboardDoubleArrowLeft size={25} />
+        </div>
+        <div
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+          onClick={handleCloseForm}
+        >
+          <IoMdClose size={25} />
         </div>
       </div>
-      {type === BoardGameFormType.CREATE && (
-        <PrimaryButton
-          isLoading={isLoading}
-          onClick={handleSaveGame}
-          text="salvar"
-          type={PrimaryButtonTypes.OUTLINED}
-        />
-      )}
-      {type === BoardGameFormType.UPDATE && (
-        <PrimaryButton
-          isLoading={isLoading}
-          onClick={handleUpdateGame}
-          text="atualizar"
-          type={PrimaryButtonTypes.OUTLINED}
-        />
-      )}
-    </>
+
+      <div className="h-full px-4 overflow-y-auto">
+        {/* Game Image */}
+        <div className="w-full flex justify-center items-center mb-4">
+          <Image
+            src={boardgame.image ?? ""}
+            alt={boardgame.name ?? ""}
+            height={0}
+            width={0}
+            className="rounded shadow-md w-52"
+          />
+        </div>
+
+        {/* Game Name Input  */}
+        <div className="w-full mb-4">
+          <PrimaryInput
+            placeholder="Digite o nome do jogo"
+            handleOnChange={(event) => handleOnChangeFields("name", event)}
+            text={boardgame.name}
+            label="Nome"
+            type={PrimaryInputTypes.TEXT}
+          />
+        </div>
+
+        {/* Price Input  */}
+        <div className="w-full mb-4">
+          <PrimaryInput
+            handleOnChange={(event) => handleOnChangeFields("price", event)}
+            text={boardgame.price}
+            placeholder="Digite o preço"
+            label="Preço"
+            type={PrimaryInputTypes.NUMBER}
+          />
+        </div>
+
+        {/* Available Copies Input  */}
+        <div className="w-full mb-4">
+          <PrimaryInput
+            handleOnChange={(event) =>
+              handleOnChangeFields("availableCopies", event)
+            }
+            text={boardgame.availableCopies}
+            placeholder="Digite o número de cópias"
+            type={PrimaryInputTypes.NUMBER}
+            label="Cópias disponíveis"
+          />
+        </div>
+
+        {/* Rental Days Duration Input  */}
+        <div className="w-full mb-4">
+          <PrimaryInput
+            handleOnChange={(event) =>
+              handleOnChangeFields("rentalDurationDays", event)
+            }
+            text={boardgame.rentalDurationDays}
+            placeholder="Digite os dias"
+            type={PrimaryInputTypes.NUMBER}
+            label="Duração do aluguel"
+          />
+        </div>
+
+        {/* Dropdown for Game Status  */}
+        <div className="w-full mb-6">
+          <p className="text-gray-500 mb-2">Situação</p>
+          <div className="relative">
+            <div
+              className={`flex justify-between items-center border border-gray-300 rounded px-4 py-2 cursor-pointer ${
+                isVisible.dropdown ? "bg-gray-100" : "bg-white"
+              }`}
+              onClick={() =>
+                setIsVisible({
+                  ...isVisible,
+                  dropdown: !isVisible.dropdown,
+                })
+              }
+            >
+              <p className="font-medium text-gray-700">
+                {boardgame.status ?? "Selecione o status"}
+              </p>
+              <div>
+                {isVisible.dropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
+              </div>
+            </div>
+
+            {/* Dropdown Content  */}
+            {isVisible.dropdown && (
+              <div className="absolute w-full bg-white border border-gray-300 rounded mt-2 shadow-lg z-10">
+                <Dropdown
+                  styles="w-full"
+                  visibility={isVisible.dropdown}
+                  content={dropdownContent}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+        {type === BoardGameFormType.CREATE && (
+          <PrimaryButton
+            isLoading={isLoading}
+            onClick={handleSaveGame}
+            text="salvar"
+            type={isSubmitButtonDisabled}
+          />
+        )}
+        {type === BoardGameFormType.UPDATE && (
+          <PrimaryButton
+            isLoading={isLoading}
+            onClick={handleUpdateGame}
+            text="atualizar"
+            type={isSubmitButtonDisabled}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 
@@ -158,7 +179,6 @@ export const BoardGameForm = ({ type }: { type: BoardGameFormType }) => {
     boardgame,
     isLoading,
     step,
-    isSmallHeight,
     animation,
     isVisible,
     handleOnChangeFields,
@@ -175,7 +195,6 @@ export const BoardGameForm = ({ type }: { type: BoardGameFormType }) => {
         <div
           className={`
               text-base
-              px-10
               z-50
               flex
               flex-col
@@ -189,18 +208,17 @@ export const BoardGameForm = ({ type }: { type: BoardGameFormType }) => {
               max-[450px]:w-[85.33%]
               gap-3
               w-96
-              py-10
               overflow-y-auto
               ease-in-out
               scroll-smooth
-              ${
-                isSmallHeight && step === BoardGameFormSteps.SAVE_GAME_FORM_STEP
-                  ? "h-[90%]"
-                  : "h-auto"
-              }
+              py-10
           `}
         >
-          <div className={`${type === BoardGameFormType.UPDATE && "hidden"}`}>
+          <div
+            className={`${
+              type === BoardGameFormType.UPDATE && "hidden"
+            } w-full`}
+          >
             {step === BoardGameFormSteps.SEARCH_ID_STEP && (
               <>
                 <div
@@ -209,17 +227,16 @@ export const BoardGameForm = ({ type }: { type: BoardGameFormType }) => {
                 >
                   <IoMdClose size={25} />
                 </div>
-                <div className="w-full">
+                <div className="flex px-4 flex-col gap-2">
                   <PrimaryInput
-                    placeholder="Digite o id..."
+                    placeholder="Digite o id"
                     text={boardgame.id}
+                    label="Pesquisar jogo"
                     handleOnChange={(event) =>
                       handleOnChangeFields("id", event)
                     }
                     type={PrimaryInputTypes.NUMBER}
                   />
-                </div>
-                <div className="w-full">
                   <PrimaryButton
                     isLoading={isLoading}
                     onClick={handleNextStep}
@@ -244,7 +261,11 @@ export const BoardGameForm = ({ type }: { type: BoardGameFormType }) => {
             )}
           </div>
 
-          <div className={`${type === BoardGameFormType.CREATE && "hidden"}`}>
+          <div
+            className={`${
+              type === BoardGameFormType.CREATE && "hidden"
+            } w-full`}
+          >
             <BoardGameFormSubmit
               type={BoardGameFormType.UPDATE}
               handleCloseForm={closeForm}

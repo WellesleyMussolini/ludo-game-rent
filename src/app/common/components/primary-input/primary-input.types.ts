@@ -9,6 +9,7 @@ export enum PrimaryInputTypes {
 export interface IPrimaryInput {
   type: PrimaryInputTypes;
   text: string;
+  label?: string;
   handleOnChange: (text: string) => void;
   placeholder: string;
   handleOnSearch?: () => void;
