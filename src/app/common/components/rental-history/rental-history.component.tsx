@@ -12,6 +12,7 @@ import { PrimaryButton, PrimaryButtonTypes } from "../buttons";
 import { useContext } from "../../context/context";
 import { formatCurrency } from "../../utils/format-currency";
 import Link from "next/link";
+import AlertPing from "../alert-ping/alert-ping";
 
 enum TranslateRentalStatus {
   overdue = "Atrasado",
@@ -28,88 +29,111 @@ export const RentalHistory = ({
 }) => {
   const pathname = usePathname();
   const { isVisible, setIsVisible } = useContext();
-  const isUserView = pathname === Pathnames.USER;
+
+  const isAdmin = pathname !== Pathnames.USER;
+  const isEmptyTable = rentals.length === 0;
+
+  const styleHeaderCol =
+    "px-6 py-3 whitespace-nowrap overflow-hidden text-ellipsis w-[166px]";
+
+  const renderAdminHeader = (): JSX.Element | null => {
+    if (!isAdmin) return null;
+    const headerCols = [
+      "USUÁRIO",
+      "BOARDGAME",
+      "INÍCIO DO ALUGUEL",
+      "FIM DO ALUGUEL",
+      "STATUS",
+      "ATUALIZAR",
+    ];
+    return (
+      <>
+        {headerCols.map((col, index) => (
+          <th key={index} scope="col" className={styleHeaderCol}>
+            {col}
+          </th>
+        ))}
+      </>
+    );
+  };
+
+  const renderUserHeader = (): JSX.Element | null => {
+    if (isAdmin) return null;
+    const headerCols = [
+      "BOARDGAME",
+      "INÍCIO DO ALUGUEL",
+      "FIM DO ALUGUEL",
+      "STATUS",
+    ];
+    return (
+      <>
+        {headerCols.map((col, index) => (
+          <th key={index} scope="col" className={styleHeaderCol}>
+            {col}
+          </th>
+        ))}
+      </>
+    );
+  };
+
+  const renderAdminColumns = (game: Rental): JSX.Element | null => {
+    if (!isAdmin) return null;
+    return (
+      <td className={styleHeaderCol}>
+        <UserOrBoardgameInfo
+          data={{
+            id: "/admin/users?id=" + game.userId,
+            image: game.userImage,
+            name: game.userName,
+            subtitle: game.userEmail,
+          }}
+        />
+      </td>
+    );
+  };
+
+  const renderAdminColumnUpdateItem = (game: Rental): JSX.Element | null => {
+    if (!isAdmin) return null;
+    return (
+      <td className={styleHeaderCol}>
+        <PrimaryButton
+          onClick={() => {
+            onSelectRental(game);
+            setIsVisible({ ...isVisible, updateRentalStatus: true });
+          }}
+          text="ATUALIZAR"
+          type={PrimaryButtonTypes.OUTLINED}
+        />
+      </td>
+    );
+  };
+
+  if (isEmptyTable)
+    return (
+      <div className="flex justify-center items-center h-[400px]">
+        <p className="text-gray-500">Nenhum aluguel encontrado</p>
+      </div>
+    );
 
   return (
     <div className="relative w-[1000px] overflow-x-auto">
       <table className="table-fixed w-[1000px] shadow-md sm:rounded-lg text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            {!isUserView && (
-              <th
-                scope="col"
-                className="px-6 py-3 whitespace-nowrap overflow-hidden text-ellipsis"
-                style={{ width: "166px" }}
-              >
-                USER
-              </th>
-            )}
-            <th
-              scope="col"
-              className="px-6 py-3 whitespace-nowrap overflow-hidden text-ellipsis"
-              style={{ width: "166px" }}
-            >
-              BOARDGAME
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-center whitespace-nowrap overflow-hidden text-ellipsis"
-              style={{ width: "166px" }}
-            >
-              INÍCIO DO ALUGUEL
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-center whitespace-nowrap overflow-hidden text-ellipsis"
-              style={{ width: "166px" }}
-            >
-              FIM DO ALUGUEL
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-center whitespace-nowrap overflow-hidden text-ellipsis"
-              style={{ width: "166px" }}
-            >
-              STATUS
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-center whitespace-nowrap overflow-hidden text-ellipsis"
-              style={{ width: "166px" }}
-            >
-              ATUALIZAR
-            </th>
+            {renderAdminHeader()}
+            {renderUserHeader()}
           </tr>
         </thead>
 
+        {/* Render BoardGameColumns */}
         <tbody className="text-xs">
           {rentals.map((game, index) => (
             <tr
               key={index}
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
             >
-              {/* user column */}
-              {!isUserView && (
-                <td
-                  className="px-6 py-4 whitespace-nowrap overflow-hidden text-ellipsis"
-                  style={{ width: "166px" }}
-                >
-                  <UserOrBoardgameInfo
-                    data={{
-                      id: "/admin/users?id=" + game.userId,
-                      image: game.userImage,
-                      name: game.userName,
-                      subtitle: game.userEmail,
-                    }}
-                  />
-                </td>
-              )}
-
-              {/* boardgame column */}
-              <td
-                className="px-6 py-4 whitespace-nowrap overflow-hidden text-ellipsis"
-                style={{ width: "166px" }}
-              >
+              {renderAdminColumns(game)}
+              <td className={styleHeaderCol}>
                 <UserOrBoardgameInfo
                   data={{
                     id: "/search?boardgame=" + game.boardgameId,
@@ -120,59 +144,22 @@ export const RentalHistory = ({
                 />
               </td>
 
-              {/* rental start date column */}
-              <td
-                className="px-6 py-4 text-center whitespace-nowrap overflow-hidden text-ellipsis"
-                style={{ width: "166px" }}
-              >
+              <td className={styleHeaderCol}>
                 {formatDate(game.rentalStartDate)}
               </td>
 
-              {/* rental end date column */}
-              <td
-                className="px-6 py-4 text-center whitespace-nowrap overflow-hidden text-ellipsis"
-                style={{ width: "166px" }}
-              >
+              <td className={styleHeaderCol}>
                 {formatDate(game.rentalEndDate)}
               </td>
 
               {/* rental status column */}
-              <td
-                className="px-6 py-4 text-center whitespace-nowrap overflow-hidden text-ellipsis"
-                style={{ width: "166px" }}
-              >
+              <td className={styleHeaderCol}>
                 <div className="flex justify-center items-center gap-2">
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span
-                      className={`${
-                        game.rentalStatus === RentalStatusType.RETURNED &&
-                        "hidden"
-                      } animate-ping absolute inline-flex h-full w-full rounded-full
-                    ${
-                      game.rentalStatus === RentalStatusType.ACTIVE &&
-                      "bg-green-500"
-                    }
-                    ${
-                      game.rentalStatus === RentalStatusType.OVERDUE &&
-                      "bg-error"
-                    }
-                    opacity-75`}
+                  {game.rentalStatus !== RentalStatusType.RETURNED && (
+                    <AlertPing
+                      isActive={game.rentalStatus === RentalStatusType.ACTIVE}
                     />
-                    <span
-                      className={`${
-                        game.rentalStatus === RentalStatusType.RETURNED &&
-                        "hidden"
-                      } relative inline-flex rounded-full h-2.5 w-2.5
-                    ${
-                      game.rentalStatus === RentalStatusType.ACTIVE &&
-                      "bg-green-500"
-                    }
-                    ${
-                      game.rentalStatus === RentalStatusType.OVERDUE &&
-                      "bg-error"
-                    }`}
-                    />
-                  </span>
+                  )}
                   <p
                     className={`text-xs font-semibold
                   ${
@@ -192,21 +179,7 @@ export const RentalHistory = ({
                   </p>
                 </div>
               </td>
-
-              {/* update rental status column */}
-              <td
-                className="px-6 py-4 text-center whitespace-nowrap overflow-hidden text-ellipsis"
-                style={{ width: "166px" }}
-              >
-                <PrimaryButton
-                  onClick={() => {
-                    onSelectRental(game);
-                    setIsVisible({ ...isVisible, updateRentalStatus: true });
-                  }}
-                  text="ATUALIZAR"
-                  type={PrimaryButtonTypes.OUTLINED}
-                />
-              </td>
+              {renderAdminColumnUpdateItem(game)}
             </tr>
           ))}
         </tbody>
