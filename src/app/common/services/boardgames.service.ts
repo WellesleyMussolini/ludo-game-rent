@@ -69,18 +69,16 @@ class BoardGames {
       `boardgames/${id}`,
       RequestMethods.PUT,
       {
-        body: JSON.stringify({
-          name,
-          image,
-          price,
-          status,
-          ageToPlay,
-          playTime,
-          minimumPlayersToPlay,
-          maximumPlayersToPlay,
-          description,
-          rentalDurationDays,
-        }),
+        name,
+        image,
+        price,
+        status,
+        ageToPlay,
+        playTime,
+        minimumPlayersToPlay,
+        maximumPlayersToPlay,
+        description,
+        rentalDurationDays,
       }
     );
 
@@ -110,19 +108,17 @@ class BoardGames {
       `boardgames/`,
       RequestMethods.POST,
       {
-        body: JSON.stringify({
-          name,
-          image,
-          price,
-          status,
-          ageToPlay,
-          playTime,
-          minimumPlayersToPlay,
-          maximumPlayersToPlay,
-          description,
-          rentalDurationDays,
-          availableCopies,
-        }),
+        name,
+        image,
+        price,
+        status,
+        ageToPlay,
+        playTime,
+        minimumPlayersToPlay,
+        maximumPlayersToPlay,
+        description,
+        rentalDurationDays,
+        availableCopies,
       }
     );
 

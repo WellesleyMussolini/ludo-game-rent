@@ -7,108 +7,100 @@ import {
   PrimaryButton,
   PrimaryButtonTypes,
 } from "@/app/common/components/buttons";
-import { useContext } from "@/app/common/context/context";
-import { signOut } from "next-auth/react";
 import { OverlayBackground } from "../overlay-background/overlay-background.component";
-import { useIsLoading } from "../../hooks/is-loading.hook";
-import { boardGamesService } from "../../services/boardgames.service";
-import { CardStatus } from "../card/boardgames/types/card.types";
-import { handleAnimationClose } from "../../utils/handle-animation-close";
-import { Animations } from "../../types/animations.enum";
-import { useRefetchQuery } from "../../hooks/refetch-query.hook";
+import { useActionModal } from "./hooks/action-modal.hook";
+import { Rental, RentalStatus } from "../../types/rental.types";
 
-export enum ModalActionType {
+export enum ActionModalType {
   LOGOUT = "logout",
   DELETE_BOARDGAME = "delete-boardgame",
+  UPDATE_RENTAL = "update-rental",
 }
 
-export const ActionModal = ({ type }: { type: ModalActionType }) => {
-  const [animation, setAnimation] = React.useState<string>(
-    Animations.ANIMATION_JUMP_IN
-  );
-  const { boardgame, setBoardGame, isVisible, setIsVisible } = useContext();
-  const { isLoading, setIsLoading } = useIsLoading();
-  const { handleResetQuery } = useRefetchQuery();
-
-  const handleExecuteAction = async () => {
-    if (type === ModalActionType.LOGOUT) return signOut();
-
-    setIsLoading(true);
-    await boardGamesService.delete(boardgame.id);
-    handleResetQuery("boardgames");
-    setBoardGame({
-      id: "",
-      name: "",
-      image: "",
-      price: "",
-      status: CardStatus.AVAILABLE,
-      ageToPlay: "",
-      playTime: "",
-      minimumPlayersToPlay: "",
-      maximumPlayersToPlay: "",
-      description: "",
-      rentalDurationDays: "",
-    });
-    handleAnimationClose({ isVisible, setIsVisible, setAnimation });
-    setIsLoading(false);
+export const ActionModal = ({
+  type,
+  handleExecuteAction,
+  isLoading,
+  rental,
+}: {
+  type: ActionModalType;
+  handleExecuteAction: () => void;
+  rental?: Rental & {
+    handleRental: React.Dispatch<React.SetStateAction<Rental>>;
   };
+  isLoading: boolean;
+}) => {
+  const { animation, isAlertPopup, actionModalConfig, closeModal } =
+    useActionModal(type);
 
-  const modalMessage =
-    type === ModalActionType.LOGOUT
-      ? "Tem certeza de que deseja sair?"
-      : "Tem certeza? Essa ação é irreversível.";
-
-  const buttonLabel =
-    type === ModalActionType.LOGOUT ? "Desconectar" : "Deletar";
-  const buttonType =
-    type === ModalActionType.LOGOUT
-      ? PrimaryButtonTypes.ALERT
-      : PrimaryButtonTypes.DELETE;
-
-  const alertColor =
-    type === ModalActionType.LOGOUT ? "text-alert" : "text-error";
+  if (isAlertPopup) return null;
 
   return (
-    <>
-      {(type === ModalActionType.LOGOUT
-        ? isVisible.logout
-        : isVisible.deleteBoardGame) && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center z-50">
-          <OverlayBackground
-            onClose={() =>
-              handleAnimationClose({ isVisible, setIsVisible, setAnimation })
-            }
+    <div className="fixed inset-0 flex items-center justify-center z-40">
+      <OverlayBackground onClose={closeModal} />
+      <div
+        className={`relative max-w-[400px] z-50 bg-white rounded-2xl border p-4 shadow-lg sm:p-6 lg:p-8 ${animation} animate-delay-[1ms]`}
+        role="alert"
+      >
+        <div className="flex justify-center">
+          <GoAlertFill
+            className={actionModalConfig.alertColor}
+            size={sizeIcons.larger}
           />
-          <div
-            className={`relative max-[400px]:w-[80%] z-[60] bg-white gap-2 flex flex-col rounded-2xl border border-blue-100 bg-contrastBackground p-4 shadow-lg sm:p-6 lg:p-8 ${animation} animate-delay-[1ms]`}
-            role="alert"
-          >
-            <div className="w-full flex items-center justify-center">
-              <GoAlertFill className={alertColor} size={sizeIcons.larger} />
-            </div>
-            <p className="mt-4 text-gray-500 text-center">{modalMessage}</p>
-            <div className="mt-6 flex flex-wrap gap-4 lg:grid lg:grid-cols-2 lg:gap-4">
-              <PrimaryButton
-                isLoading={isLoading}
-                text={buttonLabel}
-                onClick={handleExecuteAction}
-                type={buttonType}
-              />
-              <PrimaryButton
-                text="Cancelar"
-                onClick={() =>
-                  handleAnimationClose({
-                    isVisible,
-                    setIsVisible,
-                    setAnimation,
-                  })
-                }
-                type={PrimaryButtonTypes.SECONDARY}
-              />
-            </div>
-          </div>
         </div>
-      )}
-    </>
+        <p className="mt-4 text-gray-500 text-center">
+          {actionModalConfig.message}
+        </p>
+        {type === ActionModalType.UPDATE_RENTAL && rental && (
+          <RentalStatusOptions rental={rental} />
+        )}
+        <div className="mt-6 flex flex-wrap gap-4 lg:grid lg:grid-cols-2 lg:gap-4">
+          <PrimaryButton
+            isLoading={isLoading}
+            text={actionModalConfig.buttonLabel}
+            onClick={() => {
+              handleExecuteAction();
+              closeModal();
+            }}
+            type={actionModalConfig.buttonType}
+          />
+          <PrimaryButton
+            text="Cancelar"
+            onClick={closeModal}
+            type={PrimaryButtonTypes.SECONDARY}
+          />
+        </div>
+      </div>
+    </div>
   );
 };
+
+const RentalStatusOptions = ({
+  rental,
+}: {
+  rental: Rental & {
+    handleRental: React.Dispatch<React.SetStateAction<Rental>>;
+  };
+}) => (
+  <div className="mt-4 flex flex-col gap-2">
+    {[
+      { name: "ENTREGUE", value: RentalStatus.RETURNED },
+      { name: "ATIVO", value: RentalStatus.ACTIVE },
+      { name: "ATRASADO", value: RentalStatus.OVERDUE },
+    ].map((option, index) => (
+      <div
+        key={index}
+        className={`cursor-pointer border rounded-lg p-3 text-center transition-all hover:border-primary active:bg-primary ${
+          rental.rentalStatus === option.value
+            ? "bg-primary text-white border-primary"
+            : "bg-white text-gray-700"
+        }`}
+        onClick={() =>
+          rental.handleRental({ ...rental, rentalStatus: option.value })
+        }
+      >
+        {option.name}
+      </div>
+    ))}
+  </div>
+);

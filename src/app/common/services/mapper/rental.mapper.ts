@@ -20,6 +20,7 @@ class RentalMapper {
       rentalStartDate: persistence.rentalStartDate,
       rentalEndDate: persistence.rentalEndDate,
       rentalStatus: persistence.rentalStatus,
+      returnedAt: persistence.returnedAt,
     };
   }
 }

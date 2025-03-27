@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useRefetchQuery } from "@/app/common/hooks/refetch-query.hook";
 import { rentalsService } from "@/app/common/services/rentals.service";
 import { Rental, RentalStatus } from "@/app/common/types/rental.types";
@@ -8,13 +9,28 @@ import { toast } from "react-toastify";
 
 export const useAllUsersRentals = () => {
   const { handleResetQuery } = useRefetchQuery();
+
+  const [rental, setRental] = React.useState<Rental>({
+    id: "",
+    userId: "",
+    userName: "",
+    userImage: "",
+    userEmail: "",
+    boardgameId: "",
+    boardgameName: "",
+    boardgameImage: "",
+    price: "",
+    rentalDurationDays: "",
+    rentalStatus: RentalStatus.ACTIVE,
+  });
+
   const { data: findAllRentals = [] } = useQuery({
     queryKey: ["rentals"],
     queryFn: async () => await rentalsService.get(),
     refetchInterval: 1000,
   });
 
-  const { mutate: handleUpdateStatus } = useMutation({
+  const { mutate: handleUpdateStatus, isPending: isLoading } = useMutation({
     mutationKey: ["rentals"],
     mutationFn: async ({
       id,
@@ -24,21 +40,31 @@ export const useAllUsersRentals = () => {
       rental: Rental;
     }) => {
       try {
-        if (confirm("Tem certeza que o jogo foi entregue?")) {
-          await rentalsService.update({
-            ...rental,
-            id: id,
-            rentalStatus: RentalStatus.RETURNED,
-          });
-        }
-      } catch {
+        return await rentalsService.update({
+          ...rental,
+          id: id,
+          rentalStatus: rental.rentalStatus,
+        });
+      } catch (error) {
         toast.error("NÃO FOI POSSÍVEL ATUALIZAR O STATUS");
       }
     },
     onSuccess: () => {
+      setRental({ ...rental, id: "", rentalStatus: rental.rentalStatus });
       return handleResetQuery("rentals");
     },
   });
 
-  return { findAllRentals, handleUpdateStatus };
+  const updatedStatus = () => {
+    if (!rental) return;
+    handleUpdateStatus({ id: rental.id, rental });
+  };
+  return {
+    rental,
+    setRental,
+    isLoading,
+    findAllRentals,
+    handleUpdateStatus,
+    updatedStatus,
+  };
 };

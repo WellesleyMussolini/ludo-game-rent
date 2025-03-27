@@ -12,6 +12,7 @@ export const handleAnimationClose = ({
     deleteBoardGame: boolean;
     createBoardGame: boolean;
     updateBoardGame: boolean;
+    updateRentalStatus: boolean;
     sidebar: boolean;
     dropdown: boolean;
   };
@@ -21,6 +22,7 @@ export const handleAnimationClose = ({
       deleteBoardGame: boolean;
       createBoardGame: boolean;
       updateBoardGame: boolean;
+      updateRentalStatus: boolean;
       sidebar: boolean;
       dropdown: boolean;
     }>
@@ -40,6 +42,7 @@ export const handleAnimationClose = ({
       updateBoardGame: false,
       createBoardGame: false,
       deleteBoardGame: false,
+      updateRentalStatus: false,
     });
   }, 600);
 };

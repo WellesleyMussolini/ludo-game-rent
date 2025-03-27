@@ -1,4 +1,4 @@
-import { Rental } from "../types/rental.types";
+import { Rental, RentalStatus } from "../types/rental.types";
 import { RequestMethods } from "../types/request-methods.enum";
 import { handleHttpRequest } from "../utils/handle-http-request";
 import rentalMapper, { ResponseRental } from "./mapper/rental.mapper";
@@ -65,33 +65,33 @@ class Rentals {
     price,
     rentalDurationDays,
     rentalStatus,
+    rentalStartDate,
   }: Rental): Promise<Rental> {
+    const requestBody: Rental = {
+      userId,
+      userName,
+      userImage,
+      userEmail,
+      boardgameId,
+      boardgameImage,
+      boardgameName,
+      price,
+      rentalDurationDays,
+      rentalStatus: rentalStatus ?? RentalStatus.ACTIVE,
+      rentalStartDate,
+    };
+
     const response = await handleHttpRequest(
       url,
       `rentals/${id}`,
       RequestMethods.PUT,
-      {
-        body: JSON.stringify({
-          userId,
-          userName,
-          userImage,
-          userEmail,
-          boardgameId,
-          boardgameImage,
-          boardgameName,
-          price,
-          rentalDurationDays,
-          rentalStatus,
-        }),
-      }
+      requestBody
     );
 
-    if (!response) {
-      throw new Error("Failed to update Rental"); // Handle null response
-    }
+    if (!response) throw new Error("Failed to update Rental");
 
-    const updateRental = await response.json();
-    return rentalMapper.toDomain(updateRental);
+    const updatedRental = await response.json();
+    return rentalMapper.toDomain(updatedRental);
   }
 
   async create({
@@ -110,17 +110,15 @@ class Rentals {
       `rentals/`,
       RequestMethods.POST,
       {
-        body: JSON.stringify({
-          userId,
-          userName,
-          userImage,
-          userEmail,
-          boardgameId,
-          boardgameImage,
-          boardgameName,
-          price,
-          rentalDurationDays,
-        }),
+        userId,
+        userName,
+        userImage,
+        userEmail,
+        boardgameId,
+        boardgameImage,
+        boardgameName,
+        price,
+        rentalDurationDays,
       }
     );
 

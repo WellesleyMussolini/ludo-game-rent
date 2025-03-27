@@ -1,4 +1,5 @@
 import { RequestMethods } from "../types/request-methods.enum";
+import { UserRoles } from "../types/user-roles.enum";
 import { IUser } from "../types/user.interface";
 import { handleHttpRequest } from "../utils/handle-http-request";
 import userMapper, { ResponseUser } from "./mapper/user.mapper";
@@ -38,7 +39,7 @@ class Users {
       `users/${id}`,
       RequestMethods.PUT,
       {
-        body: JSON.stringify({ role: role }),
+        role: role || UserRoles.USER,
       }
     );
 
