@@ -18,4 +18,5 @@ export type Rental = {
   rentalStartDate?: string;
   rentalEndDate?: string;
   rentalStatus?: RentalStatus;
+  returnedAt?: string;
 };

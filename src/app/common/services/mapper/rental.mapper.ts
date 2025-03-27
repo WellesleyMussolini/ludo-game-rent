@@ -20,8 +20,7 @@ class RentalMapper {
       rentalStartDate: persistence.rentalStartDate,
       rentalEndDate: persistence.rentalEndDate,
       rentalStatus: persistence.rentalStatus,
-      // userCpf: persistence.userCpf,
-      // returnedAt: persistence.returnedAt,  // <-- Add this line
+      returnedAt: persistence.returnedAt,
     };
   }
 }

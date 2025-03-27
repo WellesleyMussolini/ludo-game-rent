@@ -10,9 +10,19 @@ import { toast } from "react-toastify";
 export const useAllUsersRentals = () => {
   const { handleResetQuery } = useRefetchQuery();
 
-  const [selectedRental, setSelectedRental] = React.useState<Rental | null>(
-    null
-  );
+  const [rental, setRental] = React.useState<Rental>({
+    id: "",
+    userId: "",
+    userName: "",
+    userImage: "",
+    userEmail: "",
+    boardgameId: "",
+    boardgameName: "",
+    boardgameImage: "",
+    price: "",
+    rentalDurationDays: "",
+    rentalStatus: RentalStatus.ACTIVE,
+  });
 
   const { data: findAllRentals = [] } = useQuery({
     queryKey: ["rentals"],
@@ -33,27 +43,27 @@ export const useAllUsersRentals = () => {
         return await rentalsService.update({
           ...rental,
           id: id,
-          rentalStatus: RentalStatus.RETURNED,
+          rentalStatus: rental.rentalStatus,
         });
-      } catch {
+      } catch (error) {
         toast.error("NÃO FOI POSSÍVEL ATUALIZAR O STATUS");
       }
     },
     onSuccess: () => {
-      setSelectedRental(null);
+      setRental({ ...rental, id: "", rentalStatus: rental.rentalStatus });
       return handleResetQuery("rentals");
     },
   });
 
   const updatedStatus = () => {
-    if (!selectedRental) return;
-    handleUpdateStatus({ id: selectedRental.id, rental: selectedRental });
+    if (!rental) return;
+    handleUpdateStatus({ id: rental.id, rental });
   };
   return {
+    rental,
+    setRental,
     isLoading,
     findAllRentals,
-    selectedRental,
-    setSelectedRental,
     handleUpdateStatus,
     updatedStatus,
   };

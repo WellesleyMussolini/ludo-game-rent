@@ -144,11 +144,11 @@ export const RentalHistory = ({
                 />
               </td>
 
-              <td className={styleHeaderCol}>
+              <td className={`${styleHeaderCol} text-center`}>
                 {formatDate(game.rentalStartDate)}
               </td>
 
-              <td className={styleHeaderCol}>
+              <td className={`${styleHeaderCol} text-center`}>
                 {formatDate(game.rentalEndDate)}
               </td>
 
