@@ -1,5 +1,7 @@
-import { UsersAndRentals } from "./components/users-and-rentals/users-and-rentals.component";
+"use server";
+
+import { UsersOverview } from "./components/users-overview";
 
 export default async function Users() {
-  return <UsersAndRentals />;
+  return <UsersOverview />;
 }
