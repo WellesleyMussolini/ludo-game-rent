@@ -19,19 +19,22 @@ export enum ActionModalType {
 
 export const ActionModal = ({
   type,
+  animation,
   handleExecuteAction,
   isLoading,
   rental,
+  closeModal,
 }: {
+  animation: string;
   type: ActionModalType;
   handleExecuteAction: () => void;
   rental?: Rental & {
     handleRental: React.Dispatch<React.SetStateAction<Rental>>;
   };
   isLoading: boolean;
+  closeModal: () => void;
 }) => {
-  const { animation, isAlertPopup, actionModalConfig, closeModal } =
-    useActionModal(type);
+  const { isAlertPopup, actionModalConfig } = useActionModal(type);
 
   if (isAlertPopup) return null;
 

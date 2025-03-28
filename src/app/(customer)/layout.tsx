@@ -5,7 +5,7 @@ import { Provider } from "@/app/common/utils/lib/provider/provider";
 import { ThemeProvider } from "@/app/common/context/context";
 import React from "react";
 import { LayoutWrapper } from "./layout/wrapper/wrapper.layout";
-import { LoadingScreen } from "../common/components/loading/loading-screen/loading-screen.component";
+import { LoadingScreenHexagon } from "../common/components/loading/loading-screen/loading-screen.component";
 import { ProgressBar } from "../common/components/progress-bar/progress-bar.component";
 
 const font = Roboto({ weight: "500", subsets: ["latin"] });
@@ -30,7 +30,7 @@ export default async function RootLayout({
         <Provider>
           <ProgressBar />
           <ThemeProvider>
-            <React.Suspense fallback={<LoadingScreen />}>
+            <React.Suspense fallback={<LoadingScreenHexagon />}>
               <LayoutWrapper />
               {children}
             </React.Suspense>

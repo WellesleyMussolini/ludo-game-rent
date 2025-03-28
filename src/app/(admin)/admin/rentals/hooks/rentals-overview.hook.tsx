@@ -55,16 +55,11 @@ export const useRentalsOverview = () => {
     },
   });
 
-  const updatedStatus = () => {
-    if (!rental) return;
-    handleUpdateStatus({ id: rental.id, rental });
-  };
   return {
     rental,
     setRental,
     isLoading,
     findAllRentals,
     handleUpdateStatus,
-    updatedStatus,
   };
 };

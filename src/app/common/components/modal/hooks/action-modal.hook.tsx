@@ -1,15 +1,9 @@
-import React from "react";
 import { ActionModalType } from "../action-modal.component";
-import { Animations } from "@/app/common/types/animations.enum";
 import { useContext } from "@/app/common/context/context";
 import { PrimaryButtonTypes } from "../../buttons";
-import { handleAnimationClose } from "@/app/common/utils/handle-animation-close";
 
 export const useActionModal = (type: ActionModalType) => {
-  const [animation, setAnimation] = React.useState<string>(
-    Animations.ANIMATION_JUMP_IN
-  );
-  const { isVisible, setIsVisible } = useContext();
+  const { isVisible } = useContext();
 
   const visibilityMap: Record<ActionModalType, keyof typeof isVisible> = {
     [ActionModalType.LOGOUT]: "logout",
@@ -38,17 +32,12 @@ export const useActionModal = (type: ActionModalType) => {
     },
   };
 
-  const closeModal = () =>
-    handleAnimationClose({ isVisible, setIsVisible, setAnimation });
-
   const actionModalConfig = ACTION_MODAL_CONFIG[type];
 
   const isAlertPopup = !isVisible[visibilityMap[type]];
 
   return {
-    animation,
     isAlertPopup,
     actionModalConfig,
-    closeModal,
   };
 };

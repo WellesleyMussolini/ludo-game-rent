@@ -1,6 +1,6 @@
 "use server";
 
-import { UsersOverview } from "./components/users-overview";
+import { UsersOverview } from "./components/users-overview/users-overview";
 
 export default async function Users() {
   return <UsersOverview />;

@@ -4,7 +4,7 @@ import "../../globals.css";
 import React from "react";
 import { Provider } from "@/app/common/utils/lib/provider/provider";
 import { ThemeProvider } from "@/app/common/context/context";
-import { LoadingScreen } from "@/app/common/components/loading/loading-screen/loading-screen.component";
+import { LoadingScreenHexagon } from "@/app/common/components/loading/loading-screen/loading-screen.component";
 import { LayoutWrapper } from "../layout/wrapper/wrapper.layout";
 import { ProgressBar } from "@/app/common/components/progress-bar/progress-bar.component";
 import Head from "next/head";
@@ -36,7 +36,7 @@ export default function RootLayout({
         <Provider>
           <ProgressBar />
           <ThemeProvider>
-            <React.Suspense fallback={<LoadingScreen />}>
+            <React.Suspense fallback={<LoadingScreenHexagon />}>
               <LayoutWrapper />
               {children}
             </React.Suspense>
