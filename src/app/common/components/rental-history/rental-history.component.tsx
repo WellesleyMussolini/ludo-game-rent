@@ -44,7 +44,7 @@ export const RentalHistory = ({
     );
 
   return (
-    <div className="relative w-[1000px] overflow-x-auto">
+    <div className="relative w-[1000px] max-xl:w-4/5 overflow-x-auto">
       <table className="table-fixed w-[1000px] shadow-md sm:rounded-lg text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
