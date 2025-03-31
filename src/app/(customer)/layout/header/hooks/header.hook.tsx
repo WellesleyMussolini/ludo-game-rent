@@ -3,9 +3,12 @@ import { useRouter } from "next/navigation";
 import { useUserSession } from "@/app/common/hooks/session.hook";
 import { useContext } from "@/app/common/context/context";
 
-export const useUserMenu = () => {
+export const useHeader = () => {
   const { isVisible, setIsVisible } = useContext();
   const { session } = useUserSession();
+  const { isAuthenticated, isLoading } = useUserSession();
+  const redirect = useRouter();
+
   const menuRef = React.useRef<HTMLDivElement>(null);
 
   const router = useRouter();
@@ -58,10 +61,12 @@ export const useUserMenu = () => {
   ];
 
   return {
+    redirect,
+    isAuthenticated,
+    isLoading,
     isVisible,
     menuOptions,
     handleDropdownVisibility,
-    handleCloseDropdown,
     menuRef,
     userInfo,
   };
