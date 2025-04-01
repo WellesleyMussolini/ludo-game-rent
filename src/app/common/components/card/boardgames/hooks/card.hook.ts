@@ -14,8 +14,7 @@ export const useCard = (boardgame: BoardGame) => {
   const boardgamePrice = formatCurrency(boardgame.price);
 
   const redirectToBoardgameAbout = () => {
-    pathname === Pathnames.HOME &&
-      router.push(`search?boardgame=${boardgame.id}`);
+    pathname === Pathnames.HOME && router.push(`?boardgame=${boardgame.id}`);
   };
 
   return {

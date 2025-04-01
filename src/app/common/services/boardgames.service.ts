@@ -24,17 +24,21 @@ class BoardGames {
   }
 
   async getById(id: string): Promise<BoardGame | null> {
-    const response = await handleHttpRequest(
-      url,
-      `boardgames/get-by-id/${id}`,
-      RequestMethods.GET
-    );
+    try {
+      const response = await handleHttpRequest(
+        url,
+        `boardgames/get-by-id/${id}`,
+        RequestMethods.GET
+      );
 
-    if (!response) return null;
+      if (!response) return null;
 
-    const findBoardgame: ResponseBoardGame = await response.json();
+      const findBoardgame: ResponseBoardGame = await response.json();
 
-    return boardGameMapper.toDomain(findBoardgame);
+      return boardGameMapper.toDomain(findBoardgame);
+    } catch {
+      return null;
+    }
   }
 
   async getByName(name: string): Promise<BoardGame[] | null> {
