@@ -1,7 +1,6 @@
 "use server";
 
 import { sizeIcons } from "@/app/common/constants/size-icons";
-import Link from "next/link";
 import { IoLogoWhatsapp } from "react-icons/io";
 
 export default async function About() {
@@ -21,7 +20,7 @@ export default async function About() {
             <p className="flex gap-2 items-center">
               WhatsApp:
               <IoLogoWhatsapp
-                size={sizeIcons.small}
+                size={sizeIcons.smaller}
                 className="text-primary hover:scale-125 duration-300"
               />
             </p>

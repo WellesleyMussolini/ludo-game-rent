@@ -30,8 +30,10 @@ export const LayoutWrapper = () => {
     Animations.ANIMATION_JUMP_IN
   );
 
-  const pathname = usePathname();
   const { handleResetQuery } = useRefetchQuery();
+
+  const closeModal = () =>
+    handleAnimationClose({ isVisible, setIsVisible, setAnimation });
 
   const { mutate: handleDeleteBoardgame, isPending: isLoading } = useMutation({
     mutationKey: ["boardgames"],
@@ -52,24 +54,12 @@ export const LayoutWrapper = () => {
         rentalDurationDays: "",
         availableCopies: "",
       });
-      handleAnimationClose({ isVisible, setIsVisible, setAnimation });
+      closeModal();
     },
   });
 
   return (
     <>
-      <div
-        className={`p-4 ${
-          pathname === Pathnames.ADMIN_AUTH && "hidden"
-        } text-gray-600`}
-      >
-        <Hamburger
-          toggled={isVisible.sidebar}
-          onToggle={() =>
-            setIsVisible({ ...isVisible, sidebar: !isVisible.sidebar })
-          }
-        />
-      </div>
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -85,6 +75,8 @@ export const LayoutWrapper = () => {
         className="z-50"
       />
       <ActionModal
+        animation={animation}
+        closeModal={closeModal}
         handleExecuteAction={handleDeleteBoardgame}
         isLoading={isLoading}
         type={ActionModalType.DELETE_BOARDGAME}
