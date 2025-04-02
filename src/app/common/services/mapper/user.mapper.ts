@@ -14,6 +14,7 @@ class UserMapper {
       password: persistence.password,
       image: persistence.image,
       role: persistence.role,
+      cpf: persistence.cpf,
     };
   }
 }

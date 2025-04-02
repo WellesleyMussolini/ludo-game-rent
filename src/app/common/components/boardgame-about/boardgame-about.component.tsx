@@ -5,12 +5,15 @@ import Image from "next/image";
 import { ButtonRentGame } from "@/app/common/components/buttons";
 import { ErrorMessage } from "@/app/common/components/error-message/error-message.component";
 import { BoardGame } from "../../types/boardgame.types";
+import { Pathnames } from "../../types/pathnames.enum";
+import { usePathname } from "next/navigation";
 
 export const BoardGameAbout = async ({
   boardgame,
 }: {
   boardgame: BoardGame;
 }) => {
+  const pathname = usePathname();
   if (!boardgame)
     return (
       <div className="flex justify-center items-center  h-screen">
@@ -33,7 +36,9 @@ export const BoardGameAbout = async ({
           dangerouslySetInnerHTML={{ __html: boardgame.description }}
         />
       )}
-      <ButtonRentGame boardgame={boardgame} />
+      <div className={`${pathname !== Pathnames.HOME && "hidden"} w-full`}>
+        <ButtonRentGame boardgame={boardgame} />
+      </div>
     </div>
   );
 };

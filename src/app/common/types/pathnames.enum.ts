@@ -7,4 +7,5 @@ export enum Pathnames {
   ADMIN_AUTH = "/admin/auth",
   ADMIN_USERS = "/admin/users",
   ADMIN_RENTALS = "/admin/rentals",
+  GET_STARTED = "/get-started",
 }

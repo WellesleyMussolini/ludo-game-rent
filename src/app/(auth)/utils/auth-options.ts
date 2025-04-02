@@ -2,39 +2,14 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GoogleProvider from "next-auth/providers/google";
 import { prisma } from "../../common/utils/lib/database/prisma";
 import { UserRoles } from "@/app/common/types/user-roles.enum";
-import { IUser } from "@/app/common/types/user.interface";
+import { IUser, IAuth } from "@/app/common/types/user.interface";
 import { usersService } from "@/app/common/services/users.service";
 
-type JWT = {
-  token: Token;
-  user: IUser;
-};
-
-type Token = {
-  name: string;
-  email: string;
-  picture: string;
-  sub: string;
-  role: UserRoles;
-  id: string;
+export interface Token extends IUser {
   iat: number;
   exp: number;
   jti: string;
-};
-
-type Session = {
-  session: {
-    user: {
-      id: string;
-      name: string;
-      email: string;
-      image: string;
-      role: UserRoles;
-    };
-    expires: string;
-  };
-  token: Token;
-};
+}
 
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -48,15 +23,40 @@ export const authOptions = {
     strategy: "jwt", // This enables JWT-based session
   },
   callbacks: {
-    async jwt({ token, user }: JWT) {
+    async jwt({ token, user }: { token: Token; user?: IUser }): Promise<Token> {
+      // If a user object is provided during sign-in, update the token directly.
       if (user) {
-        token.role = user.role;
-        token.id = user.id;
+        return {
+          ...token,
+          id: user.id,
+          role: user.role,
+          cpf: user.cpf,
+        };
       }
+
+      // If token has no ID, there's nothing to fetch; return the token as-is.
+      if (!token.id) return token;
+
+      // If CPF is not already set, try to fetch it from the database.
+      if (!token.cpf) {
+        try {
+          const dbUser = await usersService.getById(token.id);
+          token.cpf = dbUser?.cpf ?? null;
+        } catch {
+          token.cpf = null;
+        }
+      }
+
       return token;
     },
 
-    async session({ session, token }: Session) {
+    async session({
+      session,
+      token,
+    }: {
+      session: IAuth;
+      token: Token;
+    }): Promise<IAuth> {
       const user = await usersService.getById(token.id);
 
       const role = user?.role ?? UserRoles.USER;
@@ -64,12 +64,9 @@ export const authOptions = {
       token.role = role;
       session.user.role = role;
       session.user.id = token.id;
-      return {
-        user: {
-          ...session.user,
-          expires: session.expires,
-        },
-      };
+      session.user.cpf = token.cpf;
+
+      return session;
     },
   },
   secret: process.env.NEXT_PUBLIC_SECRET,

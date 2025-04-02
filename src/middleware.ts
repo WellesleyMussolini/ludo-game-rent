@@ -25,6 +25,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(Pathnames.ADMIN_AUTH, request.url));
   }
 
+  // Prevents redirect loop
+  // if (pathname.startsWith(Pathnames.GET_STARTED)) {
+  //   return NextResponse.next();
+  // }
+
+  // if (authenticated && !authenticated?.cpf) {
+  //   return NextResponse.redirect(new URL(Pathnames.GET_STARTED, request.url));
+  // }
+
   if (
     authenticated &&
     isNotAdmin &&

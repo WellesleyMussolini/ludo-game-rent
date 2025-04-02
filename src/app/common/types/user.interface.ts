@@ -8,6 +8,7 @@ export interface IUser {
   password?: null;
   image: string;
   role: UserRoles;
+  cpf: string | null;
 }
 
 export interface Session extends IUser {
