@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useContext } from "@/app/common/context/context";
 import { toast } from "react-toastify";
 import { boardGamesService } from "@/app/common/services/boardgames.service";
@@ -17,6 +17,10 @@ export const useBoardGameForm = ({
   handleCloseForm?: () => void;
 }) => {
   const { boardgame, setBoardGame, isVisible, setIsVisible } = useContext();
+
+  const [isOpenDropdownStatus, setIsOpenDropdownStatus] =
+    useState<boolean>(false);
+
   const { handleResetQuery } = useRefetchQuery();
   const [animation, setAnimation] = React.useState<string>(
     Animations.ANIMATION_JUMP_IN
@@ -52,7 +56,7 @@ export const useBoardGameForm = ({
         onDragStart={(event) => event.preventDefault()}
         onClick={() => {
           handleOnChangeFields("status", chosenStatus);
-          setIsVisible({ ...isVisible, dropdown: false });
+          setIsOpenDropdownStatus(false);
         }}
       >
         <p className="text-base font-medium">{chosenStatus}</p>
@@ -182,5 +186,7 @@ export const useBoardGameForm = ({
     handleReturnPreviousStep,
     handleSaveGame,
     handleUpdateGame,
+    isOpenDropdownStatus,
+    setIsOpenDropdownStatus,
   };
 };
