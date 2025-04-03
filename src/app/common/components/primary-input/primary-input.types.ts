@@ -4,6 +4,7 @@ export enum PrimaryInputTypes {
   NUMBER = "number",
   EMAIL = "email",
   PASSWORD = "password",
+  DATE = "date",
 }
 
 export interface IPrimaryInput {
@@ -11,6 +12,7 @@ export interface IPrimaryInput {
   text: string;
   label?: string;
   handleOnChange: (text: string) => void;
-  placeholder: string;
+  placeholder?: string;
   handleOnSearch?: () => void;
+  icon?: JSX.Element;
 }
