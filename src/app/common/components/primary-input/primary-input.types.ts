@@ -4,12 +4,11 @@ export enum PrimaryInputTypes {
   NUMBER = "number",
   EMAIL = "email",
   PASSWORD = "password",
-  DATE = "date",
 }
 
 export interface IPrimaryInput {
   type: PrimaryInputTypes;
-  text: string;
+  text: string | number;
   label?: string;
   handleOnChange: (text: string) => void;
   placeholder?: string;
