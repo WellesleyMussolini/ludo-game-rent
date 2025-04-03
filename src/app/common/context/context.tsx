@@ -21,7 +21,6 @@ interface IContext {
     createBoardGame: boolean;
     updateBoardGame: boolean;
     updateRentalStatus: boolean;
-    sidebar: boolean;
     dropdown: boolean;
   };
   setIsVisible: React.Dispatch<
@@ -31,7 +30,6 @@ interface IContext {
       createBoardGame: boolean;
       updateBoardGame: boolean;
       updateRentalStatus: boolean;
-      sidebar: boolean;
       dropdown: boolean;
     }>
   >;
@@ -97,7 +95,6 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
     createBoardGame: boolean;
     updateBoardGame: boolean;
     updateRentalStatus: boolean;
-    sidebar: boolean;
     dropdown: boolean;
   }>({
     logout: false,
@@ -105,7 +102,6 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
     createBoardGame: false,
     updateBoardGame: false,
     updateRentalStatus: false,
-    sidebar: false,
     dropdown: false,
   });
 

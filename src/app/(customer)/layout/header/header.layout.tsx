@@ -18,11 +18,11 @@ export const Header = () => {
     redirect,
     isAuthenticated,
     isLoading,
-    isVisible,
     menuOptions,
-    handleDropdownVisibility,
     menuRef,
     userInfo,
+    isOpenDropdown,
+    handleOpenDropdown,
   } = useHeader();
   return (
     <div className="fixed top-0 flex items-center justify-between w-full px-8 h-20 bg-white z-30">
@@ -51,10 +51,10 @@ export const Header = () => {
             objectFit="cover"
             height={0}
             width={0}
-            onClick={handleDropdownVisibility}
+            onClick={handleOpenDropdown}
           />
           <Dropdown
-            visibility={isVisible.dropdown}
+            visibility={isOpenDropdown}
             content={menuOptions.map((option, index) => (
               <p
                 key={index}
