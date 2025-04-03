@@ -21,8 +21,6 @@ interface IContext {
     createBoardGame: boolean;
     updateBoardGame: boolean;
     updateRentalStatus: boolean;
-    sidebar: boolean;
-    dropdown: boolean;
   };
   setIsVisible: React.Dispatch<
     React.SetStateAction<{
@@ -31,8 +29,6 @@ interface IContext {
       createBoardGame: boolean;
       updateBoardGame: boolean;
       updateRentalStatus: boolean;
-      sidebar: boolean;
-      dropdown: boolean;
     }>
   >;
   boardgame: BoardGame;
@@ -97,16 +93,12 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
     createBoardGame: boolean;
     updateBoardGame: boolean;
     updateRentalStatus: boolean;
-    sidebar: boolean;
-    dropdown: boolean;
   }>({
     logout: false,
     deleteBoardGame: false,
     createBoardGame: false,
     updateBoardGame: false,
     updateRentalStatus: false,
-    sidebar: false,
-    dropdown: false,
   });
 
   return (

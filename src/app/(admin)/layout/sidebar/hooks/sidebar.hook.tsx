@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import { useContext } from "@/app/common/context/context";
+import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { sizeIcons } from "@/app/common/constants/size-icons";
 import * as Fa from "react-icons/fa";
@@ -9,20 +8,36 @@ import { FaUser } from "react-icons/fa6";
 import { IoMdCart } from "react-icons/io";
 import { Pathnames } from "@/app/common/types/pathnames.enum";
 
+export type SidebarItem = {
+  icon: React.JSX.Element;
+  label: string;
+  alert: boolean;
+  active: boolean;
+  route:
+    | Pathnames.HOME
+    | Pathnames.AUTH
+    | Pathnames.USER
+    | Pathnames.CART
+    | Pathnames.ADMIN
+    | Pathnames.ADMIN_AUTH
+    | Pathnames.ADMIN_USERS
+    | Pathnames.ADMIN_RENTALS
+    | Pathnames.GET_STARTED;
+};
+
 export const useSidebar = () => {
-  const { isVisible, setIsVisible } = useContext();
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const pathname = usePathname();
   const router = useRouter();
 
-  const toggleSidebarVisibility = () =>
-    setIsVisible({ ...isVisible, sidebar: !isVisible.sidebar });
+  const toggleSidebarVisibility = () => setIsExpanded((prev) => !prev);
 
   const handleSwitchRoute = async (route: string) => {
     router.push(route);
-    setIsVisible({ ...isVisible, sidebar: false });
+    setIsExpanded(false);
   };
 
-  const sidebarContent = [
+  const sidebarContent: SidebarItem[] = [
     {
       icon: <Fa.FaDice size={sizeIcons.smaller} />,
       label: "Catálogo",
@@ -47,10 +62,9 @@ export const useSidebar = () => {
   ];
 
   return {
-    router,
     pathname,
-    isVisible,
-    setIsVisible,
+    isExpanded,
+    setIsExpanded,
     handleSwitchRoute,
     toggleSidebarVisibility,
     sidebarContent,

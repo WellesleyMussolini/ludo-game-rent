@@ -29,15 +29,16 @@ const BoardGameFormSubmit = ({
 }) => {
   const {
     boardgame,
-    isVisible,
     isLoading,
     dropdownContent,
-    setIsVisible,
     handleOnChangeFields,
     handleSaveGame,
     handleUpdateGame,
     isSubmitButtonDisabled,
+    isOpenDropdownStatus,
+    setIsOpenDropdownStatus,
   } = useBoardGameForm({ handleCloseForm });
+
   return (
     <div className="h-96 w-full">
       {/* Close and Back Buttons */}
@@ -124,29 +125,24 @@ const BoardGameFormSubmit = ({
           <div className="relative">
             <div
               className={`flex justify-between items-center border border-gray-300 rounded px-4 py-2 cursor-pointer ${
-                isVisible.dropdown ? "bg-gray-100" : "bg-white"
+                isOpenDropdownStatus ? "bg-gray-100" : "bg-white"
               }`}
-              onClick={() =>
-                setIsVisible({
-                  ...isVisible,
-                  dropdown: !isVisible.dropdown,
-                })
-              }
+              onClick={() => setIsOpenDropdownStatus((prev) => !prev)}
             >
               <p className="font-medium text-gray-700">
                 {boardgame.status ?? "Selecione o status"}
               </p>
               <div>
-                {isVisible.dropdown ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                {isOpenDropdownStatus ? <IoIosArrowUp /> : <IoIosArrowDown />}
               </div>
             </div>
 
             {/* Dropdown Content  */}
-            {isVisible.dropdown && (
+            {isOpenDropdownStatus && (
               <div className="absolute w-full bg-white border border-gray-300 rounded mt-2 shadow-lg z-10">
                 <Dropdown
                   styles="w-full"
-                  visibility={isVisible.dropdown}
+                  visibility={isOpenDropdownStatus}
                   content={dropdownContent}
                 />
               </div>

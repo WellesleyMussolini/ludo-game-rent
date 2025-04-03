@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserSession } from "@/app/common/hooks/session.hook";
 import { useContext } from "@/app/common/context/context";
 
 export const useHeader = () => {
   const { isVisible, setIsVisible } = useContext();
+
+  const [isOpenDropdown, setIsOpenDropdown] = useState<boolean>(false);
   const { session } = useUserSession();
   const { isAuthenticated, isLoading } = useUserSession();
   const redirect = useRouter();
@@ -13,13 +15,9 @@ export const useHeader = () => {
 
   const router = useRouter();
 
-  const handleDropdownVisibility = () =>
-    setIsVisible({ ...isVisible, dropdown: !isVisible.dropdown });
+  const handleOpenDropdown = () => setIsOpenDropdown((prev) => !prev);
 
-  const handleCloseDropdown = React.useCallback(
-    () => setIsVisible({ ...isVisible, dropdown: false }),
-    [isVisible, setIsVisible]
-  );
+  const handleCloseDropdown = () => setIsOpenDropdown(false);
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -55,8 +53,10 @@ export const useHeader = () => {
     },
     {
       label: "Sair",
-      onClick: () =>
-        setIsVisible({ ...isVisible, logout: true, dropdown: false }),
+      onClick: () => {
+        setIsVisible({ ...isVisible, logout: true });
+        handleCloseDropdown();
+      },
     },
   ];
 
@@ -64,9 +64,9 @@ export const useHeader = () => {
     redirect,
     isAuthenticated,
     isLoading,
-    isVisible,
     menuOptions,
-    handleDropdownVisibility,
+    isOpenDropdown,
+    handleOpenDropdown,
     menuRef,
     userInfo,
   };
