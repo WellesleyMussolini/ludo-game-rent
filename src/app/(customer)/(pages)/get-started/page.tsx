@@ -1,6 +1,6 @@
 "use server";
 
-import { GetStarted as GetStartedComponent } from "@/app/(customer)/(pages)/get-started/components/get-started.component";
+import { GetStartedComponent } from "@/app/(customer)/(pages)/get-started/components/get-started.component";
 
 export default async function GetStarted() {
   return (
