@@ -20,7 +20,7 @@ export default async function Admin({
     return <BoardGameAbout boardgame={foundBoardGame as BoardGame} />;
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center gap-10 pt-10 justify-center">
       <CreateBoardgame />
       <BoardGameCatalogue />
     </div>

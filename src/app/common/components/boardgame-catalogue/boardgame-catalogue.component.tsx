@@ -5,25 +5,14 @@ import { Card } from "../card/boardgames/card.component";
 import { BoardGame } from "@/app/common/types/boardgame.types";
 import { ErrorMessage } from "../error-message/error-message.component";
 import { PrimaryInput, PrimaryInputTypes } from "../primary-input";
-import { Pathnames } from "../../types/pathnames.enum";
 import { CardSkeleton } from "../card-skeleton/card-skeleton.component";
 import { useBoardGameCatalogue } from "./hooks/boardgame-catalogue.hook";
 
 export const BoardGameCatalogue = () => {
-  const {
-    searchQuery,
-    setSearchQuery,
-    pathname,
-    handleSearch,
-    boardgames,
-    isLoading,
-  } = useBoardGameCatalogue();
+  const { searchQuery, setSearchQuery, handleSearch, boardgames, isLoading } =
+    useBoardGameCatalogue();
   return (
-    <div
-      className={`flex items-center justify-center flex-col w-full gap-10 ${
-        pathname === Pathnames.HOME ? "pt-28" : "pt-16"
-      } `}
-    >
+    <div className="flex items-center justify-center flex-col w-full gap-10">
       <div className="flex justify-center items-center flex-col w-full max-w-[1200px] px-5 gap-10">
         <PrimaryInput
           handleOnChange={setSearchQuery}
@@ -34,7 +23,7 @@ export const BoardGameCatalogue = () => {
         />
       </div>
 
-      {boardgames && boardgames.length === 0 ? (
+      {boardgames && !boardgames ? (
         <div className="w-full h-[40em]">
           <ErrorMessage
             title="NÃO ENCONTRADO"

@@ -151,5 +151,3 @@ class BoardGames {
 }
 
 export const boardGamesService = new BoardGames();
-
-export const findAllBoardGames = await boardGamesService.get();

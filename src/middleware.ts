@@ -13,11 +13,14 @@ export async function middleware(request: NextRequest) {
   });
   const { pathname } = request.nextUrl;
 
+  console.log(authenticated);
+
   const isNotAdmin = authenticated?.role === UserRoles.USER;
   const isAdmin = authenticated?.role === UserRoles.ADMIN;
 
   const isNotAuthenticated = !authenticated || authenticated === null;
 
+  // Redirect to login if not authenticated and trying to access admin routes
   if (
     isNotAuthenticated &&
     adminProtectedRoutes.includes(pathname as Pathnames)
@@ -25,14 +28,35 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(Pathnames.ADMIN_AUTH, request.url));
   }
 
-  // Prevents redirect loop
-  // if (pathname.startsWith(Pathnames.GET_STARTED)) {
-  //   return NextResponse.next();
-  // }
+  /*
+  // Redirect user away from GET_STARTED if CPF is already registered
+  if (authenticated?.cpf && pathname === Pathnames.GET_STARTED) {
+    return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
+  }
 
-  // if (authenticated && !authenticated?.cpf) {
-  //   return NextResponse.redirect(new URL(Pathnames.GET_STARTED, request.url));
-  // }
+  // Allow user to access GET_STARTED only if they are authenticated and CPF is missing
+  if (
+    pathname === Pathnames.GET_STARTED &&
+    authenticated &&
+    !authenticated?.cpf
+  ) {
+    return NextResponse.next();
+  }
+
+  // If authenticated and CPF is missing, force user to complete "get started"
+  if (
+    authenticated &&
+    !authenticated?.cpf &&
+    pathname !== Pathnames.GET_STARTED
+  ) {
+    return NextResponse.redirect(new URL(Pathnames.GET_STARTED, request.url));
+  }
+
+  // If authenticated and CPF is already registered, block access to "get started"
+  if (authenticated?.cpf && pathname === Pathnames.GET_STARTED) {
+    return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
+  }
+  */
 
   if (
     authenticated &&
@@ -53,7 +77,9 @@ export async function middleware(request: NextRequest) {
 
   if (
     isNotAuthenticated &&
-    (pathname === Pathnames.CART || pathname === Pathnames.USER)
+    (pathname === Pathnames.CART ||
+      pathname === Pathnames.USER ||
+      pathname === Pathnames.GET_STARTED)
   ) {
     return NextResponse.redirect(new URL(Pathnames.AUTH, request.url));
   }

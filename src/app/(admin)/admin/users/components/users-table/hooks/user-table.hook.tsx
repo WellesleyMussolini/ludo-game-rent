@@ -20,7 +20,7 @@ export const useUserTable = (allUsers: Array<IUser>) => {
         position === index ? newRole : role
       )
     );
-    await usersService.update(id, newRole);
+    await usersService.update({ id, role: newRole });
   };
 
   return { selectedRoles, handleRoleChange };

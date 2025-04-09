@@ -5,6 +5,12 @@ import { BoardGame } from "@/app/common/types/boardgame.types";
 import { CardStatus } from "../components/card/boardgames/types/card.types";
 
 interface IContext {
+  isModalDeleteGameOpen: boolean;
+  isModalUpdateGameFormOpen: boolean;
+  isModalCreateGameFormOpen: boolean;
+  setIsModalUpdateGameFormOpen: (isModalUpdateGameFormOpen: boolean) => void;
+  setIsModalCreateGameFormOpen: (isModalCreateGameFormOpen: boolean) => void;
+  setIsModalDeleteGameOpen: (isModalDeleteGameOpen: boolean) => void;
   cart: {
     boardgames: Array<BoardGame>;
     isLoading: boolean;
@@ -13,22 +19,6 @@ interface IContext {
     React.SetStateAction<{
       boardgames: Array<BoardGame>;
       isLoading: boolean;
-    }>
-  >;
-  isVisible: {
-    logout: boolean;
-    deleteBoardGame: boolean;
-    createBoardGame: boolean;
-    updateBoardGame: boolean;
-    updateRentalStatus: boolean;
-  };
-  setIsVisible: React.Dispatch<
-    React.SetStateAction<{
-      logout: boolean;
-      deleteBoardGame: boolean;
-      createBoardGame: boolean;
-      updateBoardGame: boolean;
-      updateRentalStatus: boolean;
     }>
   >;
   boardgame: BoardGame;
@@ -87,29 +77,26 @@ export const ThemeProvider = ({ children }: IProviderProps) => {
     availableCopies: "",
   });
 
-  const [isVisible, setIsVisible] = React.useState<{
-    logout: boolean;
-    deleteBoardGame: boolean;
-    createBoardGame: boolean;
-    updateBoardGame: boolean;
-    updateRentalStatus: boolean;
-  }>({
-    logout: false,
-    deleteBoardGame: false,
-    createBoardGame: false,
-    updateBoardGame: false,
-    updateRentalStatus: false,
-  });
+  const [isModalUpdateGameFormOpen, setIsModalUpdateGameFormOpen] =
+    React.useState<boolean>(false);
+  const [isModalCreateGameFormOpen, setIsModalCreateGameFormOpen] =
+    React.useState<boolean>(false);
+  const [isModalDeleteGameOpen, setIsModalDeleteGameOpen] =
+    React.useState<boolean>(false);
 
   return (
     <ContextProvider.Provider
       value={{
         cart,
-        setCart,
         boardgame,
+        isModalUpdateGameFormOpen,
+        isModalCreateGameFormOpen,
+        isModalDeleteGameOpen,
+        setCart,
         setBoardGame,
-        isVisible,
-        setIsVisible,
+        setIsModalUpdateGameFormOpen,
+        setIsModalCreateGameFormOpen,
+        setIsModalDeleteGameOpen,
       }}
     >
       {children}

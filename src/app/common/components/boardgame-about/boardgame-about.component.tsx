@@ -8,11 +8,7 @@ import { BoardGame } from "../../types/boardgame.types";
 import { Pathnames } from "../../types/pathnames.enum";
 import { usePathname } from "next/navigation";
 
-export const BoardGameAbout = async ({
-  boardgame,
-}: {
-  boardgame: BoardGame;
-}) => {
+export const BoardGameAbout = ({ boardgame }: { boardgame: BoardGame }) => {
   const pathname = usePathname();
   if (!boardgame)
     return (

@@ -2,9 +2,6 @@
 
 import { useContext } from "@/app/common/context/context";
 import Sidebar from "../sidebar/sidebar.layout";
-import { Squash as Hamburger } from "hamburger-react";
-import { usePathname } from "next/navigation";
-import { Pathnames } from "@/app/common/types/pathnames.enum";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
@@ -18,13 +15,20 @@ import {
 import { boardGamesService } from "@/app/common/services/boardgames.service";
 import { useRefetchQuery } from "@/app/common/hooks/refetch-query.hook";
 import { CardStatus } from "@/app/common/components/card/boardgames/types/card.types";
-import { handleAnimationClose } from "@/app/common/utils/handle-animation-close";
+import { handleAnimationCloseModal } from "@/app/common/utils/handle-animation-close";
 import React from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Animations } from "@/app/common/types/animations.enum";
 
 export const LayoutWrapper = () => {
-  const { isVisible, boardgame, setIsVisible, setBoardGame } = useContext();
+  const {
+    boardgame,
+    isModalDeleteGameOpen,
+    isModalUpdateGameFormOpen,
+    setIsModalUpdateGameFormOpen,
+    setBoardGame,
+    setIsModalDeleteGameOpen,
+  } = useContext();
 
   const [animation, setAnimation] = React.useState<string>(
     Animations.ANIMATION_JUMP_IN
@@ -32,8 +36,11 @@ export const LayoutWrapper = () => {
 
   const { handleResetQuery } = useRefetchQuery();
 
-  const closeModal = () =>
-    handleAnimationClose({ isVisible, setIsVisible, setAnimation });
+  const closeModal = (): void =>
+    handleAnimationCloseModal({
+      handleAnimation: setAnimation,
+      handleModalVisibility: setIsModalDeleteGameOpen,
+    });
 
   const { mutate: handleDeleteBoardgame, isPending: isLoading } = useMutation({
     mutationKey: ["boardgames"],
@@ -75,13 +82,18 @@ export const LayoutWrapper = () => {
         className="z-50"
       />
       <ActionModal
+        visibility={isModalDeleteGameOpen}
         animation={animation}
         closeModal={closeModal}
         handleExecuteAction={handleDeleteBoardgame}
         isLoading={isLoading}
         type={ActionModalType.DELETE_BOARDGAME}
       />
-      <BoardGameForm type={BoardGameFormType.UPDATE} />
+      <BoardGameForm
+        visibility={isModalUpdateGameFormOpen}
+        handleVisibility={setIsModalUpdateGameFormOpen}
+        type={BoardGameFormType.UPDATE}
+      />
       <Sidebar />
     </>
   );

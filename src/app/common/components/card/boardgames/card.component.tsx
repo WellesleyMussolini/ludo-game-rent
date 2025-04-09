@@ -3,12 +3,6 @@
 import Image from "next/image";
 import { BoardGame } from "../../../types/boardgame.types";
 import { CardStatus } from "./types/card.types";
-import { Pathnames } from "../../../types/pathnames.enum";
-import {
-  PrimaryButton,
-  PrimaryButtonTypes,
-  ButtonRentGame,
-} from "@/app/common/components/buttons";
 import { BsHourglassSplit } from "react-icons/bs";
 import { MdGroup } from "react-icons/md";
 import { useCard } from "./hooks/card.hook";
@@ -17,10 +11,8 @@ export const Card = ({ boardgame }: { boardgame: BoardGame }) => {
   const {
     redirectToBoardgameAbout,
     boardgamePrice,
-    pathname,
-    isVisible,
-    setIsVisible,
-    setBoardGame,
+    renderUserRentalButton,
+    renderAdminButtons,
   } = useCard(boardgame);
   return (
     <div
@@ -91,32 +83,8 @@ export const Card = ({ boardgame }: { boardgame: BoardGame }) => {
           {boardgamePrice}
         </p>
         <div className="absolute bottom-4 w-full flex items-center justify-center gap-1 px-6">
-          {boardgame.status === CardStatus.AVAILABLE &&
-            pathname === Pathnames.HOME && (
-              <ButtonRentGame boardgame={boardgame} />
-            )}
-          {pathname === Pathnames.ADMIN && (
-            <>
-              <PrimaryButton
-                styles="text-xs"
-                text={"EDITAR"}
-                type={PrimaryButtonTypes.ALERT}
-                onClick={() => {
-                  setBoardGame(boardgame);
-                  setIsVisible({ ...isVisible, updateBoardGame: true });
-                }}
-              />
-              <PrimaryButton
-                styles="text-xs"
-                text={"DELETAR"}
-                type={PrimaryButtonTypes.DELETE}
-                onClick={() => {
-                  setBoardGame(boardgame);
-                  setIsVisible({ ...isVisible, deleteBoardGame: true });
-                }}
-              />
-            </>
-          )}
+          {renderUserRentalButton()}
+          {renderAdminButtons()}
         </div>
       </div>
     </div>

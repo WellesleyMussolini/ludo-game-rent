@@ -1,16 +1,7 @@
 import { ActionModalType } from "../action-modal.component";
-import { useContext } from "@/app/common/context/context";
 import { PrimaryButtonTypes } from "../../buttons";
 
-export const useActionModal = (type: ActionModalType) => {
-  const { isVisible } = useContext();
-
-  const visibilityMap: Record<ActionModalType, keyof typeof isVisible> = {
-    [ActionModalType.LOGOUT]: "logout",
-    [ActionModalType.DELETE_BOARDGAME]: "deleteBoardGame",
-    [ActionModalType.UPDATE_RENTAL]: "updateRentalStatus",
-  };
-
+export const useActionModal = (type: ActionModalType | null) => {
   const ACTION_MODAL_CONFIG = {
     [ActionModalType.LOGOUT]: {
       message: "Tem certeza que deseja sair?",
@@ -30,14 +21,16 @@ export const useActionModal = (type: ActionModalType) => {
       buttonType: PrimaryButtonTypes.ALERT,
       alertColor: "text-alert",
     },
+    [ActionModalType.REGISTER_USER_CPF]: {
+      message: "Tem certeza? Essa ação é irreversível",
+      buttonLabel: "Atualizar",
+      buttonType: PrimaryButtonTypes.ALERT,
+      alertColor: "text-alert",
+    },
   };
 
-  const actionModalConfig = ACTION_MODAL_CONFIG[type];
-
-  const isAlertPopup = !isVisible[visibilityMap[type]];
-
+  const config = type ? ACTION_MODAL_CONFIG[type] : null;
   return {
-    isAlertPopup,
-    actionModalConfig,
+    actionModalConfig: config,
   };
 };

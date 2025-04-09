@@ -6,8 +6,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { usersService } from "../services/users.service";
 import { usePathname } from "next/navigation";
-import { handleAnimationClose } from "../utils/handle-animation-close";
-import { useContext } from "../context/context";
+import { handleAnimationCloseModal } from "../utils/handle-animation-close";
 import { Animations } from "../types/animations.enum";
 
 export const useRentals = (userId?: string) => {
@@ -17,10 +16,14 @@ export const useRentals = (userId?: string) => {
   const [animation, setAnimation] = React.useState<string>(
     Animations.ANIMATION_JUMP_IN
   );
-  const { isVisible, setIsVisible } = useContext();
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
 
-  const closeModal = () =>
-    handleAnimationClose({ isVisible, setAnimation, setIsVisible });
+  const closeModal = (): void => {
+    return handleAnimationCloseModal({
+      handleModalVisibility: setIsModalOpen,
+      handleAnimation: setAnimation,
+    });
+  };
 
   const [rental, setRental] = React.useState<Rental>({
     id: "",
@@ -58,10 +61,7 @@ export const useRentals = (userId?: string) => {
     onSuccess: () => {
       setRental({ ...rental, id: "", rentalStatus: rental.rentalStatus });
       closeModal();
-
-      setTimeout(() => {
-        handleResetQuery("rentals");
-      }, 550);
+      handleResetQuery("rentals");
     },
   });
 
@@ -80,14 +80,9 @@ export const useRentals = (userId?: string) => {
     queryKey: ["rentals", userId],
     queryFn: async () => {
       if (!userId) return null;
-      try {
-        const user = await usersService.getById(userId);
-        const rentals = await rentalsService.getUserRentalsById(userId);
-        if (!user) throw new Error("User not found");
-        return { user, rentals };
-      } catch (error) {
-        throw new Error("Error fetching user rentals");
-      }
+      const user = await usersService.getById(userId);
+      const rentals = await rentalsService.getUserRentalsById(userId);
+      return { user, rentals };
     },
     refetchInterval: 1000,
     enabled: !!userId,
@@ -97,6 +92,7 @@ export const useRentals = (userId?: string) => {
 
   return {
     findAllRentals,
+    isModalOpen,
     userRental,
     pathname,
     animation,
@@ -104,6 +100,7 @@ export const useRentals = (userId?: string) => {
     isLoadingUserRentals,
     isLoadingAllRentals,
     setRental,
+    setIsModalOpen,
     handleUpdateStatus,
     closeModal,
   };

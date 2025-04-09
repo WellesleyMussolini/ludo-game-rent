@@ -33,13 +33,22 @@ class Users {
     return userMapper.toDomain(findUser);
   }
 
-  async update(id: string | undefined, role?: string): Promise<IUser> {
+  async update({
+    id,
+    role,
+    cpf,
+  }: {
+    id: string | undefined;
+    role?: string;
+    cpf?: string | null;
+  }): Promise<IUser> {
     const response = await handleHttpRequest(
       url,
       `users/${id}`,
       RequestMethods.PUT,
       {
         role: role || UserRoles.USER,
+        cpf: cpf ?? "",
       }
     );
 
@@ -54,5 +63,3 @@ class Users {
 }
 
 export const usersService = new Users();
-
-export const findAllUsers = await usersService.get();

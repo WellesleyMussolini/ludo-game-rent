@@ -11,12 +11,13 @@ import { PrimaryButton, PrimaryButtonTypes } from "../../buttons";
 export const useRentalHistory = ({
   rentals,
   onSelectRental,
+  isRentalUpdateModalOpen,
 }: {
   rentals: Rental[];
   onSelectRental: (rental: Rental) => void;
+  isRentalUpdateModalOpen: (value: boolean) => void;
 }) => {
   const pathname = usePathname();
-  const { isVisible, setIsVisible } = useContext();
 
   const isAdmin = pathname !== Pathnames.USER;
   const isEmptyTable = rentals.length === 0;
@@ -87,7 +88,7 @@ export const useRentalHistory = ({
         <PrimaryButton
           onClick={() => {
             onSelectRental(game);
-            setIsVisible({ ...isVisible, updateRentalStatus: true });
+            isRentalUpdateModalOpen(true);
           }}
           text="ATUALIZAR"
           type={PrimaryButtonTypes.OUTLINED}

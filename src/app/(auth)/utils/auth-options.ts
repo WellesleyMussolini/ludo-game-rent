@@ -11,6 +11,16 @@ export interface Token extends IUser {
   jti: string;
 }
 
+interface Session {
+  session: IAuth;
+  token: Token;
+}
+
+interface JWT {
+  token: Token;
+  user?: IUser;
+}
+
 export const authOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -23,48 +33,25 @@ export const authOptions = {
     strategy: "jwt", // This enables JWT-based session
   },
   callbacks: {
-    async jwt({ token, user }: { token: Token; user?: IUser }): Promise<Token> {
-      // If a user object is provided during sign-in, update the token directly.
+    async jwt({ token, user }: JWT): Promise<Token> {
       if (user) {
-        return {
-          ...token,
-          id: user.id,
-          role: user.role,
-          cpf: user.cpf,
-        };
-      }
-
-      // If token has no ID, there's nothing to fetch; return the token as-is.
-      if (!token.id) return token;
-
-      // If CPF is not already set, try to fetch it from the database.
-      if (!token.cpf) {
-        try {
-          const dbUser = await usersService.getById(token.id);
-          token.cpf = dbUser?.cpf ?? null;
-        } catch {
-          token.cpf = null;
-        }
+        token.id = user.id;
+        token.role = user.role;
+        token.cpf = user.cpf ?? null;
       }
 
       return token;
     },
 
-    async session({
-      session,
-      token,
-    }: {
-      session: IAuth;
-      token: Token;
-    }): Promise<IAuth> {
+    async session({ session, token }: Session): Promise<IAuth> {
       const user = await usersService.getById(token.id);
 
       const role = user?.role ?? UserRoles.USER;
+      const cpf = user?.cpf ?? null;
 
-      token.role = role;
-      session.user.role = role;
       session.user.id = token.id;
-      session.user.cpf = token.cpf;
+      session.user.role = role;
+      session.user.cpf = cpf;
 
       return session;
     },

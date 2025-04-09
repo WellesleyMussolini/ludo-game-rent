@@ -21,9 +21,11 @@ enum TranslateRentalStatus {
 export const RentalHistory = ({
   rentals,
   onSelectRental,
+  isRentalUpdateModalOpen,
 }: {
   rentals: Rental[];
   onSelectRental: (rental: Rental) => void;
+  isRentalUpdateModalOpen: (value: boolean) => void;
 }) => {
   const {
     styleHeaderCol,
@@ -33,7 +35,7 @@ export const RentalHistory = ({
     renderUserHeader,
     renderAdminColumns,
     renderAdminColumnUpdateItem,
-  } = useRentalHistory({ rentals, onSelectRental });
+  } = useRentalHistory({ rentals, onSelectRental, isRentalUpdateModalOpen });
 
   if (isEmptyTable)
     return (

@@ -25,7 +25,7 @@ export const generatePreviewBoardgame = async (
     id,
     image: apiObjectAccess("image"),
     name: apiObjectAccess("name"),
-    price: "40",
+    price: "",
     status: CardStatus.AVAILABLE,
     ageToPlay: apiObjectAccess("age"),
     playTime: apiObjectAccess("playingtime"),
