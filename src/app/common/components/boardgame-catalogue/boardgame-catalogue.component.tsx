@@ -9,8 +9,15 @@ import { CardSkeleton } from "../card-skeleton/card-skeleton.component";
 import { useBoardGameCatalogue } from "./hooks/boardgame-catalogue.hook";
 
 export const BoardGameCatalogue = () => {
-  const { searchQuery, setSearchQuery, handleSearch, boardgames, isLoading } =
-    useBoardGameCatalogue();
+  const {
+    searchQuery,
+    setSearchQuery,
+    handleSearch,
+    boardgames,
+    isLoading,
+    isBoardGamesGetHasError,
+  } = useBoardGameCatalogue();
+
   return (
     <div className="flex items-center justify-center flex-col w-full gap-10">
       <div className="flex justify-center items-center flex-col w-full max-w-[1200px] px-5 gap-10">
@@ -23,7 +30,7 @@ export const BoardGameCatalogue = () => {
         />
       </div>
 
-      {boardgames && !boardgames ? (
+      {isBoardGamesGetHasError ? (
         <div className="w-full h-[40em]">
           <ErrorMessage
             title="NÃO ENCONTRADO"

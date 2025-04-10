@@ -10,7 +10,11 @@ export const useBoardGameCatalogue = () => {
   const searchParams = useSearchParams()!;
   const boardgameIdParam = searchParams.get("boardgame");
 
-  const { data: boardgames, isPending: isLoading } = useQuery({
+  const {
+    data: boardgames,
+    isPending: isLoading,
+    isError: isBoardGamesGetHasError,
+  } = useQuery({
     queryKey: ["boardgames", boardgameIdParam],
     queryFn: async () => {
       if (boardgameIdParam) {
@@ -20,8 +24,6 @@ export const useBoardGameCatalogue = () => {
       return await boardGamesService.get();
     },
   });
-
-  console.log(boardgames);
 
   // Handle search input
   const handleSearch = async (): Promise<void> => {
@@ -37,5 +39,6 @@ export const useBoardGameCatalogue = () => {
     setSearchQuery,
     boardgames,
     isLoading,
+    isBoardGamesGetHasError,
   };
 };

@@ -6,6 +6,7 @@ export const adminProtectedRoutes = [
   Pathnames.ADMIN_RENTALS,
 ];
 
+// Nome de sugestão = authenticatedRoutes
 export const isNotAuthenticatedProtectedRoutes = [
   Pathnames.USER,
   Pathnames.CART,

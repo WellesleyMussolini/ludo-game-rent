@@ -17,7 +17,7 @@ class BoardGames {
     if (!response) return [];
 
     const findAllBoardGames: ResponseBoardGame[] = await response.json();
-
+    console.log("=", findAllBoardGames);
     return findAllBoardGames.map((boardGame: ResponseBoardGame) =>
       boardGameMapper.toDomain(boardGame)
     );

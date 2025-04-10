@@ -17,6 +17,7 @@ export default async function Home({
     : null;
 
   if (boardgameId)
+    // Passar para client e useQuery
     return <BoardGameAbout boardgame={foundBoardGame as BoardGame} />;
 
   return (

@@ -9,6 +9,7 @@ import { Pathnames } from "../../types/pathnames.enum";
 import { usePathname } from "next/navigation";
 
 export const BoardGameAbout = ({ boardgame }: { boardgame: BoardGame }) => {
+  // Passar para client e useQuery
   const pathname = usePathname();
   if (!boardgame)
     return (

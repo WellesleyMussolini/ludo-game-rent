@@ -33,6 +33,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(Pathnames.AUTH, request.url));
   }
 
+  // Sugestão nomeclatura
+  // const isUnauthenticated = !authenticated && unauthenticatedRoutes.includes(pathname as Pathnames)
   if (!authenticated && unauthenticatedRoutes.includes(pathname as Pathnames)) {
     return NextResponse.next();
   }
