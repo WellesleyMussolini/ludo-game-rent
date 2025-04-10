@@ -9,6 +9,7 @@ export const useBoardGameCatalogue = () => {
   const router = useRouter();
   const searchParams = useSearchParams()!;
   const boardgameIdParam = searchParams.get("boardgame");
+
   const { data: boardgames, isPending: isLoading } = useQuery({
     queryKey: ["boardgames", boardgameIdParam],
     queryFn: async () => {
@@ -19,6 +20,8 @@ export const useBoardGameCatalogue = () => {
       return await boardGamesService.get();
     },
   });
+
+  console.log(boardgames);
 
   // Handle search input
   const handleSearch = async (): Promise<void> => {

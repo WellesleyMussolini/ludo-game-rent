@@ -1,4 +1,4 @@
-import { handleHttpRequest } from "@/app/common/utils/handle-http-request";
+import { handleHttpRequest } from "@/app/common/utils/httpErrors";
 import boardGameMapper, { ResponseBoardGame } from "./mapper/boardgame.mapper";
 import { BoardGame } from "@/app/common/types/boardgame.types";
 import boardgameMapper from "./mapper/boardgame.mapper";

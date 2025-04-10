@@ -1,4 +1,5 @@
-export const handleErrors = async (response: Response) => {
+export const httpErrors = async (response: Response) => {
+  console.log("->", response.url);
   if (response.status === 404) return null;
 
   if (response.status === 400) throw new Error("Bad Request");

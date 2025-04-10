@@ -1,7 +1,7 @@
 import { RequestMethods } from "../types/request-methods.enum";
 import { UserRoles } from "../types/user-roles.enum";
 import { IUser } from "../types/user.interface";
-import { handleHttpRequest } from "../utils/handle-http-request";
+import { handleHttpRequest } from "../utils/httpErrors";
 import userMapper, { ResponseUser } from "./mapper/user.mapper";
 
 const url = process.env.NEXT_PUBLIC_API_URL;

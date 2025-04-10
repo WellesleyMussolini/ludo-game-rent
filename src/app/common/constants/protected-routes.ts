@@ -11,3 +11,5 @@ export const isNotAuthenticatedProtectedRoutes = [
   Pathnames.CART,
   Pathnames.GET_STARTED,
 ];
+
+export const unauthenticatedRoutes = [Pathnames.HOME, Pathnames.ABOUT];

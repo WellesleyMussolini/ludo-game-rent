@@ -1,6 +1,6 @@
 import { Rental, RentalStatus } from "../types/rental.types";
 import { RequestMethods } from "../types/request-methods.enum";
-import { handleHttpRequest } from "../utils/handle-http-request";
+import { handleHttpRequest } from "../utils/httpErrors";
 import rentalMapper, { ResponseRental } from "./mapper/rental.mapper";
 
 const url = process.env.NEXT_PUBLIC_API_URL;

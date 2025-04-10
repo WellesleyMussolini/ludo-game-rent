@@ -1,4 +1,4 @@
-import { handleHttpRequest } from "@/app/common/utils/handle-http-request";
+import { handleHttpRequest } from "@/app/common/utils/httpErrors";
 import { RequestMethods } from "../types/request-methods.enum";
 
 const url = process.env.NEXT_PUBLIC_TELEGRAM_API_URL;

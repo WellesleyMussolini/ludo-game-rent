@@ -6,6 +6,7 @@ import { getToken } from "next-auth/jwt";
 import {
   adminProtectedRoutes,
   isNotAuthenticatedProtectedRoutes,
+  unauthenticatedRoutes,
 } from "./app/common/constants/protected-routes";
 import { UserRoles } from "./app/common/types/user-roles.enum";
 import { usersService } from "./app/common/services/users.service";
@@ -32,7 +33,12 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL(Pathnames.AUTH, request.url));
   }
 
+  if (!authenticated && unauthenticatedRoutes.includes(pathname as Pathnames)) {
+    return NextResponse.next();
+  }
+
   // Authenticated user redirections
+  // Remover requisição do midleware
   const user = await usersService.getById(authenticated?.id as string);
   const isAdmin = authenticated?.role === UserRoles.ADMIN;
 
