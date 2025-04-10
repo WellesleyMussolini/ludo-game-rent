@@ -2,7 +2,7 @@ import { ActionModalType } from "../action-modal.component";
 import { PrimaryButtonTypes } from "../../buttons";
 
 export const useActionModal = (type: ActionModalType | null) => {
-  const ACTION_MODAL_CONFIG = {
+  const ActionModalTypes = {
     [ActionModalType.LOGOUT]: {
       message: "Tem certeza que deseja sair?",
       buttonLabel: "Desconectar",
@@ -29,8 +29,8 @@ export const useActionModal = (type: ActionModalType | null) => {
     },
   };
 
-  const config = type ? ACTION_MODAL_CONFIG[type] : null;
+  const actionModalConfig = type ? ActionModalTypes[type] : null;
   return {
-    actionModalConfig: config,
+    actionModalConfig,
   };
 };

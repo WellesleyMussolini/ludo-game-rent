@@ -5,3 +5,9 @@ export const adminProtectedRoutes = [
   Pathnames.ADMIN_USERS,
   Pathnames.ADMIN_RENTALS,
 ];
+
+export const isNotAuthenticatedProtectedRoutes = [
+  Pathnames.USER,
+  Pathnames.CART,
+  Pathnames.GET_STARTED,
+];

@@ -1,27 +1,21 @@
 "use client";
 
-import React from "react";
 import {
   PrimaryInput,
   PrimaryInputTypes,
 } from "@/app/common/components/primary-input";
-import { ModalStepper } from "@/app/common/components/modal-stepper/modal-stepper.component";
-import { formatCpf } from "@/app/common/utils/format-cpf";
-import { cpf } from "cpf-cnpj-validator";
-import { toast } from "react-toastify";
-import {
-  ActionModal,
-  ActionModalType,
-} from "@/app/common/components/modal/action-modal.component";
-import { handleAnimationCloseModal } from "@/app/common/utils/handle-animation-close";
-import { Animations } from "@/app/common/types/animations.enum";
-import { usersService } from "@/app/common/services/users.service";
 import { useUserSession } from "@/app/common/hooks/session.hook";
-import { redirect } from "next/navigation";
+import { usersService } from "@/app/common/services/users.service";
+import { Animations } from "@/app/common/types/animations.enum";
 import { Pathnames } from "@/app/common/types/pathnames.enum";
-import { PrimaryButtonTypes } from "@/app/common/components/buttons";
+import { formatCpf } from "@/app/common/utils/format-cpf";
+import { handleAnimationCloseModal } from "@/app/common/utils/handle-animation-close";
+import { cpf } from "cpf-cnpj-validator";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { toast } from "react-toastify";
 
-export const GetStartedComponent = () => {
+export const useCpfRegistration = () => {
   const { session } = useUserSession();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isCpfRegistered, setIsCpfRegistered] = React.useState<boolean>(false);
@@ -31,6 +25,8 @@ export const GetStartedComponent = () => {
   const [animation, setAnimation] = React.useState<string>(
     Animations.ANIMATION_JUMP_IN
   );
+
+  const router = useRouter();
 
   const stepsContent = {
     registerCpf: (
@@ -78,34 +74,20 @@ export const GetStartedComponent = () => {
     closeModal();
     toast.success("CPF atualizado com sucesso");
     setIsCpfRegistered(true);
-    setTimeout(() => redirect(Pathnames.HOME), 3000);
+    setTimeout(() => router.push(Pathnames.HOME), 2000);
   };
-
-  return (
-    <>
-      <ModalStepper
-        totalSteps={totalSteps}
-        handleSubmit={() => setIsModalOpen(true)}
-        currentStep={stepIndex}
-        stepsKeys={stepKeys}
-        stepsContent={stepsContent}
-        handleNextStep={() => handleChangeStep(stepIndex + 1)}
-        handlePreviousStep={() => handleChangeStep(stepIndex - 1)}
-        isLoading={false}
-        buttonType={
-          isCpfRegistered
-            ? PrimaryButtonTypes.DISABLED
-            : PrimaryButtonTypes.PRIMARY
-        }
-      />
-      <ActionModal
-        visibility={isModalOpen}
-        animation={animation}
-        closeModal={closeModal}
-        isLoading={isLoading}
-        type={ActionModalType.REGISTER_USER_CPF}
-        handleExecuteAction={handleSubmitCPF}
-      />
-    </>
-  );
+  return {
+    totalSteps,
+    stepIndex,
+    stepKeys,
+    stepsContent,
+    isCpfRegistered,
+    isModalOpen,
+    animation,
+    isLoading,
+    closeModal,
+    setIsModalOpen,
+    handleSubmitCPF,
+    handleChangeStep,
+  };
 };
