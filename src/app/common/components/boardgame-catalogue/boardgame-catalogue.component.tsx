@@ -15,9 +15,9 @@ export const BoardGameCatalogue = () => {
     handleSearch,
     boardgames,
     isLoading,
-    isBoardGamesGetHasError,
+    boardgamesFetchError,
+    boardgameNotFound,
   } = useBoardGameCatalogue();
-
   return (
     <div className="flex items-center justify-center flex-col w-full gap-10">
       <div className="flex justify-center items-center flex-col w-full max-w-[1200px] px-5 gap-10">
@@ -30,11 +30,11 @@ export const BoardGameCatalogue = () => {
         />
       </div>
 
-      {isBoardGamesGetHasError ? (
+      {boardgamesFetchError || boardgameNotFound ? (
         <div className="w-full h-[40em]">
           <ErrorMessage
             title="NÃO ENCONTRADO"
-            message="Oops! parece que o jogo inserido não existe"
+            message="Oops... parece que o jogo inserido não existe"
           />
         </div>
       ) : (

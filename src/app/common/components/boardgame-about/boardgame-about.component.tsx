@@ -4,13 +4,21 @@ import React from "react";
 import Image from "next/image";
 import { ButtonRentGame } from "@/app/common/components/buttons";
 import { ErrorMessage } from "@/app/common/components/error-message/error-message.component";
-import { BoardGame } from "../../types/boardgame.types";
 import { Pathnames } from "../../types/pathnames.enum";
 import { usePathname } from "next/navigation";
+import { boardGamesService } from "../../services/boardgames.service";
+import { useQuery } from "@tanstack/react-query";
 
-export const BoardGameAbout = ({ boardgame }: { boardgame: BoardGame }) => {
-  // Passar para client e useQuery
+export const BoardGameAbout = ({ id }: { id: any }) => {
+  const { data: boardgame } = useQuery({
+    queryKey: ["boardgame", id],
+    queryFn: () => boardGamesService.getById(id),
+    enabled: !!id,
+    staleTime: 0, // similar to: "keepPreviousData: false"
+  });
+
   const pathname = usePathname();
+
   if (!boardgame)
     return (
       <div className="flex justify-center items-center  h-screen">

@@ -34,10 +34,13 @@ export const authOptions = {
   },
   callbacks: {
     async jwt({ token, user }: JWT): Promise<Token> {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
-        token.cpf = user.cpf ?? null;
+      const session =
+        user ?? (token?.id ? await usersService.getById(token.id) : null);
+
+      if (session) {
+        token.id = session.id;
+        token.role = session.role;
+        token.cpf = session.cpf ?? null;
       }
 
       return token;

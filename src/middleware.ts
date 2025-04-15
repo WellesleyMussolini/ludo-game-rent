@@ -2,89 +2,77 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { Pathnames } from "@/app/common/types/pathnames.enum";
-import { getToken } from "next-auth/jwt";
+import { getToken, JWT } from "next-auth/jwt";
 import {
-  adminProtectedRoutes,
-  isNotAuthenticatedProtectedRoutes,
-  unauthenticatedRoutes,
+  adminOnlyRoutes,
+  authRequiredRoutes,
+  publicRoutes,
 } from "./app/common/constants/protected-routes";
 import { UserRoles } from "./app/common/types/user-roles.enum";
-import { usersService } from "./app/common/services/users.service";
+
+async function getRedirectUrl(
+  user: JWT | null,
+  pathname: string
+): Promise<string | null> {
+  const isAuthenticated = Boolean(user);
+  const isUnauthenticated = !isAuthenticated;
+  const isAdmin = user?.role === UserRoles.ADMIN;
+  const hasCpf = Boolean(user?.cpf);
+
+  const redirectAwayFromGetStarted =
+    isAuthenticated && !isAdmin && hasCpf && pathname === Pathnames.GET_STARTED;
+
+  const redirectAwayFromAuthRoute =
+    isAuthenticated && pathname === Pathnames.AUTH;
+
+  const nonAdminAttemptingAdminRoutes =
+    isAuthenticated &&
+    !isAdmin &&
+    adminOnlyRoutes.includes(pathname as Pathnames);
+
+  // Unauthenticated users cannot access admin routes
+  if (isUnauthenticated && adminOnlyRoutes.includes(pathname as Pathnames))
+    return Pathnames.ADMIN_AUTH;
+
+  // Unauthenticated users cannot access routes that require authentication
+  if (isUnauthenticated && authRequiredRoutes.includes(pathname as Pathnames))
+    return Pathnames.AUTH;
+
+  // No redirection for unauthenticated public routes
+  if (isUnauthenticated && publicRoutes.includes(pathname as Pathnames))
+    return null;
+
+  // For authenticated users: group conditions that redirect to HOME
+  const shouldRedirectToHome =
+    redirectAwayFromAuthRoute ||
+    redirectAwayFromGetStarted ||
+    nonAdminAttemptingAdminRoutes;
+  if (shouldRedirectToHome) return Pathnames.HOME;
+
+  // If an admin tries to access the admin auth page, redirect to admin dashboard
+  if (isAuthenticated && isAdmin && pathname === Pathnames.ADMIN_AUTH)
+    return Pathnames.ADMIN;
+
+  // Force authenticated users without CPF to complete the process on GET_STARTED
+  if (isAuthenticated && !hasCpf && pathname !== Pathnames.GET_STARTED)
+    return Pathnames.GET_STARTED;
+
+  // No redirection is needed
+  return null;
+}
 
 export async function middleware(request: NextRequest) {
-  const authenticated = await getToken({
+  const userToken = await getToken({
     req: request,
     secret: process.env.NEXT_PUBLIC_SECRET,
   });
   const { pathname } = request.nextUrl;
 
-  // Unauthenticated user redirections
+  const shouldRedirect = await getRedirectUrl(userToken, pathname);
 
-  // If not authenticated and trying to access an admin-protected route, redirect to admin auth page.
-  if (!authenticated && adminProtectedRoutes.includes(pathname as Pathnames)) {
-    return NextResponse.redirect(new URL(Pathnames.ADMIN_AUTH, request.url));
-  }
+  if (shouldRedirect)
+    return NextResponse.redirect(new URL(shouldRedirect, request.url));
 
-  // If not authenticated and trying to access a protected page (like CART, USER, or GET_STARTED), redirect to auth page.
-  if (
-    !authenticated &&
-    isNotAuthenticatedProtectedRoutes.includes(pathname as Pathnames)
-  ) {
-    return NextResponse.redirect(new URL(Pathnames.AUTH, request.url));
-  }
-
-  // Sugestão nomeclatura
-  // const isUnauthenticated = !authenticated && unauthenticatedRoutes.includes(pathname as Pathnames)
-  if (!authenticated && unauthenticatedRoutes.includes(pathname as Pathnames)) {
-    return NextResponse.next();
-  }
-
-  // Authenticated user redirections
-  // Remover requisição do midleware
-  const user = await usersService.getById(authenticated?.id as string);
-  const isAdmin = authenticated?.role === UserRoles.ADMIN;
-
-  // If user is not admin and is trying to access an admin-protected route, redirect to HOME.
-  if (
-    authenticated &&
-    !isAdmin &&
-    adminProtectedRoutes.includes(pathname as Pathnames)
-  ) {
-    return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
-  }
-
-  // Redirect admin users away from the admin auth page to the admin dashboard.
-  if (authenticated && isAdmin && pathname === Pathnames.ADMIN_AUTH) {
-    return NextResponse.redirect(new URL(Pathnames.ADMIN, request.url));
-  }
-
-  // Redirect any authenticated user trying to access the general authentication page.
-  if (authenticated && pathname === Pathnames.AUTH) {
-    return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
-  }
-
-  // For regular (non-admin) users:
-  // If CPF is registered and the user accesses GET_STARTED, send them to HOME.
-  if (
-    authenticated &&
-    !isAdmin &&
-    user?.cpf &&
-    pathname === Pathnames.GET_STARTED
-  ) {
-    return NextResponse.redirect(new URL(Pathnames.HOME, request.url));
-  }
-
-  // If CPF is missing and the user is not on GET_STARTED, force them to complete GET_STARTED.
-  if (
-    authenticated &&
-    !isAdmin &&
-    !user?.cpf &&
-    pathname !== Pathnames.GET_STARTED
-  ) {
-    return NextResponse.redirect(new URL(Pathnames.GET_STARTED, request.url));
-  }
-
-  // Otherwise, allow the request to proceed
   return NextResponse.next();
 }
 

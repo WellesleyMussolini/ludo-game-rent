@@ -1,16 +1,15 @@
 import { Pathnames } from "@/app/common/types/pathnames.enum";
 
-export const adminProtectedRoutes = [
+export const adminOnlyRoutes = [
   Pathnames.ADMIN,
   Pathnames.ADMIN_USERS,
   Pathnames.ADMIN_RENTALS,
 ];
 
-// Nome de sugestão = authenticatedRoutes
-export const isNotAuthenticatedProtectedRoutes = [
+export const authRequiredRoutes = [
   Pathnames.USER,
   Pathnames.CART,
   Pathnames.GET_STARTED,
 ];
 
-export const unauthenticatedRoutes = [Pathnames.HOME, Pathnames.ABOUT];
+export const publicRoutes = [Pathnames.HOME, Pathnames.ABOUT];
